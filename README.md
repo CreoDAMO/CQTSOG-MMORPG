@@ -1,6 +1,6 @@
 # CryptoQuest: The Shards of Genesis
 
-![CryptoQuest Logo](link_to_logo_image)
+![CryptoQuest Logo](https://github.com/CreoDAMO/Crypto-Quest/assets/151800081/8be79371-7f2e-4fe5-a8f5-158031748d2b)
 
 **CryptoQuest: The Shards of Genesis** is an ambitious blockchain-based MMORPG (Massively Multiplayer Online Role-Playing Game) where players embark on an epic journey through the realm of Cryptonia, a world where reality and digital existence converge. In this open-world universe, every item, character, and piece of land is a unique non-fungible token (NFT) on the blockchain, giving players true ownership of their in-game assets.
 
