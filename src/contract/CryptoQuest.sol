@@ -1,253 +1,177 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-import "@openzeppelin/contracts/access/Ownable.sol"; 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-
-contract CryptoQuest is Ownable, VRFConsumerBase {
-
-  using SafeMath for uint256;
-
-  // Player struct
-  struct Player {
-    address playerAddress;
-    uint256 reputation; 
-    uint256 allianceId;
-    uint256 xp;
-    uint256 enemiesKilled;
-  }
-
-  // Faction struct 
-  struct Faction {
-    uint256 factionId;
-    string factionName;
-    address leader;
-  }
-
-  // Campaign struct
-  struct Campaign {
-    uint256 campaignId;
-    string campaignName;
-    uint256 startTime;
-    uint256 endTime;
-  }
-
-  // Content struct
-  struct Content {
-    uint256 contentId;
-    address creator;
-    string description;
-    bool approved;
-  }
-
-  // Item struct
-  struct Item {
-    uint256 itemId;
-    string itemName; 
-    uint256 rarity;
-  }
-
-  // Quest struct
-  struct Quest {
-    uint256 questId;
-    string questName;
-    string description;
-    bool isActive;
-    string completionCondition;
-    uint256 enemyKillTarget;
-    uint256 itemCollectionTarget;
-    uint256 reputationReward;
-    uint256 xpReward;
-    bool isComplete;
-    address creator;
-  }
-
-  // Sponsored quest condition struct
-  struct SponsoredQuestCondition {
-    string conditionType;
-    uint256 value; 
-  }
-
-  // Event struct
-  struct Event {
-    uint256 eventId;
-    string eventName;
-    string theme;
-    uint256 startTime;
-    uint256 endTime;
-  }
-
-  // Quest idea struct
-  struct QuestIdea {
-    uint256 ideaId;
-    string questName;
-    string description;
-    address submitter;
-    uint256 votes;
-  }
-
-  // Mappings, variables, etc
-
-  mapping(address => bool) public moderators;
-  mapping(address => bool) public admins;
-
-  enum ContentStatus {
-    Pending, 
-    Approved,
-    Rejected
-  }
-
-  mapping(uint256 => ContentStatus) public contentStatuses;
-
-  bytes32 internal keyHash;
-  uint256 internal fee;
-
-  mapping(bytes32 => uint256) public randomResults;
-
-  struct ItemUpgrade {
-    uint256 upgradeId;
-    string upgradeName;
-    uint256 upgradeLevel;
-  }
-
-  mapping(uint256 => ItemUpgrade[]) public itemUpgrades;
-
-  struct Land {
-    address owner;
-    uint256 price;
-  }
-
-  mapping(uint256 => mapping(uint256 => Land)) public landsForSale;
-
-  ERC20 public cqToken;
-
-  mapping(uint256 => SponsoredQuestCondition[]) public sponsoredQuestConditions;
-
-  mapping(uint256 => Event) public events;
-
-  mapping(uint256 => QuestIdea) public questIdeas;
-
-  // Additional mappings
-  mapping(uint256 => Faction) public factions;
-
-  // Constructor
-
-  constructor(address _vrfCoordinator, address _linkToken, bytes32 _keyHash, address _initialOwner) 
-    VRFConsumerBase(_vrfCoordinator, _linkToken) 
-    Ownable(_initialOwner)
-  {
-    keyHash = _keyHash;
-    fee = 0.1 * 10 ** 18; 
-  }
-
-  // Modifiers
-
-  modifier onlyLeader(uint256 _factionId) {
-    require(msg.sender == factions[_factionId].leader, "Unauthorized");
-    _;
-  }
-
-  modifier onlyAdmin() {
-    require(admins[msg.sender], "Caller is not an admin");
-    _; 
-  }
-
-  // Functions
-
-  // VRF functions
-
-  function getRandomNumber() internal returns (bytes32 requestId) {
-    require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK");
-    return requestRandomness(keyHash, fee);
-  }
-
-  function fulfillRandomness(bytes32 _requestId, uint256 _randomness) internal override {
-    randomResults[_requestId] = _randomness;
-  }
-
-  // Player functions
-
-  function joinFaction(uint256 _allianceId) external {
-    // Join faction logic 
-  }
-
-  function changeReputation(address _playerAddress, uint256 _newReputation) external {
-    // Change reputation logic
-  }
-
-  // Content functions
-
-  function submitPlayerContent(string memory _description) external {
-    // Submit content logic
-  }
-
-  function approveContent(uint256 _contentId) external onlyOwner {
-    // Approve content logic
-  }
-
-  // Item functions
-
-  function createItem(string memory _itemName, uint256 _rarity) external onlyOwner {
-    // Create item logic 
-  }
-
-  function transferItem(uint256 _itemId, address _to) external {
-    // Transfer item logic
-  }
-
-  // Quest functions
-
-  function createQuest(string memory _questName, string memory _description) external onlyOwner {
-    // Create quest logic
-  }
-
-  function acceptQuest(uint256 _questId) external {
-    // Accept quest logic
-  }
-
-  function completeQuest(uint256 _questId) external {
-    // Complete quest logic
-  }
-
-  function validateQuestCompletion(uint256 _questId, address _player) internal returns (bool) {
-    // Validate completion logic
-  }
-
-  // Revenue functions
-
-  function setTransactionFee(uint256 _fee) external onlyOwner {
-    // Set fee logic
-  }
-
-  function purchasePremiumContent(uint256 _contentId) external payable {
-    // Purchase content logic
-  }
-
-  // Helper functions
-
-  function min(uint256 a, uint256 b) internal pure returns (uint256) {
-    return a < b ? a : b;
-  }
-
-}
-
-// Remaining contracts
-
-contract CQToken is ERC20 {
-
-  // CQToken implementation
-
-  constructor(string memory name_, string memory symbol_) ERC20(name_, symbol_) {}
-
-}
-
-contract GameItemNFT is ERC721, Ownable {
-
-  // GameItemNFT implementation
-
-  constructor(string memory name_, string memory symbol_, address initialOwner) ERC721(name_, symbol_) Ownable(initialOwner) {}
-
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+
+contract CryptoQuest_TheShardsOfGenesisMMPORPG is Initializable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
+    bytes32 public constant GAME_ADMIN_ROLE = keccak256("GAME_ADMIN_ROLE");
+
+    struct Player {
+        uint level;
+        uint experience;
+        uint health;
+        uint mana;
+        uint attackDamage;
+        uint defense;
+        uint agility;
+        uint luck;
+        uint[] inventory;
+        uint[] skills;
+    }
+
+    struct Item {
+        uint id;
+        string name;
+        uint attackBonus;
+        uint defenseBonus;
+        uint manaBonus;
+        uint healthBonus;
+    }
+
+    struct Quest {
+        string title;
+        string description;
+        uint rewardXP;
+        bool completed;
+    }
+
+    struct Guild {
+        string name;
+        address leader;
+        address[] members;
+    }
+
+    struct Recipe {
+        uint[] itemIds;
+        uint resultItemId;
+    }
+
+    uint private nextItemId = 1;
+    uint private nextRecipeId = 1;
+
+    mapping(uint => Item) public items;
+    mapping(address => Player) public players;
+    mapping(address => Quest[]) public playerQuests;
+    mapping(address => Guild) public guilds;
+    mapping(string => address) guildNameToLeader;
+    mapping(uint => Recipe) public recipes;
+
+    event QuestCompleted(address indexed player, string questTitle);
+    event PlayerCreated(address indexed player);
+    event ItemAdded(uint itemId, string itemName);
+    event GuildCreated(string name, address leader);
+    event RecipeAdded(uint recipeId, uint resultItemId);
+
+    function initialize(address defaultAdmin, address pauser, address upgrader) initializer public {
+        __Pausable_init();
+        __AccessControl_init();
+        __UUPSUpgradeable_init();
+
+        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
+        _grantRole(PAUSER_ROLE, pauser);
+        _grantRole(UPGRADER_ROLE, upgrader);
+        _grantRole(GAME_ADMIN_ROLE, defaultAdmin);
+    }
+
+    function pause() public onlyRole(PAUSER_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(PAUSER_ROLE) {
+        _unpause();
+    }
+
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(UPGRADER_ROLE) {}
+
+    function createPlayer() public {
+        require(players[msg.sender].level == 0, "Player already exists");
+        players[msg.sender] = Player(1, 0, 100, 50, 10, 5, 3, 2, new uint[](0), new uint[](0));
+        emit PlayerCreated(msg.sender);
+    }
+
+    function addItem(string memory name, uint attackBonus, uint defenseBonus, uint manaBonus, uint healthBonus) public onlyRole(GAME_ADMIN_ROLE) {
+        items[nextItemId] = Item(nextItemId, name, attackBonus, defenseBonus, manaBonus, healthBonus);
+        emit ItemAdded(nextItemId, name);
+        nextItemId++;
+    }
+
+    function startQuest(string memory title, string memory description, uint rewardXP) public onlyRole(GAME_ADMIN_ROLE) {
+        playerQuests[msg.sender].push(Quest(title, description, rewardXP, false));
+    }
+
+    function completeQuest(string memory questTitle) public {
+        for (uint i = 0; i < playerQuests[msg.sender].length; i++) {
+            Quest storage quest = playerQuests[msg.sender][i];
+            if (keccak256(abi.encodePacked(quest.title)) == keccak256(abi.encodePacked(questTitle)) && !quest.completed) {
+                quest.completed = true;
+                players[msg.sender].experience += quest.rewardXP;
+                emit QuestCompleted(msg.sender, questTitle);
+                break;
+            }
+        }
+    }
+
+    function createGuild(string memory name, address leader) public onlyRole(GAME_ADMIN_ROLE) {
+        require(guildNameToLeader[name] == address(0), "Guild already exists");
+        guilds[leader] = Guild(name, leader, new address[](1));
+        guilds[leader].members[0] = leader;
+        guildNameToLeader[name] = leader;
+        emit GuildCreated(name, leader);
+    }
+
+    function joinGuild(string memory guildName) public {
+        address leader = guildNameToLeader[guildName];
+        require(leader != address(0), "Guild does not exist");
+
+        // Adding a check to ensure the sender is not already a member of the guild
+        Guild storage guild = guilds[leader];
+        for (uint i = 0; i < guild.members.length; i++) {
+            require(guild.members[i] != msg.sender, "Sender is already a member of the guild");
+        }
+
+        guild.members.push(msg.sender);
+    }
+
+    function addRecipe(uint[] memory itemIds, uint resultItemId) public onlyRole(GAME_ADMIN_ROLE) {
+        recipes[nextRecipeId] = Recipe(itemIds, resultItemId);
+        emit RecipeAdded(nextRecipeId, resultItemId);
+        nextRecipeId++;
+    }
+
+    function craftItem(uint recipeId) public {
+        Recipe memory recipe = recipes[recipeId];
+        require(recipe.itemIds.length > 0, "Invalid recipe");
+
+        // Check if the player has all the required items
+        for (uint i = 0; i < recipe.itemIds.length; i++) {
+            bool hasItem = false;
+            for (uint j = 0; j < players[msg.sender].inventory.length; j++) {
+                if (players[msg.sender].inventory[j] == recipe.itemIds[i]) {
+                    hasItem = true;
+                    break;
+                }
+            }
+            require(hasItem, "Player does not have all required items");
+        }
+
+        // Remove required items from the player's inventory
+        for (uint i = 0; i < recipe.itemIds.length; i++) {
+            for (uint j = 0; j < players[msg.sender].inventory.length; j++) {
+                if (players[msg.sender].inventory[j] == recipe.itemIds[i]) {
+                    players[msg.sender].inventory[j] = players[msg.sender].inventory[players[msg.sender].inventory.length - 1];
+                    players[msg.sender].inventory.pop();
+                    break;
+                }
+            }
+        }
+
+        // Add the crafted item to the player's inventory
+        players[msg.sender].inventory.push(recipe.resultItemId);
+    }
 }
