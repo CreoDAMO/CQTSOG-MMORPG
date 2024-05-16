@@ -14,7 +14,7 @@ import "@openzeppelin/contracts-upgradeable@4.9.3/proxy/utils/Initializable.sol"
 import "@openzeppelin/contracts-upgradeable@4.9.3/proxy/utils/UUPSUpgradeable.sol";
 
 /// @custom:security-contact jacquedegraff@creodamo.com
-contract CryptoQuestTheShardsOfGenesisNFT is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, ERC721PausableUpgradeable, AccessControlUpgradeable, ERC721BurnableUpgradeable, EIP712Upgradeable, ERC721VotesUpgradeable, UUPSUpgradeable {
+contract CryptoQuestTheShardsOfGenesisERC721 is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, ERC721PausableUpgradeable, AccessControlUpgradeable, ERC721BurnableUpgradeable, EIP712Upgradeable, ERC721VotesUpgradeable, UUPSUpgradeable {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
@@ -61,13 +61,13 @@ contract CryptoQuestTheShardsOfGenesisNFT is Initializable, ERC721Upgradeable, E
     function initialize(address defaultAdmin, address pauser, address minter, address upgrader)
         initializer public
     {
-        __ERC721_init("CryptoQuestTheShardsOfGenesisNFT", "CQTNFT");
+        __ERC721_init("CryptoQuestTheShardsOfGenesisERC721", "CQTNFT");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __ERC721Pausable_init();
         __AccessControl_init();
         __ERC721Burnable_init();
-        __EIP712_init("CryptoQuestTheShardsOfGenesisNFT", "1");
+        __EIP712_init("CryptoQuestTheShardsOfGenesisERC721", "1");
         __ERC721Votes_init();
         __UUPSUpgradeable_init();
 
