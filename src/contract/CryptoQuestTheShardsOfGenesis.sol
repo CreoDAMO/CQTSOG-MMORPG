@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract CryptoQuest_TheShardsOfGenesisMMPORPG is Initializable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable {
+contract CryptoQuestTheShardsOfGenesisMMPORPG is Initializable, PausableUpgradeable, AccessControlUpgradeable, UUPSUpgradeable {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     bytes32 public constant GAME_ADMIN_ROLE = keccak256("GAME_ADMIN_ROLE");
