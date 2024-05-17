@@ -1,0 +1,62 @@
+{
+	"compiler": {
+		"version": "0.8.25+commit.b61c2a91"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"details": "This library defines the `History` struct, for checkpointing values as they change at different points in time, and later looking up past values by block number. See {Votes} as an example. To create a history of checkpoints define a variable type `Checkpoints.History` in your contract, and store a new checkpoint for the current transaction block using the {push} function. _Available since v4.5._",
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".deps/npm/@openzeppelin/contracts-upgradeable@4.9.3/utils/CheckpointsUpgradeable.sol": "CheckpointsUpgradeable"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".deps/npm/@openzeppelin/contracts-upgradeable@4.9.3/utils/CheckpointsUpgradeable.sol": {
+			"keccak256": "0x51ea916844ee2c53874c6895ce37acbca0250977b49b48909d75ad439f38f211",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1be66618a68c62dfb767443bccba219ea240ebac287a7a23a32af4d2cbe2d9b9",
+				"dweb:/ipfs/QmegRfPREH1UTq56ucSgGByYZqepGoRjKc51Jd3guvqpBJ"
+			]
+		},
+		".deps/npm/@openzeppelin/contracts-upgradeable@4.9.3/utils/math/MathUpgradeable.sol": {
+			"keccak256": "0x2bc0007987c229ae7624eb29be6a9b84f6a6a5872f76248b15208b131ea41c4e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2b2835c737d073ef8b82a4cc246495a9740f43e7ff2cf130906b2449ff9bfb91",
+				"dweb:/ipfs/QmSCWfNoSvvTN57ic7o1RW6NqSxxGAqbBTnLKc7QHe27qB"
+			]
+		},
+		".deps/npm/@openzeppelin/contracts-upgradeable@4.9.3/utils/math/SafeCastUpgradeable.sol": {
+			"keccak256": "0xcef50f95b43b038aa40aed25b62fc45906c681a5c1d504a4fdcf3bc6330a8d4b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ef883699a00970d5469e502514e2854704cd53d7a49825078aa807a2f056315c",
+				"dweb:/ipfs/QmRjpN9oxgw6zHCVjfWNB9MzaYpNPPgqu7Rrwqwabmhpis"
+			]
+		}
+	},
+	"version": 1
+}
