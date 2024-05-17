@@ -276,6 +276,66 @@ This setup gives you a React front-end that can interact with your smart contrac
 
 By following these steps, you should be able to create a comprehensive front-end DApp for the CryptoQuest: The Shards of Genesis MMORPG project.
 
+### How to Use the Makefile
+
+1. **Install Dependencies**
+
+    To install the dependencies, run:
+    ```bash
+    make install
+    ```
+
+2. **Start the Development Server**
+
+    To start the development server, run:
+    ```bash
+    make start
+    ```
+
+3. **Build the Project**
+
+    To build the project for production, run:
+    ```bash
+    make build
+    ```
+
+4. **Run Tests**
+
+    To run the tests, run:
+    ```bash
+    make test
+    ```
+
+5. **Lint the Code**
+
+    To lint the code, run:
+    ```bash
+    make lint
+    ```
+
+6. **Format the Code**
+
+    To format the code, run:
+    ```bash
+    make format
+    ```
+
+7. **Clean the Project**
+
+    To clean the project by removing `node_modules` and `build` directories, run:
+    ```bash
+    make clean
+    ```
+
+8. **Set Up the Development Environment**
+
+    To set up the development environment, run:
+    ```bash
+    make setup
+    ```
+
+This `Makefile` provides a convenient way to manage common tasks in your DApp project. You can add more targets as needed to support additional functionality or automation tasks.
+
 ## Contributing
 We welcome contributions from the community! If you'd like to contribute to CryptoQuest, please follow these guidelines:
 
