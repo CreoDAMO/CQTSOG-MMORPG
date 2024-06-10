@@ -23,8 +23,10 @@
 ## Game Overview
 In *CryptoQuest: The Shards of Genesis*, players enter the world of Cryptonia as adventurers seeking to uncover the mysteries of the Genesians and the Shards of Genesis. They must navigate political intrigue, battle fierce creatures, and explore uncharted territories in their quest to reunify the shattered shards and restore balance to the realm.
 
-## Verified Contracts Link On Tenderly
-https://dashboard.tenderly.co/CreoDAMO/cryptoquesttheshardsofgenesismmorpg
+## 19 Verified Contracts Linked On Tenderly & Polygonscan
+Tenderly: https://dashboard.tenderly.co/CreoDAMO/cryptoquesttheshardsofgenesismmorpg
+
+Polygonscan: https://polygonscan.com/address/0xcc380fd8bfbdf0c020de64075b86c84c2bb0ae79
 
 ## Installation
 To install and run CryptoQuest locally, follow these steps:
