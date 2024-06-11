@@ -2,6 +2,12 @@
 
 ![CryptoQuest Logo](https://github.com/CreoDAMO/Crypto-Quest/assets/151800081/8be79371-7f2e-4fe5-a8f5-158031748d2b)
 
+![CQTSOG - An elven adventurer named Kylen stands in a tranquil glade at the edge of the Misty Peaks, overlooking the Viridian Vale below  The dawn light bathes ](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/assets/151800081/f2bf99e2-6631-4c3b-901a-2db071e1e6d2)
+
+![CQTSOG- An elven adventurer named Kylen arrives at the imposing Stormspire Keep, surrounded by jagged peaks and stormy skies  Lightning illuminates the scene ](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/assets/151800081/b5b843aa-c431-49b9-96a0-9e27158d9f80)
+
+![CQTSOG - A group of heroes enters the Inner Sanctum of the Shrouded Isle of Zephyr, navigating through surreal landscapes with crystalline trees and floating i](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/assets/151800081/7feb9964-d11b-4ad7-a1b1-9eb2ac0c1c04)
+
 **CryptoQuest: The Shards of Genesis** is an ambitious blockchain-based MMORPG (Massively Multiplayer Online Role-Playing Game) where players embark on an epic journey through the realm of Cryptonia, a world where reality and digital existence converge. In this open-world universe, every item, character, and piece of land is a unique non-fungible token (NFT) on the blockchain, giving players true ownership of their in-game assets.
 
 ## Table of Contents
