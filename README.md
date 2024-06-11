@@ -5,6 +5,7 @@
 **CryptoQuest: The Shards of Genesis** is an ambitious blockchain-based MMORPG (Massively Multiplayer Online Role-Playing Game) where players embark on an epic journey through the realm of Cryptonia, a world where reality and digital existence converge. In this open-world universe, every item, character, and piece of land is a unique non-fungible token (NFT) on the blockchain, giving players true ownership of their in-game assets.
 
 ## Table of Contents
+
 - [Introduction](#cryptoquest-the-shards-of-genesis)
 - [Features](#features)
 - [Game Overview](#game-overview)
@@ -13,6 +14,7 @@
 - [License](#license)
 
 ## Features
+
 - **True Ownership:** Players own their in-game assets as NFTs, which they can trade, sell, or use to influence the game world.
 - **Decentralized Economy:** An in-game marketplace allows for decentralized trading, with a cryptocurrency token serving as the primary currency.
 - **Player Governance:** Certain zones are governed by player-elected councils, influencing game rules, events, and development within those areas.
@@ -21,19 +23,16 @@
 - **Cross-Chain Interactions:** Support for multiple blockchains to facilitate a broader ecosystem and cross-chain asset transfers.
 
 ## Game Overview
+
 In *CryptoQuest: The Shards of Genesis*, players enter the world of Cryptonia as adventurers seeking to uncover the mysteries of the Genesians and the Shards of Genesis. They must navigate political intrigue, battle fierce creatures, and explore uncharted territories in their quest to reunify the shattered shards and restore balance to the realm.
 
-## 19 Verified Contracts Linked On Tenderly & Polygonscan
-Tenderly: https://dashboard.tenderly.co/CreoDAMO/cryptoquesttheshardsofgenesismmorpg
+## 21 Verified Contracts Linked On Polygonscan & Tenderly
 
 Polygonscan: https://polygonscan.com/address/0xcc380fd8bfbdf0c020de64075b86c84c2bb0ae79
 
-Contract
-Address
-Network
-Tags
-Visibility
-Verification
+Tenderly: https://dashboard.tenderly.co/CreoDAMO/cryptoquesttheshardsofgenesismmorpg
+
+# Contracts, Addresses, Network, Tags, Visibility & Verification
 
 1.) CryptoQuestTheShardsOfGenesisToken
 0xb30837f54924b88294f524d3e13667396d3f3c8a
@@ -186,7 +185,24 @@ Polygon
 Visible
 Public
 
+20.) CryptoQuestSwap
+0x7132367941b5f058dc68cee2dbcd356fbaa7d5b4
+0x7132367941...d5b4
+Polygon
+Visible
+Public
+
+21.) ERC1967Proxy
+0x7132367941b5f058dc68cee2dbcd356fbaa7d5b4
+0x7132367941...d5b4
+0x9d1075b41cd80ab08179f36bc17a7ff8708748ba
+0x9d1075b41c...48ba
+Polygon
+Visible
+Public
+
 ## Installation
+
 To install and run CryptoQuest locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/your_username/cryptoquest.git`
@@ -194,7 +210,7 @@ To install and run CryptoQuest locally, follow these steps:
 3. Install dependencies: `npm install`
 4. Run the development server: `npm start`
 
-## Creating a front-end DApp using React to interact with all 9 smart contracts in this project. Here’s a step-by-step guide on how to set up your DApp using React:
+## Creating a front-end DApp using React to interact with all 11 smart contracts in this project. Here’s a step-by-step guide on how to set up your DApp using React:
 
 ### 1. Setting Up Your Development Environment
 
