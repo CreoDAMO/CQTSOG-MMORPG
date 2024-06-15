@@ -24,7 +24,7 @@ contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeabl
     mapping(address => bool) public supportedPaymentTokens;  // List of supported payment tokens
     address public paymentReceiver;  // Address that receives the payments
 
-    /// @custom:oz-upgrades-unsafe-allow
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
@@ -34,8 +34,9 @@ contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeabl
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __ERC721Pausable_init();
-        __Ownable_init(initialOwner);
+        __Ownable_init();
         __UUPSUpgradeable_init();
+        transferOwnership(initialOwner);
         _metadataURI = metadataURI;  // Set the initial metadata URI
 
         for (uint256 i = 0; i < paymentTokens.length; i++) {
@@ -105,12 +106,12 @@ contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeabl
 
     function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
 
-    function _update(address to, uint256 tokenId, address auth) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721PausableUpgradeable) returns (address) {
-        return super._update(to, tokenId, auth);
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721PausableUpgradeable) {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function _increaseBalance(address account, uint128 value) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable) {
-        super._increaseBalance(account, value);
+    function _burn(uint256 tokenId) internal override(ERC721Upgradeable, ERC721URIStorageUpgradeable) {
+        super._burn(tokenId);
     }
 
     function tokenURI(uint256 tokenId) public view override(ERC721Upgradeable, ERC721URIStorageUpgradeable) returns (string memory) {
