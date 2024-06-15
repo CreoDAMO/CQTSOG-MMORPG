@@ -1,0 +1,19 @@
+{
+  "name": "CryptoQuest: The Shards of Genesis Book",
+  "description": "An epic fantasy adventure set in the world of Cryptonia...",
+  "image": "https://your-repo-url/path-to-image.png",
+  "attributes": [
+    {
+      "trait_type": "Author",
+      "value": "Jacque Antoine DeGraff"
+    },
+    {
+      "trait_type": "Publisher",
+      "value": "CreoDAMO Inc."
+    },
+    {
+      "trait_type": "Edition",
+      "value": "First Edition: 2004"
+    }
+  ]
+}
