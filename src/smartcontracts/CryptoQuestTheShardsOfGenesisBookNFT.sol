@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-// Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
@@ -143,9 +142,17 @@ contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeabl
         return _metadataURI;
     }
 
-    function purchaseNFT(address paymentToken, uint256 amount, string memory uri) public {
-        require(supportedPaymentTokens[paymentToken], "Unsupported payment token");
-        IERC20(paymentToken).transferFrom(msg.sender, paymentReceiver, amount);
+    function purchaseNFT(address paymentToken, uint256 amount, string memory uri) public payable {
+        require(supportedPaymentTokens[paymentToken] || paymentToken == address(0), "Unsupported payment token");
+
+        if (paymentToken == address(0)) {
+            // Payment in MATIC
+            require(msg.value == amount, "Incorrect MATIC amount sent");
+            payable(paymentReceiver).transfer(amount);
+        } else {
+            // Payment in ERC20 token
+            IERC20(paymentToken).transferFrom(msg.sender, paymentReceiver, amount);
+        }
 
         uint256 tokenId = _nextTokenId++;
         _safeMint(msg.sender, tokenId);
