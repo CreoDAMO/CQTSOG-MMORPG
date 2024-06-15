@@ -1,4 +1,3 @@
-```markdown
 # CryptoQuest: The Shards of Genesis
 
 **SEO Meta Description:** Discover CryptoQuest: The Shards of Genesis, a blockchain-based MMORPG developed with Unity and Unreal Engine 5. Learn how to leverage NFTs, smart contracts, and decentralized economies to create an immersive gaming experience.
