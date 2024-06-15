@@ -4,6 +4,9 @@
 APP_NAME = cryptoquesttheshardsofgenesismmorpg-dapp
 NPM = npm
 NODE_ENV = development
+IPFS = ipfs
+CURL = curl
+INFURA_API = https://ipfs.infura.io:5001/api/v0
 
 # Commands
 install:
@@ -39,8 +42,33 @@ setup:
 	@echo "Setting up the development environment..."
 	@$(NPM) install
 
+# IPFS-related commands
+ipfs-init:
+	@echo "Initializing IPFS..."
+	@$(IPFS) init
+
+ipfs-start:
+	@echo "Starting IPFS daemon..."
+	@$(IPFS) daemon
+
+ipfs-add:
+	@echo "Adding file to IPFS..."
+	@$(IPFS) add $(FILE)
+
+ipfs-pin:
+	@echo "Pinning file to IPFS..."
+	@$(IPFS) pin add $(CID)
+
+infura-add:
+	@echo "Uploading file to Infura IPFS..."
+	@$(CURL) -X POST -F file=@$(FILE) "$(INFURA_API)/add"
+
+infura-pin:
+	@echo "Pinning file on Infura IPFS..."
+	@$(CURL) -X POST "$(INFURA_API)/pin/add?arg=$(CID)"
+
 # Default target
-.PHONY: install start build test lint format clean setup
+.PHONY: install start build test lint format clean setup ipfs-init ipfs-start ipfs-add ipfs-pin infura-add infura-pin
 
 # Instructions
 # Use `make install` to install dependencies
@@ -51,3 +79,9 @@ setup:
 # Use `make format` to format the code
 # Use `make clean` to clean the project
 # Use `make setup` to set up the development environment
+# Use `make ipfs-init` to initialize IPFS
+# Use `make ipfs-start` to start the IPFS daemon
+# Use `make ipfs-add FILE=<file-path>` to add a file to IPFS
+# Use `make ipfs-pin CID=<cid>` to pin a file on IPFS
+# Use `make infura-add FILE=<file-path>` to upload a file to Infura IPFS
+# Use `make infura-pin CID=<cid>` to pin a file on Infura IPFS
