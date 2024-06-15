@@ -715,7 +715,7 @@
 				],
 				"name": "purchaseNFT",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -1604,11 +1604,11 @@
 			]
 		},
 		"src/smartcontracts/CryptoQuestTheShardsOfGenesisBookNFT.sol": {
-			"keccak256": "0xc6dbee89b055000aac83b80747299c41a9e20429b47533dd35173bbf68a65bef",
+			"keccak256": "0xd10988214e8a2ff985ba79d41e7987a265be830d6f78a257aa77cb7a8e4ff0d2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a1d8939b67802d4d8e2dbd6dfebcb2cc8105e6bce50735b67da138b235864339",
-				"dweb:/ipfs/QmXEnMHRFYusNxHCAsob3RbYm7wdkeW4BNcp8G3MJeKpex"
+				"bzz-raw://a4489a8b4169326c2e04414766652d6f90a090bc9697f4924c240a53e1fbc8cf",
+				"dweb:/ipfs/QmPTJXMorRf3HxYfjGSNmjzcDC5ZfhYiZ3EftJRLbVwVDo"
 			]
 		}
 	},
