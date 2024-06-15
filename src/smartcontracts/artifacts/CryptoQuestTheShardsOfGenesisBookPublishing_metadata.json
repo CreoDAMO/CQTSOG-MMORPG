@@ -15,5 +15,7 @@
       "trait_type": "Edition",
       "value": "First Edition: 2004"
     }
-  ]
+  ],
+  "external_url_pdf": "ipfs://<CID-of-PDF>",
+  "external_url_epub": "ipfs://<CID-of-ePub>"
 }
