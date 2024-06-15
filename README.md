@@ -105,9 +105,13 @@ Creating a front-end DApp using React to interact with all 21 smart contracts in
 
 Follow the steps in the documentation to develop CryptoQuest using Unity, including blockchain integration, NFT management, and game mechanics.
 
+For detailed instructions, visit the [CQTSOG Unity Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-Unity).
+
 ## Developing CryptoQuest in Unreal Engine 5
 
 Refer to the guide in the documentation for creating CryptoQuest with Unreal Engine 5, covering topics like decentralized economy and player governance.
+
+For detailed instructions, visit the [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-Unreal-Engine-5).
 
 ## Documentation
 
@@ -128,7 +132,9 @@ The metadata JSON file, including blockchain publication details, is located in 
 
 ## Conclusion
 
-Developing *CryptoQuest: The Shards of Genesis* in Unity or Unreal Engine 5 merges traditional game development with blockchain technology, creating a unique and immersive gaming experience.
+Developing *Crypto
+
+Quest: The Shards of Genesis* in Unity or Unreal Engine 5 merges traditional game development with blockchain technology, creating a unique and immersive gaming experience.
 
 ## Contributing
 
