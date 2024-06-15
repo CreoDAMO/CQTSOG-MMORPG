@@ -101,6 +101,9 @@ To install and run *CryptoQuest* locally, follow these steps:
 
 Creating a front-end DApp using React to interact with all 21 smart contracts in this project is a crucial step. See the detailed guide in the `dapp/` directory.
 
+For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
+
+
 ## Developing CryptoQuest in Unity
 
 Follow the steps in the documentation to develop CryptoQuest using Unity, including blockchain integration, NFT management, and game mechanics.
