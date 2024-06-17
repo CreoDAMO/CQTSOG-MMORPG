@@ -6,167 +6,184 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @custom:security-contact jacquedegraff@creodamo.com
-interface IERC2981 {
-    function royaltyInfo(uint256 tokenId, uint256 value) external view returns (address receiver, uint256 royaltyAmount);
-}
+contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, ERC721PausableUpgradeable, AccessControlUpgradeable, ERC721BurnableUpgradeable, UUPSUpgradeable {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
+    bytes32 public constant ROYALTY_MANAGER_ROLE = keccak256("ROYALTY_MANAGER_ROLE");
+    bytes32 public constant PAYMENT_MANAGER_ROLE = keccak256("PAYMENT_MANAGER_ROLE");
+    bytes32 public constant BOOK_MANAGER_ROLE = keccak256("BOOK_MANAGER_ROLE");
+    bytes32 public constant PUBLISHER_ROLE = keccak256("PUBLISHER_ROLE");
 
-contract CryptoQuestTheShardsOfGenesisBookNFT is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, ERC721PausableUpgradeable, OwnableUpgradeable, UUPSUpgradeable, IERC2981 {
     uint256 private _nextTokenId;
-    mapping(uint256 => address[]) private _royaltyRecipients;
-    mapping(uint256 => uint256[]) private _royaltyShares;
-    mapping(uint256 => uint256) private _totalShares;
-    string private _metadataURI;  // Metadata URI
-    mapping(address => bool) public supportedPaymentTokens;  // List of supported payment tokens
-    address public paymentReceiver;  // Address that receives the payments
+    address private _royaltyReceiver;
+    uint96 private _royaltyFeeNumerator; // E.g., 1000 for 10%
+    uint256 public nftPrice;
+    mapping(address => bool) private _approvedPaymentTokens;
 
-    /// @custom:oz-upgrades-unsafe-allow
+    struct Metadata {
+        string chapter;
+        string character;
+        string location;
+        string element;
+        string rarity;
+    }
+
+    struct Book {
+        string title;
+        string description;
+        string image;
+        string pdfUrl;
+        string epubUrl;
+        bool isPublished;
+    }
+
+    mapping(uint256 => Metadata) public tokenMetadata;
+    mapping(uint256 => Book) public books;
+    uint256 public bookCount;
+
+    event NFTMinted(address indexed to, uint256 indexed tokenId, string uri, Metadata metadata);
+    event BookAdded(uint256 indexed bookId, string title, string description, string image, string pdfUrl, string epubUrl);
+    event BookPublished(uint256 indexed bookId);
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
 
-    function initialize(address initialOwner, string memory metadataURI, address[] memory paymentTokens, address receiver) initializer public {
+    function initialize(
+        address defaultAdmin,
+        address pauser,
+        address minter,
+        address upgrader,
+        address royaltyManager,
+        address paymentManager,
+        address bookManager,
+        address publisher
+    ) initializer public {
         __ERC721_init("CryptoQuestTheShardsOfGenesisBookNFT", "CQTSOGB");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __ERC721Pausable_init();
-        __Ownable_init(initialOwner);
+        __AccessControl_init();
+        __ERC721Burnable_init();
         __UUPSUpgradeable_init();
-        _metadataURI = metadataURI;  // Set the initial metadata URI
 
-        for (uint256 i = 0; i < paymentTokens.length; i++) {
-            supportedPaymentTokens[paymentTokens[i]] = true;
-        }
-        paymentReceiver = receiver;
+        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
+        _grantRole(PAUSER_ROLE, pauser);
+        _grantRole(MINTER_ROLE, minter);
+        _grantRole(UPGRADER_ROLE, upgrader);
+        _grantRole(ROYALTY_MANAGER_ROLE, royaltyManager);
+        _grantRole(PAYMENT_MANAGER_ROLE, paymentManager);
+        _grantRole(BOOK_MANAGER_ROLE, bookManager);
+        _grantRole(PUBLISHER_ROLE, publisher);
     }
 
-    function pause() public onlyOwner {
+    function setNftPrice(uint256 newPrice) public onlyRole(PAYMENT_MANAGER_ROLE) {
+        nftPrice = newPrice;
+    }
+
+    function addPaymentToken(address token) public onlyRole(PAYMENT_MANAGER_ROLE) {
+        _approvedPaymentTokens[token] = true;
+    }
+
+    function removePaymentToken(address token) public onlyRole(PAYMENT_MANAGER_ROLE) {
+        _approvedPaymentTokens[token] = false;
+    }
+
+    function setRoyaltyInfo(address receiver, uint96 feeNumerator) public onlyRole(ROYALTY_MANAGER_ROLE) {
+        _royaltyReceiver = receiver;
+        _royaltyFeeNumerator = feeNumerator;
+    }
+
+    function addBook(string memory title, string memory description, string memory image, string memory pdfUrl, string memory epubUrl) public onlyRole(BOOK_MANAGER_ROLE) {
+        books[bookCount] = Book(title, description, image, pdfUrl, epubUrl, false);
+        emit BookAdded(bookCount, title, description, image, pdfUrl, epubUrl);
+        bookCount++;
+    }
+
+    function publishBook(uint256 bookId) public onlyRole(PUBLISHER_ROLE) {
+        require(bookId < bookCount, "Invalid book ID");
+        books[bookId].isPublished = true;
+        emit BookPublished(bookId);
+    }
+
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri, Metadata memory metadata) public onlyRole(MINTER_ROLE) {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        tokenMetadata[tokenId] = metadata;
+        emit NFTMinted(to, tokenId, uri, metadata);
     }
 
-    function batchMint(address to, string[] memory uris) public onlyOwner {
-        for (uint256 i = 0; i < uris.length; i++) {
-            uint256 tokenId = _nextTokenId++;
-            _safeMint(to, tokenId);
-            _setTokenURI(tokenId, uris[i]);
+    function mintNFT(address to, string memory uri, address paymentToken, Metadata memory metadata) public payable onlyRole(MINTER_ROLE) {
+        require(_approvedPaymentTokens[paymentToken], "Unsupported payment token");
+
+        if (paymentToken != address(0)) {
+            require(IERC20(paymentToken).transferFrom(msg.sender, address(this), nftPrice), "Payment failed");
+        } else {
+            require(msg.value == nftPrice, "Incorrect amount sent");
         }
+
+        safeMint(to, uri, metadata);
     }
 
-    function burn(uint256 tokenId) public onlyOwner {
-        _burn(tokenId);
-    }
+    function _authorizeUpgrade(address newImplementation) internal onlyRole(UPGRADER_ROLE) override {}
 
-    function transferToken(address from, address to, uint256 tokenId) public onlyOwner {
-        _transfer(from, to, tokenId);
-    }
+    // The following functions are overrides required by Solidity.
 
-    function updateTokenURI(uint256 tokenId, string memory uri) public onlyOwner {
-        _setTokenURI(tokenId, uri);
-    }
-
-    function setMetadataURI(string memory metadataURI) public onlyOwner {
-        _metadataURI = metadataURI;
-    }
-
-    function getMetadataURI() public view returns (string memory) {
-        return _metadataURI;
-    }
-
-    function setRoyaltyRecipients(uint256 tokenId, address[] memory recipients, uint256[] memory shares) public onlyOwner {
-        require(recipients.length == shares.length, "Recipients and shares length mismatch");
-        uint256 totalShares;
-        for (uint256 i = 0; i < shares.length; i++) {
-            totalShares += shares[i];
-        }
-        require(totalShares == 10000, "Total shares must equal 10000 (100%)");
-
-        _royaltyRecipients[tokenId] = recipients;
-        _royaltyShares[tokenId] = shares;
-        _totalShares[tokenId] = totalShares;
-    }
-
-    function getRoyaltyRecipients(uint256 tokenId) public view returns (address[] memory, uint256[] memory) {
-        return (_royaltyRecipients[tokenId], _royaltyShares[tokenId]);
-    }
-
-    function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
-
-    function _update(address to, uint256 tokenId, address auth) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721PausableUpgradeable) returns (address) {
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721PausableUpgradeable)
+        returns (address)
+    {
         return super._update(to, tokenId, auth);
     }
 
-    function _increaseBalance(address account, uint128 value) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable) {
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721Upgradeable, ERC721EnumerableUpgradeable)
+    {
         super._increaseBalance(account, value);
     }
 
-    function tokenURI(uint256 tokenId) public view override(ERC721Upgradeable, ERC721URIStorageUpgradeable) returns (string memory) {
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721Upgradeable, ERC721URIStorageUpgradeable)
+        returns (string memory)
+    {
         return super.tokenURI(tokenId);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable) returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, AccessControlUpgradeable)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
     }
 
-    function royaltyInfo(uint256 tokenId, uint256 value) external view override returns (address, uint256) {
-        address[] memory recipients = _royaltyRecipients[tokenId];
-        uint256[] memory shares = _royaltyShares[tokenId];
-        uint256 totalShares = _totalShares[tokenId];
-
-        if (recipients.length == 0 || totalShares == 0) {
-            return (address(0), 0);
-        }
-
-        uint256 royaltyAmount;
-        for (uint256 i = 0; i < recipients.length; i++) {
-            royaltyAmount += (value * shares[i]) / totalShares;
-        }
-
-        return (recipients[0], royaltyAmount);  // Only returning the first recipient's royalty amount for simplicity
+// View function to get book details
+    function getBook(uint256 bookId) public view returns (Book memory) {
+        require(bookId < bookCount, "Invalid book ID");
+        return books[bookId];
     }
 
-    function _baseURI() internal view override returns (string memory) {
-        return _metadataURI;
     }
-
-    function purchaseNFT(address paymentToken, uint256 amount, string memory uri) public payable {
-        require(supportedPaymentTokens[paymentToken] || paymentToken == address(0), "Unsupported payment token");
-
-        if (paymentToken == address(0)) {
-            // Payment in MATIC
-            require(msg.value == amount, "Incorrect MATIC amount sent");
-            payable(paymentReceiver).transfer(amount);
-        } else {
-            // Payment in ERC20 token
-            IERC20(paymentToken).transferFrom(msg.sender, paymentReceiver, amount);
-        }
-
-        uint256 tokenId = _nextTokenId++;
-        _safeMint(msg.sender, tokenId);
-        _setTokenURI(tokenId, uri);
-    }
-
-    function addPaymentToken(address token) public onlyOwner {
-        supportedPaymentTokens[token] = true;
-    }
-
-    function removePaymentToken(address token) public onlyOwner {
-        supportedPaymentTokens[token] = false;
-    }
-
-    // Other contract functions...
-}
