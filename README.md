@@ -105,7 +105,6 @@ Creating a front-end DApp using React to interact with all 21 smart contracts in
 
 For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
 
-
 ## Developing CryptoQuest in Unity
 
 Follow the steps in the documentation to develop CryptoQuest using Unity, including blockchain integration, NFT management, and game mechanics.
@@ -116,54 +115,59 @@ For detailed instructions, visit the [CQTSOG Unity Guide](https://github.com/Cre
 
 Refer to the guide in the documentation for creating CryptoQuest with Unreal Engine 5, covering topics like decentralized economy and player governance.
 
-For detailed instructions, visit the [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-Unreal-Engine-5).
-
-## Documentation
-
-You can find the detailed project documentation in the `docs/` directory. This includes the PDF version of the book:
-
-- [CryptoQuest: The Shards of Genesis PDF](docs/CryptoQuest_TheShardsOfGenesis.pdf)
-
-## Metadata
-
-The metadata JSON file, including blockchain publication details, is located in the `metadata/` directory:
-
-- [CryptoQuest Metadata JSON](metadata/CryptoQuest_Metadata.json)
-
-## FAQs
-
-**What is CryptoQuest: The Shards of Genesis?**  
-*CryptoQuest* is a blockchain-based MMORPG where players own in-game assets as NFTs.
-
-## Conclusion
-
-Developing *Crypto
-
-Quest: The Shards of Genesis* in Unity or Unreal Engine 5 merges traditional game development with blockchain technology, creating a unique and immersive gaming experience.
-
-## Contributing
-
-We welcome contributions! Follow the guidelines in the `CONTRIBUTING.md` file.
-
-## License
-
-*CryptoQuest: The Shards of Genesis* is licensed under the [MIT License](link_to_license).
+For detailed instructions, visit the [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTS
 
 ## Repository Structure
 
-The repository is organized as follows:
+The repository for **CryptoQuest: The Shards of Genesis** is organized to provide clear separation of concerns, facilitating development and management of different aspects of the project. Below is the updated directory structure with a description of each directory and file:
 
-```
+```markdown
 CryptoQuest/
 │
-├── Article/
-│   └── ... (any article-related files)
+├── .deps/npm/@openzeppelin/                    # OpenZeppelin dependencies
+│   └── contracts-upgradeable/
+│       ├── access/
+│       │   ├── AccessControlUpgradeable.sol
+│       │   └── OwnableUpgradeable.sol
+│       ├── governance/
+│       │   └── TimelockControllerUpgradeable.sol
+│       ├── proxy/
+│       │   └── utils/
+│       │       ├── Initializable.sol
+│       │       └── UUPSUpgradeable.sol
+│       ├── security/
+│       │   └── PausableUpgradeable.sol
+│       ├── token/
+│       │   ├── ERC1155/
+│       │   │   └── extensions/
+│       │   │       ├── ERC1155BurnableUpgradeable.sol
+│       │   │       ├── ERC1155PausableUpgradeable.sol
+│       │   │       └── ERC1155SupplyUpgradeable.sol
+│       │   ├── ERC20/
+│       │   │   └── extensions/
+│       │   │       ├── ERC20BurnableUpgradeable.sol
+│       │   │       └── ERC20PausableUpgradeable.sol
+│       │   └── ERC721/
+│       │       └── extensions/
+│       │           ├── ERC721BurnableUpgradeable.sol
+│       │           ├── ERC721EnumerableUpgradeable.sol
+│       │           ├── ERC721PausableUpgradeable.sol
+│       │           └── ERC721URIStorageUpgradeable.sol
+│       └── utils/
+│           ├── AddressUpgradeable.sol
+│           ├── ContextUpgradeable.sol
+│           ├── CountersUpgradeable.sol
+│           ├── PausableUpgradeable.sol
+│           └── cryptography/
+│               ├── EIP712Upgradeable.sol
+│               └── introspection/
+│                   ├── ERC165Upgradeable.sol
+│                   └── IERC165Upgradeable.sol
 │
-├── README.md
-├── LICENSE
-├── Makefile
+├── Article/                                    # Article-related files
+│   └── ReadMe.md
 │
-├── src/
+├── src/                                        # Source code for the front-end application
 │   ├── apps/
 │   │   └── App.js
 │   ├── components/
@@ -172,17 +176,23 @@ CryptoQuest/
 │   │   └── Web3Context.js
 │   ├── contracts/
 │   │   └── index.js
-│   ├── utils/
-│   │   └── web3Modal.js
+│   └── utils/
+│       └── web3Modal.js
 │
-├── smartcontracts/
+├── smartcontracts/                             # Smart contracts and their artifacts
 │   ├── artifacts/
 │   │   ├── build-info/
 │   │   │   └── ... (various JSON files)
 │   │   ├── CryptoQuestShardsOfGenesisFarming.json
 │   │   ├── CryptoQuestShardsOfGenesisFarming_metadata.json
+│   │   ├── CryptoQuestSwap.json
+│   │   ├── CryptoQuestSwap_metadata.json
 │   │   ├── CryptoQuestTheShardsOfGenesis1155.json
 │   │   ├── CryptoQuestTheShardsOfGenesis1155_metadata.json
+│   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
+│   │   ├── CryptoQuestTheShardsOfGenesisBookNFT_metadata.json
+│   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
+│   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs_metadata.json
 │   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
 │   │   ├── CryptoQuestTheShardsOfGenesisERC721_metadata.json
 │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
@@ -195,6 +205,8 @@ CryptoQuest/
 │   │   ├── CryptoQuestTheShardsOfGenesisToken_metadata.json
 │   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
 │   │   ├── CryptoQuestTheShardsOfGenesisWallet_metadata.json
+│   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
+│   │   ├── CryptoQuest_TheShardsOfGenesisDAO_metadata.json
 │   │   ├── IDAO.json
 │   │   ├── IDAO_metadata.json
 │   │   ├── IERC1155.json
@@ -205,9 +217,10 @@ CryptoQuest/
 │   │   ├── IERC721_metadata.json
 │   │   ├── IFarming.json
 │   │   ├── IFarming_metadata.json
-│   │   ├── IStaking.json
-│   │   ├── IStaking_metadata.json
+│   │   └── IStaking.json
+│   │       └── IStaking_metadata.json
 │   ├── CryptoQuestSwap.sol
+│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
 │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
 │   ├── CryptoQuestTheShardsOfGenesisDAO.sol
 │   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
@@ -218,20 +231,26 @@ CryptoQuest/
 │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
 │   └── CryptoQueststTheShardsOfGenesisFarming.sol
 │
-├── docs/
-│   ├── CryptoQuest_TheShardsOfGenesis.pdf
-│   └── ... (other documentation files)
+├── utils/                                      # Utility scripts and contracts
+│   ├── content loaded/
+│   ├── contracts.js
 │
-└── metadata/
+├── LICENSE                                     # License file
+├── Makefile                                    # Makefile for building and deployment scripts
+├── README.md                                   # Project documentation
+└── metadata/                                   # Metadata JSON files related to the project
     └── CryptoQuest_Metadata.json
+
 ```
 
 ### Directory Descriptions
 
+- **.deps/**: Contains dependencies from npm, particularly OpenZeppelin contracts.
 - **Article/**: Contains files related to articles or publications about CryptoQuest.
 - **src/**: Source code for the front-end application, including components, context, contracts, and utilities.
-- **smartcontracts/**: Contains smart contracts and their artifacts, including compiled JSON files.
-- **docs/**: Documentation files, including the PDF version of the book.
+- **smartcontracts/**: Contains smart contracts and their artifacts, including compiled JSON files and metadata.
+- **utils/**: Utility scripts and contracts.
 - **metadata/**: Metadata JSON files related to the project.
-
----
+- **LICENSE**: License file.
+- **Makefile**: Makefile for building and deployment scripts.
+- **README.md**: Project documentation.
