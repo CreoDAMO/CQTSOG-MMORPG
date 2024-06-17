@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -979,6 +979,7 @@
 			}
 		],
 		"devdoc": {
+			"custom:security-contact": "jacquedegraff@creodamo.com",
 			"errors": {
 				"AccessControlBadConfirmation()": [
 					{
@@ -1249,11 +1250,11 @@
 			]
 		},
 		"src/smartcontracts/CryptoQuestTheShardsOfGenesisWallet.sol": {
-			"keccak256": "0xcd874ced4a71e3e76d2c0c983e8e2f81814e42ff66c741bac6164526bed79202",
+			"keccak256": "0x89741a93afd2e89728cfe6c41880a05978c3dff04a24ca79aaa57bd066970efb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://931a4b75ed23b2ec046680111d979e71e8849c7e6b5790f9f90795881a727e30",
-				"dweb:/ipfs/QmTd5LafNxzddCUyjV2xYcKmtRnoSweUmko939Qep6VM8h"
+				"bzz-raw://2e29f5980051ab33847232d4c29d270a557646cb759580a22802495f1006bdb8",
+				"dweb:/ipfs/QmRuv5mBqpSYG2qTe8iSVJtnsR3uF6gzxuFWeSqibiDe9i"
 			]
 		}
 	},

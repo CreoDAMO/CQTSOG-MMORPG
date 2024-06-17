@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -635,6 +635,7 @@
 			}
 		],
 		"devdoc": {
+			"custom:security-contact": "jacquedegraff@creodamo.com",
 			"errors": {
 				"AccessControlBadConfirmation()": [
 					{
@@ -751,7 +752,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/contract/CryptoQueststTheShardsOfGenesisFarming.sol": "CryptoQuestShardsOfGenesisFarming"
+			"src/smartcontracts/CryptoQueststTheShardsOfGenesisFarming.sol": "CryptoQuestShardsOfGenesisFarming"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -877,12 +878,12 @@
 				"dweb:/ipfs/QmeJQCtZrQjtJLr6u7ZHWeH3pBnjtLWzvRrKViAi7UZqxL"
 			]
 		},
-		"src/contract/CryptoQueststTheShardsOfGenesisFarming.sol": {
-			"keccak256": "0xb227dd0052d7512db5cbba9879013f216daf55eccb0ee98308382b46c6e36927",
+		"src/smartcontracts/CryptoQueststTheShardsOfGenesisFarming.sol": {
+			"keccak256": "0x6602be909fe21ac7694b80fd01c15ba8f738bdec9ea5e4c28c84c8128f132e28",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1bec124d5954d7f35e5e90c5274dfec203f62ea52044d1eab087af36024beb21",
-				"dweb:/ipfs/QmUtUCn92DvzFcpALtbmW1C4wCD8fCXEUnZbR6zbmkkFuC"
+				"bzz-raw://fff039fc493f0b05a2b59557fdf51b389c3cf7792cfe7db832327511df35ab18",
+				"dweb:/ipfs/QmNe65Q2b4UaGBaALs75YjwNBKzYd5NJCGZbLfiwgEs6Mw"
 			]
 		}
 	},

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -2358,11 +2358,11 @@
 			]
 		},
 		"src/smartcontracts/CryptoQuestTheShardsOfGenesisToken.sol": {
-			"keccak256": "0x0f67b7a3a793199bb8369de44f468fc088ff0dc7278c2140eced8ab929a0b95c",
+			"keccak256": "0x7c699cccf3dd9f4a73e7880ecfacbdcdf135aa9d584c5f82b41c953a7e8b9a62",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c7e5607f774cefb063749f1f8712868781aeea769fc142bfbb87b9ed340d4cd4",
-				"dweb:/ipfs/QmcYkwiAue1QVCqKQ8M1L2MZZYzH7x8rHJpe2KFoNQHyPS"
+				"bzz-raw://4bcd6e3acc01d05a0d87a8e1643c60eaf1afd8df8bb505572096b2ebe3e48729",
+				"dweb:/ipfs/QmPM3Db9oFkMnZd134QWpJ4QhFUQBiYUqCLr27nXWgBGc5"
 			]
 		}
 	},

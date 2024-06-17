@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -1240,7 +1240,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/contract/CryptoQuestTheShardsOfGenesisMarketplace.sol": "CryptoQuestTheShardsOfGenesisMarketplace"
+			"src/smartcontracts/CryptoQuestTheShardsOfGenesisMarketplace.sol": "CryptoQuestTheShardsOfGenesisMarketplace"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -1406,12 +1406,12 @@
 				"dweb:/ipfs/QmeJQCtZrQjtJLr6u7ZHWeH3pBnjtLWzvRrKViAi7UZqxL"
 			]
 		},
-		"src/contract/CryptoQuestTheShardsOfGenesisMarketplace.sol": {
-			"keccak256": "0xabca7092af8d170ef9e8db6e145fad7296b4c5f302249c21a0892872c221ebbf",
+		"src/smartcontracts/CryptoQuestTheShardsOfGenesisMarketplace.sol": {
+			"keccak256": "0xaa913a1b5e9a998ee1a540a71fc2acb2e5c9e823d3aaca03ab86ccebaf4bca4d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://18130f3771d19fd58ff8b36a48f40c79667209bd5526728c8d011275282f38e2",
-				"dweb:/ipfs/QmWGVhEt7xt45Esa4cHgF1BJVvhFZeVY4qSW3pHh4yRCw2"
+				"bzz-raw://9c75154705c025ded7201e3fda5a499527b61571d2223c3284455b019c1a8448",
+				"dweb:/ipfs/QmbGvqB7r7iwQ1n4S9GhAXD7FV5Bi4bC8An2seWGbKKLPh"
 			]
 		}
 	},

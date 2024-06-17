@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -162,11 +162,11 @@
 			]
 		},
 		"src/smartcontracts/CryptoQuestTheShardsOfGenesisMMORPG.sol": {
-			"keccak256": "0xfe36db8ebb04393c84870c683bdaff93d2d4e4a2c6e6add3f5f01c6f1b9c368a",
+			"keccak256": "0x3ca23ec6b77ce5e7b124c7dc3f5b5d1f131864e7e7af073e16a74c07797d8f6b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a05048dbc87a27717d75c3e597ac24be1b8ec286c95b7459808a3de243412aaa",
-				"dweb:/ipfs/QmVsRUCFa2daofCtGfuZypiqzWiqVQ4gtusV2k5FsVuL5b"
+				"bzz-raw://2fb5dbb1acb9096df679b7c6f0cd0f91b146f7b1983c7501ee8313bfab63ab6a",
+				"dweb:/ipfs/QmT95JxBDbYWtuF189Uk5xHDr7PVXvsQQSSNde9CQ4xZKW"
 			]
 		}
 	},
