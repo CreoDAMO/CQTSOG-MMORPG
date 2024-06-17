@@ -11,6 +11,27 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [],
+				"name": "AccessControlBadConfirmation",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "neededRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "AccessControlUnauthorizedAccount",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -187,28 +208,6 @@
 				"type": "error"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					}
-				],
-				"name": "OwnableInvalidOwner",
-				"type": "error"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "OwnableUnauthorizedAccount",
-				"type": "error"
-			},
-			{
 				"inputs": [],
 				"name": "UUPSUnauthorizedCallContext",
 				"type": "error"
@@ -297,6 +296,62 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "bookId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "image",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "pdfUrl",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "epubUrl",
+						"type": "string"
+					}
+				],
+				"name": "BookAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "bookId",
+						"type": "uint256"
+					}
+				],
+				"name": "BookPublished",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": false,
 						"internalType": "uint64",
 						"name": "version",
@@ -325,17 +380,56 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "previousOwner",
+						"name": "to",
 						"type": "address"
 					},
 					{
 						"indexed": true,
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "uri",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "chapter",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "character",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "location",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "element",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "rarity",
+								"type": "string"
+							}
+						],
+						"indexed": false,
+						"internalType": "struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata",
+						"name": "metadata",
+						"type": "tuple"
 					}
 				],
-				"name": "OwnershipTransferred",
+				"name": "NFTMinted",
 				"type": "event"
 			},
 			{
@@ -349,6 +443,81 @@
 					}
 				],
 				"name": "Paused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "previousAdminRole",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "newAdminRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "RoleAdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
 				"type": "event"
 			},
 			{
@@ -404,6 +573,110 @@
 			},
 			{
 				"inputs": [],
+				"name": "BOOK_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MINTER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PAUSER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PAYMENT_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PUBLISHER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ROYALTY_MANAGER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "UPGRADER_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "UPGRADE_INTERFACE_VERSION",
 				"outputs": [
 					{
@@ -413,6 +686,39 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "image",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "pdfUrl",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "epubUrl",
+						"type": "string"
+					}
+				],
+				"name": "addBook",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -466,21 +772,60 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "bookCount",
+				"outputs": [
 					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "string[]",
-						"name": "uris",
-						"type": "string[]"
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
-				"name": "batchMint",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "books",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "image",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "pdfUrl",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "epubUrl",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isPublished",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -516,37 +861,112 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getMetadataURI",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "bookId",
 						"type": "uint256"
 					}
 				],
-				"name": "getRoyaltyRecipients",
+				"name": "getBook",
 				"outputs": [
 					{
-						"internalType": "address[]",
+						"components": [
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "image",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "pdfUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "epubUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isPublished",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct CryptoQuestTheShardsOfGenesisBookNFT.Book",
 						"name": "",
-						"type": "address[]"
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
 					},
 					{
-						"internalType": "uint256[]",
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
 						"name": "",
-						"type": "uint256[]"
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -556,22 +976,42 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "initialOwner",
+						"name": "defaultAdmin",
 						"type": "address"
 					},
 					{
-						"internalType": "string",
-						"name": "metadataURI",
-						"type": "string"
-					},
-					{
-						"internalType": "address[]",
-						"name": "paymentTokens",
-						"type": "address[]"
+						"internalType": "address",
+						"name": "pauser",
+						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "receiver",
+						"name": "minter",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "upgrader",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "royaltyManager",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "paymentManager",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "bookManager",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "publisher",
 						"type": "address"
 					}
 				],
@@ -605,6 +1045,61 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "paymentToken",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "chapter",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "character",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "location",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "element",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "rarity",
+								"type": "string"
+							}
+						],
+						"internalType": "struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata",
+						"name": "metadata",
+						"type": "tuple"
+					}
+				],
+				"name": "mintNFT",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "name",
 				"outputs": [
@@ -619,12 +1114,12 @@
 			},
 			{
 				"inputs": [],
-				"name": "owner",
+				"name": "nftPrice",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -671,19 +1166,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "paymentReceiver",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "proxiableUUID",
 				"outputs": [
 					{
@@ -698,24 +1180,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "paymentToken",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "bookId",
 						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "uri",
-						"type": "string"
 					}
 				],
-				"name": "purchaseNFT",
+				"name": "publishBook",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -732,8 +1204,19 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "renounceOwnership",
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "callerConfirmation",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -741,30 +1224,19 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
 					},
-					{
-						"internalType": "uint256",
-						"name": "value",
-						"type": "uint256"
-					}
-				],
-				"name": "royaltyInfo",
-				"outputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "account",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -778,6 +1250,38 @@
 						"internalType": "string",
 						"name": "uri",
 						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "chapter",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "character",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "location",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "element",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "rarity",
+								"type": "string"
+							}
+						],
+						"internalType": "struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata",
+						"name": "metadata",
+						"type": "tuple"
 					}
 				],
 				"name": "safeMint",
@@ -857,35 +1361,12 @@
 			{
 				"inputs": [
 					{
-						"internalType": "string",
-						"name": "metadataURI",
-						"type": "string"
-					}
-				],
-				"name": "setMetadataURI",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "newPrice",
 						"type": "uint256"
-					},
-					{
-						"internalType": "address[]",
-						"name": "recipients",
-						"type": "address[]"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "shares",
-						"type": "uint256[]"
 					}
 				],
-				"name": "setRoyaltyRecipients",
+				"name": "setNftPrice",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -894,19 +1375,18 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "receiver",
 						"type": "address"
-					}
-				],
-				"name": "supportedPaymentTokens",
-				"outputs": [
+					},
 					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
+						"internalType": "uint96",
+						"name": "feeNumerator",
+						"type": "uint96"
 					}
 				],
-				"stateMutability": "view",
+				"name": "setRoyaltyInfo",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -955,6 +1435,45 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenMetadata",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "chapter",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "character",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "element",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "rarity",
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -1040,62 +1559,8 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
-					}
-				],
-				"name": "transferOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "transferToken",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "unpause",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "uri",
-						"type": "string"
-					}
-				],
-				"name": "updateTokenURI",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1120,7 +1585,18 @@
 			}
 		],
 		"devdoc": {
+			"custom:security-contact": "jacquedegraff@creodamo.com",
 			"errors": {
+				"AccessControlBadConfirmation()": [
+					{
+						"details": "The caller of a function is not the expected one. NOTE: Don't confuse with {AccessControlUnauthorizedAccount}."
+					}
+				],
+				"AccessControlUnauthorizedAccount(address,bytes32)": [
+					{
+						"details": "The `account` is missing a role."
+					}
+				],
 				"AddressEmptyCode(address)": [
 					{
 						"details": "There's no code at `target` (it is not a contract)."
@@ -1238,16 +1714,6 @@
 						"details": "The contract is not initializing."
 					}
 				],
-				"OwnableInvalidOwner(address)": [
-					{
-						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
-					}
-				],
-				"OwnableUnauthorizedAccount(address)": [
-					{
-						"details": "The caller account is not authorized to perform an operation."
-					}
-				],
 				"UUPSUnauthorizedCallContext()": [
 					{
 						"details": "The call is from an unauthorized context."
@@ -1278,6 +1744,15 @@
 				"Paused(address)": {
 					"details": "Emitted when the pause is triggered by `account`."
 				},
+				"RoleAdminChanged(bytes32,bytes32,bytes32)": {
+					"details": "Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this."
+				},
+				"RoleGranted(bytes32,address,address)": {
+					"details": "Emitted when `account` is granted `role`. `sender` is the account that originated the contract call, an admin role bearer except when using {AccessControl-_setupRole}."
+				},
+				"RoleRevoked(bytes32,address,address)": {
+					"details": "Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+				},
 				"Transfer(address,address,uint256)": {
 					"details": "Emitted when `tokenId` token is transferred from `from` to `to`."
 				},
@@ -1296,20 +1771,29 @@
 				"balanceOf(address)": {
 					"details": "See {IERC721-balanceOf}."
 				},
+				"burn(uint256)": {
+					"details": "Burns `tokenId`. See {ERC721-_burn}. Requirements: - The caller must own `tokenId` or be an approved operator."
+				},
 				"constructor": {
-					"custom:oz-upgrades-unsafe-allow": ""
+					"custom:oz-upgrades-unsafe-allow": "constructor"
 				},
 				"getApproved(uint256)": {
 					"details": "See {IERC721-getApproved}."
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role. May emit a {RoleGranted} event."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
 				},
 				"isApprovedForAll(address,address)": {
 					"details": "See {IERC721-isApprovedForAll}."
 				},
 				"name()": {
 					"details": "See {IERC721Metadata-name}."
-				},
-				"owner()": {
-					"details": "Returns the address of the current owner."
 				},
 				"ownerOf(uint256)": {
 					"details": "See {IERC721-ownerOf}."
@@ -1320,8 +1804,11 @@
 				"proxiableUUID()": {
 					"details": "Implementation of the ERC1822 {proxiableUUID} function. This returns the storage slot used by the implementation. It is used to validate the implementation's compatibility when performing an upgrade. IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier."
 				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				"renounceRole(bytes32,address)": {
+					"details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been revoked `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `callerConfirmation`. May emit a {RoleRevoked} event."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role. May emit a {RoleRevoked} event."
 				},
 				"safeTransferFrom(address,address,uint256)": {
 					"details": "See {IERC721-safeTransferFrom}."
@@ -1347,9 +1834,6 @@
 				"transferFrom(address,address,uint256)": {
 					"details": "See {IERC721-transferFrom}."
 				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
-				},
 				"upgradeToAndCall(address,bytes)": {
 					"custom:oz-upgrades-unsafe-allow-reachable": "delegatecall",
 					"details": "Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call encoded in `data`. Calls {_authorizeUpgrade}. Emits an {Upgraded} event."
@@ -1365,7 +1849,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/smartcontracts/CryptoQuestTheShardsOfGenesisBookNFT.sol": "CryptoQuestTheShardsOfGenesisBookNFT"
+			"github/CreoDAMO/CQRSOG-MMORPG/src/smartcontracts/CryptoQuestTheShardsOfGenesisBookNFT.sol": "CryptoQuestTheShardsOfGenesisBookNFT"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -1373,18 +1857,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
-		"@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol": {
-			"keccak256": "0xc163fcf9bb10138631a9ba5564df1fa25db9adff73bd9ee868a8ae1858fe093a",
+		"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol": {
+			"keccak256": "0x6662ec4e5cefca03eeadd073e9469df8d2944bb2ee8ec8f7622c2c46aab5f225",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9706d43a0124053d9880f6e31a59f31bc0a6a3dc1acd66ce0a16e1111658c5f6",
-				"dweb:/ipfs/QmUFmfowzkRwGtDu36cXV9SPTBHJ3n7dG9xQiK5B28jTf2"
+				"bzz-raw://4d8544c6f8daa4d1bc215c6a72fe0acdb748664a105b0e5efc19295667521d45",
+				"dweb:/ipfs/QmdGWqdnXT8S3RgCR6aV8XHZrsybieMQLLnug1NtpSjEXN"
 			]
 		},
 		"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
@@ -1409,6 +1893,14 @@
 			"urls": [
 				"bzz-raw://1d9f5e03898857a187d99bd0766daf725abe87f454db82ac6286544d8cb4532f",
 				"dweb:/ipfs/QmXFNXaNuxvGCLNL9xAFbvEgRmXDuxw4Ukf9tddiAHDq59"
+			]
+		},
+		"@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol": {
+			"keccak256": "0x5d1215064b3e114d329b1544cf65d33404f63e7841184e55267f4d8b114608e6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1699c6ecb0511cb626f40814463aaf4e5c8c36399689e0f3de7561f227a5b50a",
+				"dweb:/ipfs/QmQDxPddEsajUEPDRsfPekEhBRjmBTepYALuTwdM7h6mRz"
 			]
 		},
 		"@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol": {
@@ -1457,6 +1949,14 @@
 			"urls": [
 				"bzz-raw://1fa2e61141c602510bcd2cd936ed9561922ac8772a9b9c9a9db091a74e354a45",
 				"dweb:/ipfs/QmcHQDDoEBwJmwUbzoVkytvJsBx3KVHYFFnDkvRGWh9Wmh"
+			]
+		},
+		"@openzeppelin/contracts/access/IAccessControl.sol": {
+			"keccak256": "0xb6b36edd6a2999fd243ff226d6cbf84bd71af2432bbd0dfe19392996a1d9cb41",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1fd2f35495652e57e3f99bc6c510bc5f7dd398a176ea2e72d8ed730aebc6ca26",
+				"dweb:/ipfs/QmTQV6X4gkikTib49cho5iDX3JvSQbdsoEChoDwrk3CbbH"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/IERC165.sol": {
@@ -1603,12 +2103,12 @@
 				"dweb:/ipfs/QmVBEei6aTnvYNZp2CHYVNKyZS4q1KkjANfY39WVXZXVoT"
 			]
 		},
-		"src/smartcontracts/CryptoQuestTheShardsOfGenesisBookNFT.sol": {
-			"keccak256": "0xd10988214e8a2ff985ba79d41e7987a265be830d6f78a257aa77cb7a8e4ff0d2",
+		"github/CreoDAMO/CQRSOG-MMORPG/src/smartcontracts/CryptoQuestTheShardsOfGenesisBookNFT.sol": {
+			"keccak256": "0x25a4fc1af98d15a39a03255d525e7ca4a9e5794535b2df3ebd9e2115c8c25ad7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a4489a8b4169326c2e04414766652d6f90a090bc9697f4924c240a53e1fbc8cf",
-				"dweb:/ipfs/QmPTJXMorRf3HxYfjGSNmjzcDC5ZfhYiZ3EftJRLbVwVDo"
+				"bzz-raw://9d3f2bb90142c1cafe2d659e2fc8d730411423f243729293cfa7c1e36f4034ae",
+				"dweb:/ipfs/QmYTzDfmKX3EtxHH6pvSg4aqTWduf3PLATaeYR175jKHL5"
 			]
 		}
 	},
