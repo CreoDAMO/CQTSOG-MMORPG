@@ -1,7 +1,9 @@
 {
-  "name": "CryptoQuest: The Shards of Genesis Book",
-  "description": "An epic fantasy adventure set in the world of Cryptonia...",
-  "image": "https://your-repo-url/path-to-image.png",
+  "name": "CryptoQuest: The Shards of Genesis",
+  "description": "An epic fantasy adventure set in the world of Cryptonia. Embark on a journey to uncover the secrets of the Shards of Genesis.",
+  "image": "https://cf-ipfs.com/ipfs/bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa",
+  "pdf": "https://cf-ipfs.com/ipfs/bafybeiheteomouzh5hffdpkjlqktn2k3vpdufcmpxy5kivtpydnpoise74",
+  "epub": "https://cf-ipfs.com/ipfs/bafybeiaml6wnblgri6uuor6vemvsc2vp2ge5gzmzr746rpb55yipjldjgm",
   "attributes": [
     {
       "trait_type": "Author",
@@ -14,8 +16,19 @@
     {
       "trait_type": "Edition",
       "value": "First Edition: 2004"
+    },
+    {
+      "trait_type": "Publication Info",
+      "value": "CryptoQuest: The Shards Of Genesis Book NFT, Chain ID: Polygon, Wallet Address: 0xCc380FD8bfbdF0c020de64075b86C84c2BB0AE79, Transaction Hash: 0xb10b3f092fef031d566959784eca0bdd3ea1c78763c22d34373e40b0c5f9303d, Contract Address: 0x545Ace061A1b64B14641B50CfE317017b01A667b, 0x6b07aD60b1d448D0e1cE9dCB24A85B3ab18b9b1E"
+    },
+    {
+      "trait_type": "Cover Design",
+      "value": "Jacque Antoine DeGraff"
     }
   ],
-  "external_url_pdf": "ipfs://<CID-of-PDF>",
-  "external_url_epub": "ipfs://<CID-of-ePub>"
+  "additional_info": {
+    "copyright": "Copyright © 2004 by CreoDAMO Inc. All Rights Reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the publisher, except by a reviewer who may quote brief passages in a review.",
+    "publisher": "Published by CreoDAMO Inc.",
+    "contact": "For information about permission to reproduce selections from this book, write to Permissions, CreoDAMO Inc., jacquedegraff@creodamo.com."
+  }
 }
