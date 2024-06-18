@@ -12,6 +12,7 @@
 - [Creating a Front-end DApp](#creating-a-front-end-dapp)
 - [Developing CryptoQuest in Unity](#developing-cryptoquest-in-unity)
 - [Developing CryptoQuest in Unreal Engine 5](#developing-cryptoquest-in-unreal-engine-5)
+- [Developing CryptoQuest for PS5](#developing-cryptoquest-for-ps5)
 - [FAQs](#faqs)
 - [Conclusion](#conclusion)
 - [Contributing](#contributing)
@@ -115,7 +116,45 @@ For detailed instructions, visit the [CQTSOG Unity Guide](https://github.com/Cre
 
 Refer to the guide in the documentation for creating CryptoQuest with Unreal Engine 5, covering topics like decentralized economy and player governance.
 
-For detailed instructions, visit the [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTS
+For detailed instructions, visit the
+
+ [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-UnrealEngine5).
+
+## Developing CryptoQuest for PS5
+
+If you are looking to develop and deploy CryptoQuest on the PS5, follow the instructions provided in our dedicated PS5 guide.
+
+For detailed instructions, visit the [CQTSOG PS5 Guide](https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG%E2%80%90-PS5).
+
+## FAQs
+
+- **Can I play CryptoQuest on any blockchain?**  
+  Yes, CryptoQuest supports cross-chain interactions to facilitate a broader ecosystem and cross-chain asset transfers.
+
+- **How can I contribute to the project?**  
+  See the [Contributing](#contributing) section for guidelines on how to contribute.
+
+- **Is there a governance system in CryptoQuest?**  
+  Yes, certain zones in the game are governed by player-elected councils that influence game rules, events, and development.
+
+## Conclusion
+
+*CryptoQuest: The Shards of Genesis* is an innovative MMORPG that integrates blockchain technology to offer players true ownership of in-game assets. With dynamic quests, player governance, and a decentralized economy, the game provides a rich and immersive experience.
+
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute to CryptoQuest, please follow these guidelines:
+
+1. Fork the repository and create your branch: `git checkout -b feature/foo`
+2. Commit your changes: `git commit -m 'Add some feature'`
+3. Push to the branch: `git push origin feature/foo`
+4. Open a pull request
+
+Please ensure that your contributions adhere to our [Code of Conduct](link_to_code_of_conduct).
+
+## License
+
+CryptoQuest: The Shards of Genesis is licensed under the [MIT License](link_to_license).
 
 ## Repository Structure
 
@@ -254,3 +293,4 @@ CryptoQuest/
 - **LICENSE**: License file.
 - **Makefile**: Makefile for building and deployment scripts.
 - **README.md**: Project documentation.
+```
