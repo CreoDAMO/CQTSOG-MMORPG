@@ -19,7 +19,8 @@
 - [License](#license)
 - [Repository Structure](#repository-structure)
 
-![CryptoQuest Logo](https://github.com/CreoDAMO/Crypto-Quest/assets/151800081/8be79371-7f2e-4fe5-a8f5-158031748d2b)
+![CQTSOG-Logo](https://github.com/CreoDAMO/CQRSOG-MMORPG/assets/151800081/c3888b15-93e3-41ff-921f-3659b7e08785)
+
 
 ## Introduction
 
@@ -81,8 +82,7 @@ To install and run *CryptoQuest* locally, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your_username/cryptoquest.git
-    cd cryptoquest
+    
     ```
 
 2. **Navigate to the project directory**:
