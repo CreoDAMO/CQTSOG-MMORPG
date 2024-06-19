@@ -82,12 +82,12 @@ To install and run *CryptoQuest* locally, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    
+     git clone  https://github.com/CreoDAMO/CQRSOG-MMORPG.git
     ```
 
 2. **Navigate to the project directory**:
     ```bash
-    cd cryptoquest
+    cd CQRSOG-MMORPG
     ```
 
 3. **Install dependencies**:
