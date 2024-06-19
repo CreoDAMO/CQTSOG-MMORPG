@@ -1,5 +1,3 @@
-# Makefile for CryptoQuest: The Shards of Genesis DApp
-
 # Variables
 APP_NAME = cryptoquesttheshardsofgenesismmorpg-dapp
 NPM = npm
@@ -53,18 +51,22 @@ ipfs-start:
 
 ipfs-add:
 	@echo "Adding file to IPFS..."
+	@if [ -z "$(FILE)" ]; then echo "Error: FILE variable is not set"; exit 1; fi
 	@$(IPFS) add $(FILE)
 
 ipfs-pin:
 	@echo "Pinning file to IPFS..."
+	@if [ -z "$(CID)" ]; then echo "Error: CID variable is not set"; exit 1; fi
 	@$(IPFS) pin add $(CID)
 
 infura-add:
 	@echo "Uploading file to Infura IPFS..."
+	@if [ -z "$(FILE)" ]; then echo "Error: FILE variable is not set"; exit 1; fi
 	@$(CURL) -X POST -F file=@$(FILE) "$(INFURA_API)/add"
 
 infura-pin:
 	@echo "Pinning file on Infura IPFS..."
+	@if [ -z "$(CID)" ]; then echo "Error: CID variable is not set"; exit 1; fi
 	@$(CURL) -X POST "$(INFURA_API)/pin/add?arg=$(CID)"
 
 # Default target
