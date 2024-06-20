@@ -1,5 +1,5 @@
 # Variables
-APP_NAME = cryptoquesttheshardsofgenesismmorpg-dapp
+APP_NAME = cqtsog-mmorpg
 NPM = npm
 NODE_ENV = development
 IPFS = ipfs
