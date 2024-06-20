@@ -1,0 +1,10 @@
+run = "cowsay Configure me!"
+compile = "make"
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "cowsay Configure me!"]
+build = ["sh", "-c", "make"]
