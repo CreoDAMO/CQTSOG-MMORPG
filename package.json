@@ -4,8 +4,9 @@
   "description": "**SEO Meta Description:** Discover CryptoQuest: The Shards of Genesis, a blockchain-based MMORPG developed with Unity and Unreal Engine 5. Learn how to leverage NFTs, smart contracts, and decentralized economies to create an immersive gaming experience.",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -13,14 +14,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@web3-react/coinbase-wallet": "^8.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@web3-react/coinbase-wallet": "^8.2.3",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
-    "@web3-react/walletconnect-v2": "^8.0.0",
+    "@web3-react/walletconnect-v2": "^8.5.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "react-scripts": "^5.0.1"
+    "react-dom": "^18.3.1",
+    "vite": "^5.3.1"
   }
 }
