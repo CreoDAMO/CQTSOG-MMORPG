@@ -97,12 +97,12 @@ To install and run *CryptoQuest* locally, follow these steps:
 
 4. **Run the development server**:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ## Creating a Front-end DApp
 
-Creating a front-end DApp using React to interact with all 21 smart contracts in this project is a crucial step. See the detailed guide in the `dapp/` directory.
+Creating a front-end DApp using Vite and React to interact with all 21 smart contracts in this project is a crucial step. See the detailed guide in the `dapp/` directory.
 
 For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
 
