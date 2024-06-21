@@ -12,6 +12,7 @@
 - [Creating a Front-end DApp](#creating-a-front-end-dapp)
 - [Developing CryptoQuest in Unity](#developing-cryptoquest-in-unity)
 - [Developing CryptoQuest in Unreal Engine 5](#developing-cryptoquest-in-unreal-engine-5)
+- [Developing CryptoQuest for Xbox](#developing-cryptoquest-for-xbox)
 - [Developing CryptoQuest for PS5](#developing-cryptoquest-for-ps5)
 - [FAQs](#faqs)
 - [Conclusion](#conclusion)
@@ -20,7 +21,6 @@
 - [Repository Structure](#repository-structure)
 
 ![CQTSOG-Logo](https://github.com/CreoDAMO/CQRSOG-MMORPG/assets/151800081/c3888b15-93e3-41ff-921f-3659b7e08785)
-
 
 ## Introduction
 
@@ -99,25 +99,17 @@ Creating a front-end DApp using Vite and React to interact with all 21 smart con
 
 For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
 
-## Developing CryptoQuest in Unity
+## Developing CryptoQuest for Xbox
 
-Follow the steps in the documentation to develop CryptoQuest using Unity, including blockchain integration, NFT management, and game mechanics.
+If you are looking to develop and deploy CryptoQuest on Xbox, follow the instructions provided in our dedicated Xbox guide.
 
-For detailed instructions, visit the [CQTSOG Unity Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-Unity).
-
-## Developing CryptoQuest in Unreal Engine 5
-
-Refer to the guide in the documentation for creating CryptoQuest with Unreal Engine 5, covering topics like decentralized economy and player governance.
-
-For detailed instructions, visit the
-
- [CQTSOG Unreal Engine 5 Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/CQTSOG-UnrealEngine5).
+For detailed instructions, visit the [CQTSOG Xbox Guide](https://github.com/CreoDAMO/CQTSOG-MMORPG/wiki/CQTSOG-Xbox).
 
 ## Developing CryptoQuest for PS5
 
 If you are looking to develop and deploy CryptoQuest on the PS5, follow the instructions provided in our dedicated PS5 guide.
 
-For detailed instructions, visit the [CQTSOG PS5 Guide](https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG%E2%80%90-PS5).
+For detailed instructions, visit the [CQTSOG PS5 Guide](https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG%E2%80%90PS5).
 
 ## FAQs
 
@@ -227,67 +219,18 @@ cryptoquest-dapp/
 │               │   │   ├── IERC721Upgradeable.sol
 │               │   │   ├── ERC721Upgradeable.sol
 │               │   │   └── IERC721Upgradeable.sol
-│               │   ├── cryptography/
-│               │   │   └── EIP712Upgradeable.sol
-│               │   ├── introspection/
-│               │   │   ├── ERC165Upgradeable.sol
-│               │   │   └── IERC165Upgradeable.sol
-│               │   ├── AddressUpgradeable.sol
-│               │   ├── ContextUpgradeable.sol
-│               │   ├── CountersUpgradeable.sol
-│               │   ├── NoncesUpgradeable.sol
-│               │   ├── PausableUpgradeable.sol
-│               │   ├── ERC721Upgradeable.sol
-│               │   └── IERC721Upgradeable.sol
-│               ├── contracts-upgradeable@4.9.3/
-│               │   ├── access/
-│               │   │   └── AccessControlUpgradeable.sol
-│               │   │   └── IAccessControlUpgradeable.sol
-│               │   ├── governance/utils/
-│               │   │   └── IVotesUpgradeable.sol
-│               │   │   └── VotesUpgradeable.sol
-│               │   ├── interfaces/
-│               │   │   ├── IERC165Upgradeable.sol
-│               │   │   ├── IERC1967Upgradeable.sol
-│               │   │   ├── IERC4906Upgradeable.sol
-│               │   │   ├── IERC5267Upgradeable.sol
-│               │   │   ├── IERC5805Upgradeable.sol
-│               │   │   ├── IERC6372Upgradeable.sol
-│               │   │   ├── IERC721Upgradeable.sol
-│               │   │   └── draft-IERC1822Upgradeable.sol
-│               │   ├── proxy/
-│               │   │   ├── ERC1967/
-│               │   │   │   └── ERC1967UpgradeUpgradeable.sol
-│               │   │   ├── beacon/
-│               │   │   │   └── IBeaconUpgradeable.sol
-│               │   │   └── utils/
-│               │   │       ├── Initializable.sol
-│               │   │       └── UUPSUpgradeable.sol
-│               │   ├── security/
-│               │   │   └── PausableUpgradeable.sol
-│               │   ├── token/ERC721/
-│               │   │   ├── extensions/
-│               │   │   │   ├── ERC721BurnableUpgradeable.sol
-│               │   │   │   ├── ERC721EnumerableUpgradeable.sol
-│               │   │   │   ├── ERC721PausableUpgradeable.sol
-│               │   │   │   ├── ERC721URIStorageUpgradeable.sol
-│               │   │   │   ├── ERC721VotesUpgradeable.sol
-│               │   │   │   ├── IERC721EnumerableUpgradeable.sol
-│               │   │   │   ├── IERC721MetadataUpgradeable.sol
-│               │   │   ├── ERC721Upgradeable.sol
-│               │   │   ├── IERC721ReceiverUpgradeable.sol
-│               │   │   ├── IERC721Upgradeable.sol
-│               │   │   └── ERC721Upgradeable.sol
-│               │   ├── utils/
-│               │   │   ├── ERC165Upgradeable.sol
-│               │   │   ├── IERC165Upgradeable.sol
-│               │   │   └── AddressUpgradeable.sol
-│               │   ├── ContextUpgradeable.sol
-│               │   ├── CountersUpgradeable.sol
-│               │   ├── NoncesUpgradeable.sol
-│               │   ├── PausableUpgradeable.sol
-│               │   ├── ERC721Upgradeable.sol
-│               │   └── IERC721Upgradeable.sol
+│               ├── cryptography/
+│               │   └── EIP712Upgradeable.sol
+│               ├── introspection/
+│               │   ├── ERC165Upgradeable.sol
+│               │   └── IERC165Upgradeable.sol
+│               ├── AddressUpgradeable.sol
+│               ├── ContextUpgradeable.sol
+│               ├── CountersUpgradeable.sol
+│               ├── NoncesUpgradeable.sol
+│               ├── PausableUpgradeable.sol
+│               ├── ERC721Upgradeable.sol
+│               └── IERC721Upgradeable.sol
 ├── public/
 │   ├── CQTSOG-Logo.png
 │   └── CQTSOG-Logo.svg
@@ -365,38 +308,35 @@ cryptoquest-dapp/
 │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.sol
 │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
 │   │   │   ├── CryptoQueststTheShardsOfGenesisFarming.sol
-│   ├── utils/
-│   │   ├── web3Modal.js
-│   │   └── contract.js
-│   ├── App.css
-│   ├── App.jsx
-│   ├── index.css
-│   ├── main.jsx
-│   ├── .eslintrc.cjs
-│   ├── .gitignore
-│   ├── README.md
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── .gitignore
-│   ├── .replit
-│   ├── LICENSE
-│   ├── Makefile
-│   ├── SECURITY.md
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── replit.nix
-│   ├── tsconfig.json
-│   └── vite.config.js
-
-
+├── utils/
+│   ├── web3Modal.js
+│   └── contract.js
+├── App.css
+├── App.jsx
+├── index.css
+├── main.jsx
+├── .eslintrc.cjs
+├── .gitignore
+├── README.md
+├── index.html
+├── package-lock.json
+├── package.json
+├── vite.config.js
+├── .gitignore
+├── .replit
+├── LICENSE
+├── Makefile
+├── SECURITY.md
+├── package-lock.json
+├── package.json
+├── replit.nix
+├── tsconfig.json
+└── vite.config.js
 ```
-
+---
 ### Directory Descriptions
 
 - **.deps/**: Contains dependencies from npm, particularly OpenZeppelin contracts.
-- **Article/**: Contains files related to articles or publications about CryptoQuest.
 - **src/**: Source code for the front-end application, including components, context, contracts, and utilities.
   - **assets/**: Contains asset files like images.
   - **components/**: Contains React components.
@@ -404,10 +344,6 @@ cryptoquest-dapp/
   - **contracts/**: Contains contract ABIs and addresses.
   - **smartcontracts/**: Contains smart contract source files, artifacts, and build information.
   - **utils/**: Contains utility files like `web3Modal.js`.
-- **smartcontracts/**: Contains smart contracts and their artifacts, including compiled JSON files and metadata.
-  - **artifacts/**: Contains build-info and compiled contract artifacts.
-  - **build-info/**: Contains JSON files with build information.
-  - **metadata/**: Metadata JSON files related to the project.
 - **public/**: Contains publicly accessible files like the logo.
 - **LICENSE**: License file.
 - **Makefile**: Makefile for building and deployment scripts.
