@@ -80,25 +80,18 @@ Explore the various contracts that power *CryptoQuest*:
 
 To install and run *CryptoQuest* locally, follow these steps:
 
-1. **Clone the repository**:
-    ```bash
-     git clone  https://github.com/CreoDAMO/CQRSOG-MMORPG.git
-    ```
+```bash
+npx create-react-app cryptoquest-dapp
+cd cryptoquest-dapp
+```
 
-2. **Navigate to the project directory**:
-    ```bash
-    cd CQRSOG-MMORPG
-    ```
+### **Install Dependencies**
 
-3. **Install dependencies**:
-    ```bash
-    npm install
-    ```
+Install the necessary packages to interact with the Ethereum blockchain:
 
-4. **Run the development server**:
-    ```bash
-    npm run dev
-    ```
+```bash
+npm install ethers web3modal @web3-react/core @web3-react/injected-connector
+```
 
 ## Creating a Front-end DApp
 
