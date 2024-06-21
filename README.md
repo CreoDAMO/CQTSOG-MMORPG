@@ -154,124 +154,242 @@ CryptoQuest: The Shards of Genesis is licensed under the [MIT License](link_to_l
 The repository for **CryptoQuest: The Shards of Genesis** is organized to provide clear separation of concerns, facilitating development and management of different aspects of the project. Below is the updated directory structure with a description of each directory and file:
 
 ```markdown
-CryptoQuest/
-│
-├── .deps/npm/@openzeppelin/                    # OpenZeppelin dependencies
-│   └── contracts-upgradeable/
-│       ├── access/
-│       │   ├── AccessControlUpgradeable.sol
-│       │   └── OwnableUpgradeable.sol
-│       ├── governance/
-│       │   └── TimelockControllerUpgradeable.sol
-│       ├── proxy/
-│       │   └── utils/
-│       │       ├── Initializable.sol
-│       │       └── UUPSUpgradeable.sol
-│       ├── security/
-│       │   └── PausableUpgradeable.sol
-│       ├── token/
-│       │   ├── ERC1155/
-│       │   │   └── extensions/
-│       │   │       ├── ERC1155BurnableUpgradeable.sol
-│       │   │       ├── ERC1155PausableUpgradeable.sol
-│       │   │       └── ERC1155SupplyUpgradeable.sol
-│       │   ├── ERC20/
-│       │   │   └── extensions/
-│       │   │       ├── ERC20BurnableUpgradeable.sol
-│       │   │       └── ERC20PausableUpgradeable.sol
-│       │   └── ERC721/
-│       │       └── extensions/
-│       │           ├── ERC721BurnableUpgradeable.sol
-│       │           ├── ERC721EnumerableUpgradeable.sol
-│       │           ├── ERC721PausableUpgradeable.sol
-│       │           └── ERC721URIStorageUpgradeable.sol
-│       └── utils/
-│           ├── AddressUpgradeable.sol
-│           ├── ContextUpgradeable.sol
-│           ├── CountersUpgradeable.sol
-│           ├── PausableUpgradeable.sol
-│           └── cryptography/
-│               ├── EIP712Upgradeable.sol
-│               └── introspection/
-│                   ├── ERC165Upgradeable.sol
-│                   └── IERC165Upgradeable.sol
-│
-├── Article/                                    # Article-related files
-│   └── ReadMe.md
-│
-├── src/                                        # Source code for the front-end application
-│   ├── apps/
-│   │   └── App.js
+cryptoquest-dapp/
+├── .deps/
+│   └── npm/
+│       └── @openzeppelin/
+│           └── contracts-upgradeable/
+│               ├── access/
+│               │   ├── AccessControlUpgradeable.sol
+│               │   └── OwnableUpgradeable.sol
+│               ├── governance/
+│               │   └── utils/
+│               │       ├── IVotesUpgradeable.sol
+│               │       └── VotesUpgradeable.sol
+│               ├── artifacts/
+│               │   ├── build-info/
+│               │   │   ├── aab2307ecd5276504e169b3aca6086d1.json
+│               │   │   ├── TimelockControllerUpgradeable.json
+│               │   │   └── TimelockControllerUpgradeable_metadata.json
+│               │   └── extensions/
+│               │       ├── GovernorCountingSimpleUpgradeable.sol
+│               │       ├── GovernorSettingsUpgradeable.sol
+│               │       ├── GovernorStorageUpgradeable.sol
+│               │       ├── GovernorTimelockControlUpgradeable.sol
+│               │       ├── GovernorVotesQuorumFractionUpgradeable.sol
+│               │       └── GovernorVotesUpgradeable.sol
+│               ├── proxy/
+│               │   ├── ERC1967/
+│               │   │   └── ERC1967UpgradeUpgradeable.sol
+│               │   ├── beacon/
+│               │   │   └── IBeaconUpgradeable.sol
+│               │   └── utils/
+│               │       ├── Initializable.sol
+│               │       └── UUPSUpgradeable.sol
+│               ├── security/
+│               │   └── PausableUpgradeable.sol
+│               ├── token/
+│               │   ├── ERC1155/
+│               │   │   ├── extensions/
+│               │   │   │   ├── ERC1155BurnableUpgradeable.sol
+│               │   │   │   ├── ERC1155PausableUpgradeable.sol
+│               │   │   │   └── ERC1155SupplyUpgradeable.sol
+│               │   │   ├── utils/
+│               │   │   │   ├── ERC1155HolderUpgradeable.sol
+│               │   │   │   └── ERC1155Upgradeable.sol
+│               │   │   ├── IERC1155Upgradeable.sol
+│               │   │   └── IERC1155Upgradeable.sol
+│               │   ├── ERC20/
+│               │   │   ├── extensions/
+│               │   │   │   ├── ERC20BurnableUpgradeable.sol
+│               │   │   │   ├── ERC20FlashMintUpgradeable.sol
+│               │   │   │   ├── ERC20PausableUpgradeable.sol
+│               │   │   │   ├── ERC20PermitUpgradeable.sol
+│               │   │   │   ├── ERC20VotesUpgradeable.sol
+│               │   │   │   └── ERC20Upgradeable.sol
+│               │   │   ├── IERC20Upgradeable.sol
+│               │   │   ├── ERC20Upgradeable.sol
+│               │   │   └── IERC20Upgradeable.sol
+│               │   ├── ERC721/
+│               │   │   ├── extensions/
+│               │   │   │   ├── ERC721BurnableUpgradeable.sol
+│               │   │   │   ├── ERC721EnumerableUpgradeable.sol
+│               │   │   │   ├── ERC721PausableUpgradeable.sol
+│               │   │   │   ├── ERC721URIStorageUpgradeable.sol
+│               │   │   │   ├── IERC721EnumerableUpgradeable.sol
+│               │   │   ├── utils/
+│               │   │   │   ├── ERC721HolderUpgradeable.sol
+│               │   │   │   ├── ERC721Upgradeable.sol
+│               │   │   │   ├── IERC721Upgradeable.sol
+│               │   │   │   └── IERC721Upgradeable.sol
+│               │   │   ├── IERC721ReceiverUpgradeable.sol
+│               │   │   ├── ERC721Upgradeable.sol
+│               │   │   ├── IERC721Upgradeable.sol
+│               │   │   ├── ERC721Upgradeable.sol
+│               │   │   └── IERC721Upgradeable.sol
+│               │   ├── cryptography/
+│               │   │   └── EIP712Upgradeable.sol
+│               │   ├── introspection/
+│               │   │   ├── ERC165Upgradeable.sol
+│               │   │   └── IERC165Upgradeable.sol
+│               │   ├── AddressUpgradeable.sol
+│               │   ├── ContextUpgradeable.sol
+│               │   ├── CountersUpgradeable.sol
+│               │   ├── NoncesUpgradeable.sol
+│               │   ├── PausableUpgradeable.sol
+│               │   ├── ERC721Upgradeable.sol
+│               │   └── IERC721Upgradeable.sol
+│               ├── contracts-upgradeable@4.9.3/
+│               │   ├── access/
+│               │   │   └── AccessControlUpgradeable.sol
+│               │   │   └── IAccessControlUpgradeable.sol
+│               │   ├── governance/utils/
+│               │   │   └── IVotesUpgradeable.sol
+│               │   │   └── VotesUpgradeable.sol
+│               │   ├── interfaces/
+│               │   │   ├── IERC165Upgradeable.sol
+│               │   │   ├── IERC1967Upgradeable.sol
+│               │   │   ├── IERC4906Upgradeable.sol
+│               │   │   ├── IERC5267Upgradeable.sol
+│               │   │   ├── IERC5805Upgradeable.sol
+│               │   │   ├── IERC6372Upgradeable.sol
+│               │   │   ├── IERC721Upgradeable.sol
+│               │   │   └── draft-IERC1822Upgradeable.sol
+│               │   ├── proxy/
+│               │   │   ├── ERC1967/
+│               │   │   │   └── ERC1967UpgradeUpgradeable.sol
+│               │   │   ├── beacon/
+│               │   │   │   └── IBeaconUpgradeable.sol
+│               │   │   └── utils/
+│               │   │       ├── Initializable.sol
+│               │   │       └── UUPSUpgradeable.sol
+│               │   ├── security/
+│               │   │   └── PausableUpgradeable.sol
+│               │   ├── token/ERC721/
+│               │   │   ├── extensions/
+│               │   │   │   ├── ERC721BurnableUpgradeable.sol
+│               │   │   │   ├── ERC721EnumerableUpgradeable.sol
+│               │   │   │   ├── ERC721PausableUpgradeable.sol
+│               │   │   │   ├── ERC721URIStorageUpgradeable.sol
+│               │   │   │   ├── ERC721VotesUpgradeable.sol
+│               │   │   │   ├── IERC721EnumerableUpgradeable.sol
+│               │   │   │   ├── IERC721MetadataUpgradeable.sol
+│               │   │   ├── ERC721Upgradeable.sol
+│               │   │   ├── IERC721ReceiverUpgradeable.sol
+│               │   │   ├── IERC721Upgradeable.sol
+│               │   │   └── ERC721Upgradeable.sol
+│               │   ├── utils/
+│               │   │   ├── ERC165Upgradeable.sol
+│               │   │   ├── IERC165Upgradeable.sol
+│               │   │   └── AddressUpgradeable.sol
+│               │   ├── ContextUpgradeable.sol
+│               │   ├── CountersUpgradeable.sol
+│               │   ├── NoncesUpgradeable.sol
+│               │   ├── PausableUpgradeable.sol
+│               │   ├── ERC721Upgradeable.sol
+│               │   └── IERC721Upgradeable.sol
+├── public/
+│   ├── CQTSOG-Logo.png
+│   └── CQTSOG-Logo.svg
+├── src/
+│   ├── assets/
+│   │   ├── CQTSOG- Logo for 'CQT CryptoQuest The Shards Of Genesis Token' by combining elements from the provided images. The logo should feature a striking geo.png
+│   │   └── CQTSOG-Logo-for-_CQT-CryptoQuest-The-Shards-Of-Genesis-Token_-by-combining-elements-from-the-provide.svg
 │   ├── components/
 │   │   └── Game.js
 │   ├── context/
 │   │   └── Web3Context.js
 │   ├── contracts/
 │   │   └── index.js
-│   └── utils/
-│       └── web3Modal.js
-│
-├── smartcontracts/                             # Smart contracts and their artifacts
-│   ├── artifacts/
-│   │   ├── build-info/
-│   │   │   └── ... (various JSON files)
-│   │   ├── CryptoQuestShardsOfGenesisFarming.json
-│   │   ├── CryptoQuestShardsOfGenesisFarming_metadata.json
-│   │   ├── CryptoQuestSwap.json
-│   │   ├── CryptoQuestSwap_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesis1155.json
-│   │   ├── CryptoQuestTheShardsOfGenesis1155_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
-│   │   ├── CryptoQuestTheShardsOfGenesisBookNFT_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
-│   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
-│   │   ├── CryptoQuestTheShardsOfGenesisERC721_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
-│   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.json
-│   │   ├── CryptoQuestTheShardsOfGenesisMarketplace_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisStaking.json
-│   │   ├── CryptoQuestTheShardsOfGenesisStaking_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisToken.json
-│   │   ├── CryptoQuestTheShardsOfGenesisToken_metadata.json
-│   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
-│   │   ├── CryptoQuestTheShardsOfGenesisWallet_metadata.json
-│   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
-│   │   ├── CryptoQuest_TheShardsOfGenesisDAO_metadata.json
-│   │   ├── IDAO.json
-│   │   ├── IDAO_metadata.json
-│   │   ├── IERC1155.json
-│   │   ├── IERC1155_metadata.json
-│   │   ├── IERC20.json
-│   │   ├── IERC20_metadata.json
-│   │   ├── IERC721.json
-│   │   ├── IERC721_metadata.json
-│   │   ├── IFarming.json
-│   │   ├── IFarming_metadata.json
-│   │   └── IStaking.json
-│   │       └── IStaking_metadata.json
-│   ├── CryptoQuestSwap.sol
-│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
-│   ├── CryptoQuestTheShardsOfGenesisDAO.sol
-│   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
-│   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
-│   ├── CryptoQuestTheShardsOfGenesisNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisStaking.sol
-│   ├── CryptoQuestTheShardsOfGenesisToken.sol
-│   ├── CryptoQuestTheShardsOfGenesisWallet.sol
-│   └── CryptoQueststTheShardsOfGenesisFarming.sol
-│
-├── utils/                                      # Utility scripts and contracts
-│   ├── content loaded/
-│   ├── contracts.js
-│
-├── LICENSE                                     # License file
-├── Makefile                                    # Makefile for building and deployment scripts
-├── README.md                                   # Project documentation
-└── metadata/                                   # Metadata JSON files related to the project
-    └── CryptoQuest_Metadata.json
+│   ├── smartcontracts/
+│   │   ├── artifacts/
+│   │   │   ├── build-info/
+│   │   │   │   ├── 023fe5e39d2e80373429af963b312257.json
+│   │   │   │   ├── 19f947929ee77678aaa883e948224616.json
+│   │   │   │   ├── 349b6770f47943c06b3a5a6943368476.json
+│   │   │   │   ├── 41b4a0e1f5ff43c5351fa3d2871a23e9.json
+│   │   │   │   ├── 49e2b8d02672f67f13e34b6ae1933099.json
+│   │   │   │   ├── 55c00c2af517a1023df52e66779b759b.json
+│   │   │   │   ├── 658dab6b779d8b5d441eb69bf41c5cd0.json
+│   │   │   │   ├── 71ab3ccb633467b67d033387ef7a2cc4.json
+│   │   │   │   ├── 972bdc9997eef260b73b477698da35e4.json
+│   │   │   │   ├── d0b24742fa78ca2d3f97920f0d48c859.json
+│   │   │   │   ├── db4643b0199824c5db052bec35f85877.json
+│   │   │   ├── CryptoQuestShardsOfGenesisFarming.json
+│   │   │   ├── CryptoQuestShardsOfGenesisFarming_metadata.json
+│   │   │   ├── CryptoQuestSwap.json
+│   │   │   ├── CryptoQuestSwap_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesis1155.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesis1155_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisBookPublishing_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisERC721_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisStaking_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisToken_metadata.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
+│   │   │   ├── CryptoQuestTheShardsOfGenesisWallet_metadata.json
+│   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
+│   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO_metadata.json
+│   │   │   ├── IDAO.json
+│   │   │   ├── IDAO_metadata.json
+│   │   │   ├── IERC1155.json
+│   │   │   ├── IERC1155_metadata.json
+│   │   │   ├── IERC20.json
+│   │   │   ├── IERC20_metadata.json
+│   │   │   ├── IERC721.json
+│   │   │   ├── IERC721_metadata.json
+│   │   │   ├── IFarming.json
+│   │   │   ├── IFarming_metadata.json
+│   │   │   ├── IStaking.json
+│   │   │   ├── IStaking_metadata.json
+│   │   │   ├── CryptoQuestSwap.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisDAO.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisNFT.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisToken.sol
+│   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
+│   │   │   ├── CryptoQueststTheShardsOfGenesisFarming.sol
+│   ├── utils/
+│   │   ├── web3Modal.js
+│   │   └── contract.js
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   ├── .eslintrc.cjs
+│   ├── .gitignore
+│   ├── README.md
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── .gitignore
+│   ├── .replit
+│   ├── LICENSE
+│   ├── Makefile
+│   ├── SECURITY.md
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── replit.nix
+│   ├── tsconfig.json
+│   └── vite.config.js
+
 
 ```
 
@@ -280,10 +398,21 @@ CryptoQuest/
 - **.deps/**: Contains dependencies from npm, particularly OpenZeppelin contracts.
 - **Article/**: Contains files related to articles or publications about CryptoQuest.
 - **src/**: Source code for the front-end application, including components, context, contracts, and utilities.
+  - **assets/**: Contains asset files like images.
+  - **components/**: Contains React components.
+  - **context/**: Contains context providers like `Web3Context.js`.
+  - **contracts/**: Contains contract ABIs and addresses.
+  - **smartcontracts/**: Contains smart contract source files, artifacts, and build information.
+  - **utils/**: Contains utility files like `web3Modal.js`.
 - **smartcontracts/**: Contains smart contracts and their artifacts, including compiled JSON files and metadata.
-- **utils/**: Utility scripts and contracts.
-- **metadata/**: Metadata JSON files related to the project.
+  - **artifacts/**: Contains build-info and compiled contract artifacts.
+  - **build-info/**: Contains JSON files with build information.
+  - **metadata/**: Metadata JSON files related to the project.
+- **public/**: Contains publicly accessible files like the logo.
 - **LICENSE**: License file.
 - **Makefile**: Makefile for building and deployment scripts.
 - **README.md**: Project documentation.
-```
+- **package.json**: npm configuration file.
+- **.gitignore**: Git ignore file to exclude unnecessary files from version control.
+- **tsconfig.json**: TypeScript configuration file.
+- **vite.config.js**: Vite configuration file.
