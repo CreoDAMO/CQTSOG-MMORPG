@@ -97,7 +97,7 @@ npm install ethers web3modal @web3-react/core @web3-react/injected-connector
 
 Creating a front-end DApp using Vite and React to interact with all 21 smart contracts in this project is a crucial step. See the detailed guide in the `dapp/` directory.
 
-For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CryptoQuestTheShardsOfGenesisMMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
+For more detailed instructions, visit the [Creating a Front-end DApp using React Guide](https://github.com/CreoDAMO/CQTSOG-MMORPG/wiki/Creating-a-front%E2%80%90end-DApp-using-React).
 
 ## Developing CryptoQuest for Xbox
 
@@ -352,3 +352,12 @@ cryptoquest-dapp/
 - **.gitignore**: Git ignore file to exclude unnecessary files from version control.
 - **tsconfig.json**: TypeScript configuration file.
 - **vite.config.js**: Vite configuration file.
+---
+
+## CryptoQuest Guide
+
+For more detailed assistance and real-time support with *CryptoQuest: The Shards of Genesis*, you can refer to our comprehensive guide. Whether you need help with gameplay, technical issues, or understanding blockchain integration, our guide is here to assist you.
+
+[Access the CryptoQuest Guide](https://chatgpt.com/g/g-okli7Xlbi-cryptoquest-guide)
+
+If you need more help, just ask our guide.
