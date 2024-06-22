@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@metamask/sdk-react": "^0.14.1",
+    "@metamask/sdk-react": "^0.26.1",
     "@vitejs/plugin-react": "^4.3.1",
     "@web3-react/coinbase-wallet": "^8.2.3",
     "@web3-react/core": "^6.1.9",
