@@ -1,15 +1,16 @@
-// src/components/Home.jsx
 import React from 'react';
+import gameImageUrl from '../assets/CQTSOG-Logo.png';
+import bookImageUrl from '../assets/CQTSOG-Logo-for-Token.png';
 
 const Home = () => (
   <header className="bg-dark text-light py-5">
     <div className="container text-center">
       <div className="row">
         <div className="col-md-6">
-          <img src="/assets/CQTSOG-Logo.png" className="img-fluid animated" alt="Game Image" />
+          <img src={gameImageUrl} className="img-fluid animated" alt="Game Image" />
         </div>
         <div className="col-md-6">
-          <img src="/assets/CQTSOG-Logo-for-'CQT-CryptoQuest-The-Shards-Of-Genesis-Token'-by-combining-elements-from-the-provided-images.-The-logo-should-feature-a-striking-geo.png" className="img-fluid animated" alt="Book Image" />
+          <img src={bookImageUrl} className="img-fluid animated" alt="Book Image" />
         </div>
       </div>
       <h1 className="display-4 animated">CryptoQuest: The Shards of Genesis</h1>

@@ -1,22 +1,24 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import Header from './components/Header';
 import Features from './components/Features';
 import Home from './components/Home';
-import Game from './components/Game';
+import Game from './components/Game'; // assuming you have a Game component
 
 function App() {
   const { t } = useTranslation();
   return (
     <div>
       <Header />
-      <Home />
       <main>
-        <h1>{t('Welcome')}</h1>
-        <Features />
-        <Game />
-        {/* Add other components as needed */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/game" element={<Game />} />
+          {/* Add other routes as needed */}
+        </Routes>
       </main>
     </div>
   );

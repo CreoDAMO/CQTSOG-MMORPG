@@ -1,74 +1,73 @@
 import React from 'react';
-
-const logoUrl = 'https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem';
+import { Link } from 'react-router-dom';
+import logoUrl from '../assets/CQTSOG-Logo.png';
 
 const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <img src={logoUrl} alt="CryptoQuest Logo" style={{ height: '40px', marginRight: '10px' }} />
           CryptoQuest
-        </a>
+        </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
-            {/* Navigation links */}
             <li className="nav-item">
-              <a className="nav-link" href="#features">Features</a>
+              <Link className="nav-link" to="/features">Features</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#game-overview">Game Overview</a>
+              <Link className="nav-link" to="/game-overview">Game Overview</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#ps5-development">PS5 Development</a>
+              <Link className="nav-link" to="/ps5-development">PS5 Development</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#xbox-development">Xbox Development</a>
+              <Link className="nav-link" to="/xbox-development">Xbox Development</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#unity">Unity</a>
+              <Link className="nav-link" to="/unity">Unity</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#unreal-engine-5">Unreal Engine 5</a>
+              <Link className="nav-link" to="/unreal-engine-5">Unreal Engine 5</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#cqt-token">CQT Token</a>
+              <Link className="nav-link" to="/cqt-token">CQT Token</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#buy-token">Buy Token</a>
+              <Link className="nav-link" to="/buy-token">Buy Token</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#airdrop">Airdrop</a>
+              <Link className="nav-link" to="/airdrop">Airdrop</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#join-development">Join Development</a>
+              <Link className="nav-link" to="/join-development">Join Development</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#investor-perks">Investor Perks</a>
+              <Link className="nav-link" to="/investor-perks">Investor Perks</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#community-forum">Community Forum</a>
+              <Link className="nav-link" to="/community-forum">Community Forum</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#book-nft">Book NFT</a>
+              <Link className="nav-link" to="/book-nft">Book NFT</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#connect">Connect</a>
+              <Link className="nav-link" to="/connect">Connect</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#newsletter">Newsletter</a>
+              <Link className="nav-link" to="/newsletter">Newsletter</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#white-paper">White Paper</a>
+              <Link className="nav-link" to="/white-paper">White Paper</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#merchandise">Merchandise</a>
+              <Link className="nav-link" to="/merchandise">Merchandise</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#chatbot">Chatbot</a>
+              <Link className="nav-link" to="/chatbot">Chatbot</Link>
             </li>
             <li className="nav-item">
               <button className="btn btn-primary" id="connect-wallet">Connect Wallet</button>
