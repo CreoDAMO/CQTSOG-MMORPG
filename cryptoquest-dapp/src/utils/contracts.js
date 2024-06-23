@@ -1,24 +1,10 @@
-import { ethers } from 'ethers';
-import {
-    CryptoQuestTheShardsOfGenesisMMPORPG_ABI,
-    CryptoQuestTheShardsOfGenesisToken_ABI,
-    // Import other ABIs
-    CryptoQuestTheShardsOfGenesisMMPORPG_ADDRESS,
-    CryptoQuestTheShardsOfGenesisToken_ADDRESS,
-    // Import other addresses
-} from '../contracts';
+import contractFiles from '../smartcontracts/artifacts/*/*.json'
 
-export const getContract = (abi, address, library) => {
-    const signer = library.getSigner();
-    return new ethers.Contract(address, abi, signer);
-};
+const contracts = {}
 
-export const getCryptoQuestTheShardsOfGenesisMMPORPGContract = (library) => {
-    return getContract(CryptoQuestTheShardsOfGenesisMMPORPG_ABI, CryptoQuestTheShardsOfGenesisMMPORPG_ADDRESS, library);
-};
+contractFiles.keys().forEach(file => {
+  const contract = file.replace(/^.*[\\\/]/, '').replace('.json', '')
+  contracts[contract] = contractFiles(file).abi
+})
 
-export const getCryptoQuestTheShardsOfGenesisTokenContract = (library) => {
-    return getContract(CryptoQuestTheShardsOfGenesisToken_ABI, CryptoQuestTheShardsOfGenesisToken_ADDRESS, library);
-};
-
-// Create similar functions for other contracts
+export default contracts
