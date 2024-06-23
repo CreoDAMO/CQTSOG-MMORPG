@@ -50,9 +50,7 @@ Explore the various contracts that power *CryptoQuest*:
 | **Contract Name**                                | **Address**                                | **Network** | **Tags**  | **Visibility** | **Verification** |
 |--------------------------------------------------|--------------------------------------------|-------------|-----------|----------------|------------------|
 | CryptoQuestTheShardsOfGenesisToken               | 0xb30837f54924b88294f524d3e13667396d3f3c8a | Polygon     | Visible   | Public         | Verified         |
-| ERC1967Proxy (CQT)                               | 0xc36fc9872Bd271BD80365517958e6F48D3b4FA91 | Polygon     | Visible   | Public         | Verified         |
-| CQTTokenSaleContract                             | 0x126D0A70E6413EC44D977C41024A76d84CEDB4A4 | Polygon     | Visible   | Public         | Verified         |
-| ERC1967Proxy                                     | 0xc36fc9872Bd271BD80365517958e6F48D3b4FA91 | Polygon     | Visible   | Public         | Verified         |
+| ERC1967Proxy (CQT)                               | 0xb30837f54924b88294f524d3e13667396d3f3c8a | Polygon     | Visible   | Public         | Verified         |
 | CryptoQuestTheShardsOfGenesisNFT                 | 0xc641573148e62d88a2374ffe97391f849cea8ff5 | Polygon     | Visible   | Public         | Verified         |
 | ERC1967Proxy                                     | 0xc641573148e62d88a2374ffe97391f849cea8ff5 | Polygon     | Visible   | Public         | Verified         |
 | CryptoQuestTheShardsOfGenesisCollectionNFT       | 0x5ce6de14eaa1906163c5de4e57302fee8f5d2812 | Polygon     | Visible   | Public         | Verified         |
@@ -73,8 +71,9 @@ Explore the various contracts that power *CryptoQuest*:
 | CryptoQuestSwap                                  | 0x7132367941b5f058dc68cee2dbcd356fbaa7d5b4 | Polygon     | Visible   | Public         | Verified         |
 | ERC1967Proxy                                     | 0x7132367941b5f058dc68cee2dbcd356fbaa7d5b4 | Polygon     | Visible   | Public         | Verified         |
 | CryptoQuestTheShardsOfGenesisBookNFT             | 0x545Ace061A1b64B14641B50CfE317017b01A667b | Polygon     | Visible   | Public         | Verified         |
-| ERC1967
-
+| ERC1967Proxy                                     | 0x6b07aD60b1d448D0e1cE9dCB24A85B3ab18b9b1E | Polygon     | Visible   | Public         | Verified         |
+| CQTTokenSaleContract                             | 0x126D0A70E6413EC44D977C41024A76d84CEDB4A4 | Polygon     | Visible   | Public         | Verified         |
+| ERC1967Proxy                                     | 0xc36fc9872Bd271BD80365517958e6F48D3b4FA91 | Polygon     | Visible   | Public         | Verified         |
 ## Installation
 
 To install and run *CryptoQuest* locally, follow these steps:
