@@ -1,7 +1,0 @@
-version: 2
-updates:
-  - package-ecosystem: "npm" # Specifying npm as the package manager
-    directory: "/" # Location of package manifests (package.json is at the root)
-    schedule:
-      interval: "weekly" # Check for updates every week
-
