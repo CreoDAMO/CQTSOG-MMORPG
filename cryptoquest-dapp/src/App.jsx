@@ -1,35 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // Image URLs
+  const image1Url = 'https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem';  
+  const image2Url = 'https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy';
+  const image3Url = 'https://cf-ipfs.com/ipfs/bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa';
+
+  // Current image state
+  const [currentImage, setCurrentImage] = useState(1);
 
   return (
+    <div>
+
+      {/* Image component */}
+      <Image 
+        url={getUrl()}
+      />
+
+      {/* Navigation */}
+      <Navigation />
+
+      {/* Footer */}
+      <Footer />
+
+    </div>
+  );
+
+  // Conditionally return image URL
+  function getUrl() {
+    if(currentImage === 1) return image1Url;
+    if(currentImage === 2) return image2Url;
+    return image3Url;
+  }
+
+}
+
+// Image component
+function Image({url}) {
+  return <img src={url} />
+}
+
+// Navigation buttons  
+function Navigation() {
+  return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Button 
+        handleClick={() => setCurrentImage(1)}  
+      >
+        Image 1  
+      </Button>
+
+      <Button
+        handleClick={() => setCurrentImage(2)} 
+      >
+        Image 2  
+      </Button>
+
+      <Button 
+        handleClick={() => setCurrentImage(3)}
+      >
+        Image 3
+      </Button>
     </>
+  );
+}
+
+// Reusable button
+function Button({children, handleClick}) {
+  return (
+    <button onClick={handleClick}>
+      {children}
+    </button>
   )
 }
 
-export default App
+// Footer content
+function Footer() {
+  return (
+    <p>Copyright 2023</p>
+  );
+}
+
+export default App;
