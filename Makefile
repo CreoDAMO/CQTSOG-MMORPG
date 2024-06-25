@@ -1,87 +1,60 @@
-# Makefile for CryptoQuest: The Shards of Genesis DApp
+# Define variables for paths and compiler options
+UNREAL_PROJECT_PATH := /path/to/your/unreal/project
+UNREAL_BUILD_TOOL := $(UNREAL_PROJECT_PATH)/Engine/Build/BatchFiles/RunUAT.sh
+UNREAL_BUILD_CONFIG := Development
+UNREAL_BUILD_PLATFORM := Win64
 
-# Variables
-APP_NAME = cryptoquesttheshardsofgenesismmorpg-dapp
-NPM = npm
-NODE_ENV = development
-IPFS = ipfs
-CURL = curl
-INFURA_API = https://ipfs.infura.io:5001/api/v0
+CXX := g++
+CXXFLAGS := -std=c++17 -O2
+LDFLAGS := -lweb3cpp -lQt5Widgets
 
-# Commands
-install:
-	@echo "Installing dependencies..."
-	@$(NPM) install
+SRC_DIR := src
+INC_DIR := include
+BUILD_DIR := build
+DOCKERFILE := Dockerfile
 
-start:
-	@echo "Starting the development server..."
-	@$(NPM) start
+# Define target names
+UNREAL_BUILD_TARGET := YourUnrealProject
+CPP_BUILD_TARGET := YourAppName
+DOCKER_BUILD_TARGET := cryptoquest-app
 
-build:
-	@echo "Building the project..."
-	@$(NPM) run build
-
-test:
-	@echo "Running tests..."
-	@$(NPM) test
-
-lint:
-	@echo "Linting the code..."
-	@$(NPM) run lint
-
-format:
-	@echo "Formatting the code..."
-	@$(NPM) run format
-
-clean:
-	@echo "Cleaning the project..."
-	@rm -rf node_modules
-	@rm -rf build
-
-setup:
-	@echo "Setting up the development environment..."
-	@$(NPM) install
-
-# IPFS-related commands
-ipfs-init:
-	@echo "Initializing IPFS..."
-	@$(IPFS) init
-
-ipfs-start:
-	@echo "Starting IPFS daemon..."
-	@$(IPFS) daemon
-
-ipfs-add:
-	@echo "Adding file to IPFS..."
-	@$(IPFS) add $(FILE)
-
-ipfs-pin:
-	@echo "Pinning file to IPFS..."
-	@$(IPFS) pin add $(CID)
-
-infura-add:
-	@echo "Uploading file to Infura IPFS..."
-	@$(CURL) -X POST -F file=@$(FILE) "$(INFURA_API)/add"
-
-infura-pin:
-	@echo "Pinning file on Infura IPFS..."
-	@$(CURL) -X POST "$(INFURA_API)/pin/add?arg=$(CID)"
+# Define source files
+CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
+CPP_OBJECTS := $(CPP_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 # Default target
-.PHONY: install start build test lint format clean setup ipfs-init ipfs-start ipfs-add ipfs-pin infura-add infura-pin
+all: build_unreal build_cpp docker_build
 
-# Instructions
-# Use `make install` to install dependencies
-# Use `make start` to start the development server
-# Use `make build` to build the project
-# Use `make test` to run tests
-# Use `make lint` to lint the code
-# Use `make format` to format the code
-# Use `make clean` to clean the project
-# Use `make setup` to set up the development environment
-# Use `make ipfs-init` to initialize IPFS
-# Use `make ipfs-start` to start the IPFS daemon
-# Use `make ipfs-add FILE=<file-path>` to add a file to IPFS
-# Use `make ipfs-pin CID=<cid>` to pin a file on IPFS
-# Use `make infura-add FILE=<file-path>` to upload a file to Infura IPFS
-# Use `make infura-pin CID=<cid>` to pin a file on Infura IPFS
+# Build Unreal Engine project
+build_unreal:
+	@echo "Building Unreal Engine project..."
+	$(UNREAL_BUILD_TOOL) BuildCookRun -project=$(UNREAL_PROJECT_PATH)/$(UNREAL_BUILD_TARGET).uproject -noP4 -platform=$(UNREAL_BUILD_PLATFORM) -clientconfig=$(UNREAL_BUILD_CONFIG) -serverconfig=$(UNREAL_BUILD_CONFIG) -cook -allmaps -build -stage -pak -archive -archivedirectory=$(UNREAL_PROJECT_PATH)/Build
+
+# Build C++ front-end
+build_cpp: $(CPP_OBJECTS)
+	@echo "Building C++ front-end..."
+	$(CXX) $(CPP_OBJECTS) $(LDFLAGS) -o $(BUILD_DIR)/$(CPP_BUILD_TARGET)
+
+# Compile C++ source files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.h
+	@mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
+
+# Docker build
+docker_build:
+	@echo "Building Docker container..."
+	docker build -t $(DOCKER_BUILD_TARGET) -f $(DOCKERFILE) .
+
+# Clean build files
+clean:
+	@echo "Cleaning build files..."
+	rm -rf $(BUILD_DIR)
+	rm -rf $(UNREAL_PROJECT_PATH)/Build
+	docker rmi $(DOCKER_BUILD_TARGET)
+
+# Run Docker container
+docker_run:
+	@echo "Running Docker container..."
+	docker run -it --rm $(DOCKER_BUILD_TARGET)
+
+.PHONY: all build_unreal build_cpp docker_build clean docker_run
