@@ -15,8 +15,8 @@ DOCKERFILE := Dockerfile
 
 # Define target names
 UNREAL_BUILD_TARGET := YourUnrealProject
-CPP_BUILD_TARGET := YourAppName
-DOCKER_BUILD_TARGET := cryptoquest-app
+CPP_BUILD_TARGET := CryptoQuestMMORPG-Dapp
+DOCKER_BUILD_TARGET := cryptoquestmmorpg-dapp
 
 # Define source files
 CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
