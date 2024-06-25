@@ -65,12 +65,12 @@ To install and run CryptoQuest locally, follow these steps:
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/your_username/cryptoquest.git
-    cd cryptoquest
+    cd cryptoquestmmorpg-dapp
     ```
 
 2. **Navigate to the project directory**:
     ```bash
-    cd cryptoquest
+    cd cryptoquestmmorpg-dapp
     ```
 
 3. **Install dependencies**:
