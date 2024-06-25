@@ -1,3 +1,6 @@
+![CQTSOG-Logo](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/23d874f2-d5a2-4c34-ae37-44df67c66e9e)
+
+
 # CryptoQuest: The Shards of Genesis
 
 ## Introduction
@@ -10,9 +13,6 @@ Welcome to CryptoQuest: The Shards of Genesis, an ambitious blockchain-based MMO
 - **Crafting & Enchanting**: Unique item crafting and enchanting.
 - **Quests & Adventures**: Dynamic quest system with smart contracts.
 - **Cross-Chain Interactions**: Support for multiple blockchains.
-
-![CQTSOG-Logo](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/ebda6f21-f3ba-45e1-8289-cfe8a6c736fb)
-
 
 ## Game Overview
 In CryptoQuest: The Shards of Genesis, players explore the mythical realm of Cryptonia, uncovering secrets and battling creatures in a quest to reunify the shards of Genesis.
@@ -49,79 +49,39 @@ Explore the various contracts that power CryptoQuest:
 | CQTTokenSaleContract | 0x126D0A70E6413EC44D977C41024A76d84CEDB4A4 | Polygon | Visible | Public | Verified |
 | ERC1967Proxy | 0xc36fc9872Bd271BD80365517958e6F48D3b4FA91 | Polygon | Visible | Public | Verified |
 
-## CryptoQuest Token "CQT"
+# CryptoQuest Token:
 
-![CQTSOG- Logo for 'CQT CryptoQuest The Shards Of Genesis Token' by combining elements from the provided images  The logo should feature a striking geo](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/9e4797ab-1e12-43e0-9d7e-e3bfa6760119)
+![CQTSOG- Logo for 'CQT CryptoQuest The Shards Of Genesis Token' by combining elements from the provided images  The logo should feature a striking geo](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/a2448bea-9173-4545-bbe7-982a5b7b4554)
+
+
+# CryptoQuest Book NFT:
+
+![CQTSOG - A book cover for 'CryptoQuest_ The Shards of Genesis' by Jacque DeGraff  The background features a mystical, ancient world with el](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/0940e554-1383-4bdd-985e-1278000d8c24)
 
 
 ## Installation
 To install and run CryptoQuest locally, follow these steps:
 
-### Unity Build Installation
-1. **Install Unity Hub and Unity Editor**:
-   - Download and install [Unity Hub](https://unity3d.com/get-unity/download).
-   - Use Unity Hub to install the Unity Editor version 2021.3 LTS or higher.
-
-2. **Clone the Repository**:
+1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your_username/cryptoquest-unity.git
-    cd cryptoquest-unity
+    git clone https://github.com/your_username/cryptoquest.git
+    cd cryptoquest
     ```
 
-3. **Open the Project in Unity**:
-   - Launch Unity Hub.
-   - Click on the "Add" button to add the project directory.
-   - Select the `cryptoquest-unity` folder.
+2. **Navigate to the project directory**:
+    ```bash
+    cd cryptoquest
+    ```
 
-4. **Install Dependencies**:
+3. **Install dependencies**:
     ```bash
     npm install
     ```
 
-5. **Setup Blockchain Integration**:
-   - Add the Web3 libraries (`web3.js`, `ethers.js`) to the Unity project.
-   - Configure the blockchain network settings in the Unity project settings.
-
-6. **Build the Project**:
-   - Go to `File` -> `Build Settings`.
-   - Select the target platform (e.g., PC, Mac & Linux Standalone).
-   - Click on `Build` and choose the output directory.
-
-### PS5 Build Installation
-1. **Setup PlayStation SDK**:
-   - Download and install the PlayStation SDK from the official developer portal.
-
-2. **Configure Unity for PS5**:
-   - Open the Unity project in Unity Hub.
-   - Go to `File` -> `Build Settings`.
-   - Select `PS5` as the target platform.
-   - Configure the build settings according to the PlayStation SDK documentation.
-
-3. **Connect PS5 Development Kit**:
-   - Connect your PS5 Development Kit to your PC.
-   - Ensure it is recognized by the PlayStation SDK and Unity.
-
-4. **Build and Deploy**:
-   - Click on `Build` to compile the project for PS5.
-   - Use the PlayStation SDK tools to deploy the build to the PS5 Development Kit.
-
-### Xbox Build Installation
-1. **Setup Xbox SDK**:
-   - Download and install the Xbox SDK from the official developer portal.
-
-2. **Configure Unity for Xbox**:
-   - Open the Unity project in Unity Hub.
-   - Go to `File` -> `Build Settings`.
-   - Select `Xbox One` or `Xbox Series X|S` as the target platform.
-   - Configure the build settings according to the Xbox SDK documentation.
-
-3. **Connect Xbox Development Kit**:
-   - Connect your Xbox Development Kit to your PC.
-   - Ensure it is recognized by the Xbox SDK and Unity.
-
-4. **Build and Deploy**:
-   - Click on `Build` to compile the project for Xbox.
-   - Use the Xbox SDK tools to deploy the build to the Xbox Development Kit.
+4. **Run the development server**:
+    ```bash
+    npm start
+    ```
 
 ## Creating a Front-end DApp
 Creating a front-end DApp using C++ to interact with all 21 smart contracts in this project is a crucial step. Follow these detailed steps to set up the C++ front-end:
@@ -132,9 +92,7 @@ Creating a front-end DApp using C++ to interact with all 21 smart contracts in t
     sudo apt-get install qt5-default
     ```
 
-2. **
-
-Create a New C++ Project Structure**:
+2. **Create a New C++ Project Structure**:
     ```bash
     mkdir -p /path-to-your-project/src /path-to-your-project/include
     ```
@@ -207,9 +165,7 @@ Create a New C++ Project Structure**:
             contracts[name] = client.loadContract(abi, address);
         }
 
-        std::string SmartContractManager::callMethod(const std::::
-
-string& name, const std::string& method, const Json::Value& params) {
+        std::string SmartContractManager::callMethod(const std::string& name, const std::string& method, const Json::Value& params) {
             return contracts[name].call(method, params);
         }
         ```
@@ -311,20 +267,88 @@ docker_run:
 .PHONY: all build_unreal build_cpp docker_build clean docker_run
 ```
 
-## CryptoQuest The Shard's Of Genesis Book NFT
-
-![CQTSOG - A book cover for 'CryptoQuest_ The Shards of Genesis' by Jacque DeGraff  The background features a mystical, ancient world with el](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/636e1729-f740-4c85-9e04-5cd3fb932f3b)
-
-
 ## Developing CryptoQuest in Unity
-Follow the steps in the documentation to develop CryptoQuest using Unity, including blockchain integration, NFT management, and game mechanics.
+Follow these steps to build and run CryptoQuest in Unity:
 
-For detailed instructions, visit the [CQTSOG Unity Guide](#).
+### Prerequisites
+- Unity 2021.1.16f1 or later
 
-## Developing CryptoQuest in Unreal Engine 5
-Refer to the guide in the documentation for creating CryptoQuest with Unreal Engine 5, covering topics like decentralized economy and player governance.
+### Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your_username/cryptoquest.git
+    cd cryptoquest
+    ```
 
-For detailed instructions, visit the [CQTSOG Unreal Engine 5 Guide](#).
+2. Open the project in Unity:
+    ```bash
+    unity /path/to/your/project
+    ```
+
+3. Install required Unity packages via Package Manager:
+    - Add scoped registry:
+        - Name: `OpenUPM`
+        - URL: `https://package.openupm.com`
+        - Scope(s): `com.walletconnect`
+    - Add packages:
+        ```bash
+        openupm add com.walletconnect.modal
+        openupm add com.walletconnect.core
+        ```
+
+4. Configure project settings and build settings as needed.
+
+5. Build the project:
+    - For Windows:
+        ```bash
+        BuildPipeline.BuildPlayer(scenes, "Build/Windows/CryptoQuest.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
+        ```
+    - For macOS:
+        ```bash
+        BuildPipeline.BuildPlayer(scenes, "Build/macOS/CryptoQuest.app", BuildTarget.StandaloneOSX, BuildOptions.None);
+        ```
+    - For Android:
+        ```bash
+        BuildPipeline.BuildPlayer(scenes, "Build/Android/CryptoQuest.aab", BuildTarget.Android, BuildOptions.None);
+        ```
+
+6. Run the build:
+    ```bash
+    ./Build/Windows/CryptoQuest.exe
+    ```
+
+## Developing CryptoQuest for PS5 and Xbox
+Follow these steps to build and run CryptoQuest for PS5 and Xbox:
+
+### Prerequisites
+- Unity 2021.1.16f1 or later
+- PS5/Xbox SDKs
+
+### Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your_username/cryptoquest.git
+    cd cryptoquest
+    ```
+
+2. Open the project in Unity:
+    ```bash
+    unity /path/to/your/project
+    ```
+
+3. Configure project settings and build settings for PS5 and Xbox as needed.
+
+4. Build the project:
+    - For PS5:
+        ```bash
+        BuildPipeline.BuildPlayer(scenes, "Build/PS5/CryptoQuest.pkg", BuildTarget.PS5, BuildOptions.None);
+        ```
+    - For Xbox:
+        ```bash
+        BuildPipeline.BuildPlayer(scenes, "Build/Xbox/CryptoQuest.xdk", BuildTarget.XboxOne, BuildOptions.None);
+        ```
+
+5. Run the build on the respective console.
 
 ## FAQs
 ### What is CryptoQuest: The Shards of Genesis?
@@ -342,7 +366,7 @@ CryptoQuest: The Shards of Genesis is licensed under the [MIT License](#).
 ## Repository Structure
 
 ```plaintext
-cryptoquest/
+cryptoquest-dapp/
 ├── public/
 │   └── CQTSOG-Logo.svg
 ├── src/
@@ -369,17 +393,6 @@ cryptoquest/
 │   ├── App.jsx
 │   ├── index.css
 │   └── main.jsx
-├── cplusplus/
-│   ├── src/
-│   │   ├── main.cpp
-│   │   ├── MainWindow.cpp
-│   │   └── SmartContractManager.cpp
-│   ├── include/
-│   │   ├── MainWindow.h
-│   │   └── SmartContractManager.h
-│   ├── Dockerfile
-│   ├── Makefile
-│   └── YourAppName.pro
 ├── smartcontracts/
 │   ├── artifacts/
 │   │   └── build-info/
@@ -395,19 +408,23 @@ cryptoquest/
 │   ├── CryptoQuestTheShardsOfGenesisStaking.sol
 │   ├── CryptoQuestTheShardsOfGenesisToken.sol
 │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
-│   └── CryptoQuestTheShardsOfGenesisFarming.sol
-├── .eslintrc.cjs
-├── .
+│   └── CryptoQueststTheShardsOfGenesisFarming.sol
+├── unity-build/
+│   └── ...
+├── ps5-build/
+│   └──
 
-gitignore
+ ...
+├── xbox-build/
+│   └── ...
+├── .eslintrc.cjs
+├── .gitignore
 ├── README.md
 ├── index.html
 ├── package-lock.json
 ├── package.json
 ├── vite.config.js
+├── Makefile
 ```
 
----
-
-This comprehensive README along with it's guides provides the necessary steps to install, build, and run CryptoQuest: The Shards of Genesis in Unity, PS5, and Xbox environments. The provided Makefile simplifies the build process for various platforms, ensuring smooth deployment and testing. The repository structure offers a clear overview of the project's organization, making it easier for developers to navigate and contribute to the project.
-```
+This README now includes detailed installation and build instructions for Unity, PS5, and Xbox, along with the necessary project structure updates.
