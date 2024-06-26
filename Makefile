@@ -8,7 +8,7 @@ CXX := g++
 CXXFLAGS := -std=c++17 -O2
 LDFLAGS := -lweb3cpp -lQt5Widgets
 
-SRC_DIR := src
+SRC_DIR := src/cpp
 INC_DIR := include
 BUILD_DIR := build
 DOCKERFILE := Dockerfile
@@ -19,7 +19,7 @@ CPP_BUILD_TARGET := CryptoQuestMMORPG-Dapp
 DOCKER_BUILD_TARGET := cryptoquestmmorpg-dapp
 
 # Define source files
-CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
+CPP_SOURCES := $(wildcard $(SRC_DIR)/**/*.cpp)
 CPP_OBJECTS := $(CPP_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 # Default target

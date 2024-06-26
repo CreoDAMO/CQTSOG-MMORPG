@@ -1,4 +1,4 @@
-modules = ["web", "nodejs-20", "cpp-clang14"]
+modules = ["nodejs-20"]
 compile = "make"
 run = "make setup"
 
