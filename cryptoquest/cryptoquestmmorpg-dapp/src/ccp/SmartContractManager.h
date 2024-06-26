@@ -1,16 +1,15 @@
-// SmartContractManager.h
-
 #ifndef SMARTCONTRACTMANAGER_H
 #define SMARTCONTRACTMANAGER_H
 
 #include <string>
 #include <vector>
-#include <json/json.h> // Make sure to include the JSON library
+#include <json/json.h>
+#include <web3cpp/web3.h>
 
 class SmartContractManager {
 public:
     // Constructor
-    SmartContractManager(const std::string& contractAddress, const std::string& abi);
+    SmartContractManager(const std::string& providerUrl, const std::string& contractAddress, const std::string& abi);
 
     // Destructor
     ~SmartContractManager();
@@ -30,6 +29,11 @@ public:
 private:
     std::string contractAddress;
     std::string abi;
+    web3::Web3 client;
+    web3::Contract contract;
+
+    // Helper function to create a signed transaction
+    std::string createSignedTransaction(const std::string& functionName, const std::vector<std::string>& params, const std::string& senderPrivateKey);
 };
 
 #endif // SMARTCONTRACTMANAGER_H
