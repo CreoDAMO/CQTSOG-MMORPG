@@ -1,14 +1,11 @@
-// SmartContractManager.cpp
-
 #include "SmartContractManager.h"
 #include <iostream>
 #include <stdexcept>
-#include <json/json.h> // Make sure to include the JSON library
-#include <web3/web3.h> // Include your web3 library
+#include <web3cpp/transaction.h>
 
-SmartContractManager::SmartContractManager(const std::string& contractAddress, const std::string& abi)
-    : contractAddress(contractAddress), abi(abi) {
-    // Initialize the web3 client here
+SmartContractManager::SmartContractManager(const std::string& providerUrl, const std::string& contractAddress, const std::string& abi)
+    : contractAddress(contractAddress), abi(abi), client(providerUrl), contract(client, abi, contractAddress) {
+    // Initialize the web3 client and contract here
 }
 
 SmartContractManager::~SmartContractManager() {
@@ -16,36 +13,61 @@ SmartContractManager::~SmartContractManager() {
 }
 
 std::string SmartContractManager::deployContract(const std::string& bytecode, const std::string& senderPrivateKey) {
-    // Code to deploy contract using bytecode and sender's private key
-    // For simplicity, this is a placeholder. Replace with actual web3 deployment code.
-    std::cout << "Deploying contract..." << std::endl;
-    // ... deployment logic
-    return "0xContractAddress"; // Return the deployed contract address
+    try {
+        web3::Transaction tx = client.createTransaction();
+        tx.setData(bytecode);
+        tx.setGas(3000000); // Set appropriate gas limit
+        tx.setGasPrice(client.ethGasPrice());
+        tx.setNonce(client.ethGetTransactionCount(client.getAddress(senderPrivateKey), "latest"));
+        tx.setTo("");
+
+        std::string signedTx = tx.sign(senderPrivateKey);
+        std::string txHash = client.ethSendRawTransaction(signedTx);
+        return txHash;
+    } catch (const std::exception& ex) {
+        std::cerr << "Error deploying contract: " << ex.what() << std::endl;
+        throw;
+    }
 }
 
 Json::Value SmartContractManager::callFunction(const std::string& functionName, const std::vector<std::string>& params) {
-    // Code to call a smart contract function
-    // For simplicity, this is a placeholder. Replace with actual web3 call code.
-    std::cout << "Calling function: " << functionName << std::endl;
-    // ... function call logic
-
-    Json::Value result;
-    result["status"] = "success";
-    result["data"] = "Function call result"; // Replace with actual result data
-    return result;
+    try {
+        return contract.call(functionName, params);
+    } catch (const std::exception& ex) {
+        std::cerr << "Error calling function: " << ex.what() << std::endl;
+        throw;
+    }
 }
 
 std::string SmartContractManager::sendTransaction(const std::string& functionName, const std::vector<std::string>& params, const std::string& senderPrivateKey) {
-    // Code to send a transaction to the smart contract
-    // For simplicity, this is a placeholder. Replace with actual web3 transaction code.
-    std::cout << "Sending transaction to function: " << functionName << std::endl;
-    // ... transaction sending logic
-    return "0xTransactionHash"; // Return the transaction hash
+    try {
+        std::string signedTx = createSignedTransaction(functionName, params, senderPrivateKey);
+        std::string txHash = client.ethSendRawTransaction(signedTx);
+        return txHash;
+    } catch (const std::exception& ex) {
+        std::cerr << "Error sending transaction: " << ex.what() << std::endl;
+        throw;
+    }
 }
 
 void SmartContractManager::listenForEvents(const std::string& eventName) {
-    // Code to listen for smart contract events
-    // For simplicity, this is a placeholder. Replace with actual event listening code.
-    std::cout << "Listening for events: " << eventName << std::endl;
-    // ... event listening logic
+    try {
+        contract.on(eventName, [](const Json::Value& event) {
+            std::cout << "Event received: " << event.toStyledString() << std::endl;
+        });
+    } catch (const std::exception& ex) {
+        std::cerr << "Error listening for events: " << ex.what() << std::endl;
+        throw;
+    }
+}
+
+std::string SmartContractManager::createSignedTransaction(const std::string& functionName, const std::vector<std::string>& params, const std::string& senderPrivateKey) {
+    web3::Transaction tx = client.createTransaction();
+    tx.setData(contract.functionCallData(functionName, params));
+    tx.setGas(3000000); // Set appropriate gas limit
+    tx.setGasPrice(client.ethGasPrice());
+    tx.setNonce(client.ethGetTransactionCount(client.getAddress(senderPrivateKey), "latest"));
+    tx.setTo(contractAddress);
+
+    return tx.sign(senderPrivateKey);
 }
