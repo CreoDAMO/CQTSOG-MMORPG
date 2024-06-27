@@ -59,75 +59,339 @@ Explore the various contracts that power CryptoQuest:
 ![CQTSOG - A book cover for 'CryptoQuest_ The Shards of Genesis' by Jacque DeGraff  The background features a mystical, ancient world with el](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/0940e554-1383-4bdd-985e-1278000d8c24)
 
 
-## Project Structure
+### Repository Structure
 
-```
-cryptoquestmmorpg-dapp
-├── assets/                   # Asset files (models, sounds, textures)
-│   ├── models/
-│   ├── sounds/
-│   └── textures/
-├── build/                    # Build artifacts
-│   └── obj/
-├── cmake/                    # CMake modules and toolchains
-│   ├── modules/
-│   └── toolchains/
-├── docs/                     # Documentation
-├── include/                  # Header files (C++)
-│   ├── CryptoQuest/
-│   └── third_party/
-├── lib/                      # Libraries
-├── scripts/                  # Scripts
-├── src/                      # Source files
-│   ├── ccp/                  # C++ source files
-│   │   ├── GameSessionManager.cpp
-│   │   ├── GameSessionManager.h
-│   │   ├── MainWindow.cpp
-│   │   ├── MainWindow.h
-│   │   ├── MultiplayerGameManager.cpp
-│   │   ├── MultiplayerGameManager.h
-│   │   ├── SmartContractInterface.cpp
-│   │   ├── SmartContractInterface.h
-│   │   ├── SmartContractManager.cpp
-│   │   ├── SmartContractManager.h
-│   │   └── main.cpp
-│   ├── js/                   # JavaScript source files
+```plaintext
+CryptoQuest-Shards-of-Genesis-MMORPG/
+├── .deps/
+│   └── npm/
+│       └── @openzeppelin/
+│           └── contracts-upgradeable/
+│               ├── access/
+│               │   ├── AccessControlUpgradeable.sol
+│               │   └── OwnableUpgradeable.sol
+│               ├── governance/
+│               │   ├── artifacts/
+│               │   │   ├── build-info/
+│               │   │   │   ├── aab2307ecd5276504e169b3aca6086d1.json
+│               │   │   │   ├── TimelockControllerUpgradeable.json
+│               │   │   │   └── TimelockControllerUpgradeable_metadata.json
+│               │   ├── extensions/
+│               │   │   ├── GovernorCountingSimpleUpgradeable.sol
+│               │   │   ├── GovernorSettingsUpgradeable.sol
+│               │   │   ├── GovernorStorageUpgradeable.sol
+│               │   │   ├── GovernorTimelockControlUpgradeable.sol
+│               │   │   ├── GovernorVotesQuorumFractionUpgradeable.sol
+│               │   │   └── GovernorVotesUpgradeable.sol
+│               │   └── utils/
+│               │       ├── VotesUpgradeable.sol
+│               │       ├── GovernorUpgradeable.sol
+│               │       └── TimelockControllerUpgradeable.sol
+│               ├── proxy/
+│               │   └── utils/
+│               │       ├── Initializable.sol
+│               │       └── UUPSUpgradeable.sol
+│               ├── security/
+│               │   └── PausableUpgradeable.sol
+│               └── token/
+│                   ├── ERC1155/
+│                   │   ├── extensions/
+│                   │   │   ├── ERC1155BurnableUpgradeable.sol
+│                   │   │   ├── ERC1155PausableUpgradeable.sol
+│                   │   │   └── ERC1155SupplyUpgradeable.sol
+│                   │   └── utils/
+│                   │       ├── ERC1155HolderUpgradeable.sol
+│                   │       └── ERC1155Upgradeable.sol
+│                   │       └── IERC1155Upgradeable.sol
+│                   ├── ERC20/
+│                   │   ├── extensions/
+│                   │   │   ├── ERC20BurnableUpgradeable.sol
+│                   │   │   ├── ERC20FlashMintUpgradeable.sol
+│                   │   │   ├── ERC20PausableUpgradeable.sol
+│                   │   │   └── ERC20PermitUpgradeable.sol
+│                   │   └── ERC20Upgradeable.sol
+│                   │   └── IERC20Upgradeable.sol
+│                   ├── ERC721/
+│                   │   ├── extensions/
+│                   │   │   ├── ERC721BurnableUpgradeable.sol
+│                   │   │   ├── ERC721EnumerableUpgradeable.sol
+│                   │   │   ├── ERC721PausableUpgradeable.sol
+│                   │   │   └── ERC721URIStorageUpgradeable.sol
+│                   │   └── utils/
+│                   │       ├── ERC721HolderUpgradeable.sol
+│                   │       └── ERC721Upgradeable.sol
+│                   │       └── IERC721Upgradeable.sol
+│               └── utils/
+│                   ├── cryptography/
+│                   │   └── EIP712Upgradeable.sol
+│                   ├── introspection/
+│                   │   ├── ERC165Upgradeable.sol
+│                   │   └── IERC165Upgradeable.sol
+│                   ├── AddressUpgradeable.sol
+│                   ├── ContextUpgradeable.sol
+│                   ├── CountersUpgradeable.sol
+│                   └── NoncesUpgradeable.sol
+│                   └── PausableUpgradeable.sol
+│           └── contracts-upgradeable@4.9.3/
+│               ├── access/
+│               │   ├── AccessControlUpgradeable.sol
+│               │   └── IAccessControlUpgradeable.sol
+│               ├── governance/
+│               │   └── utils/
+│               │       ├── IVotesUpgradeable.sol
+│               │       └── VotesUpgradeable.sol
+│               ├── interfaces/
+│               │   ├── IERC165Upgradeable.sol
+│               │   ├── IERC1967Upgradeable.sol
+│               │   ├── IERC4906Upgradeable.sol
+│               │   ├── IERC5267Upgradeable.sol
+│               │   ├── IERC5805Upgradeable.sol
+│               │   ├── IERC6372Upgradeable.sol
+│               │   ├── IERC721Upgradeable.sol
+│               │   └── draft-IERC1822Upgradeable.sol
+│               ├── proxy/
+│               │   ├── ERC1967/
+│               │   │   └── ERC1967UpgradeUpgradeable.sol
+│               │   └── beacon/
+│               │       └── IBeaconUpgradeable.sol
+│               ├── utils/
+│               │   ├── Initializable.sol
+│               │   └── UUPSUpgradeable.sol
+│               ├── security/
+│               │   └── PausableUpgradeable.sol
+│               ├── token/
+│               │   └── ERC721/
+│               │       ├── extensions/
+│               │       │   ├── ERC721BurnableUpgradeable.sol
+│               │       │   ├── ERC721EnumerableUpgradeable.sol
+│               │       │   ├── ERC721PausableUpgradeable.sol
+│               │       │   ├── ERC721URIStorageUpgradeable.sol
+│               │       │   ├── ERC721VotesUpgradeable.sol
+│               │       │   └── IERC721EnumerableUpgradeable.sol
+│               │       │   └── IERC721MetadataUpgradeable.sol
+│               │       ├── ERC721Upgradeable.sol
+│               │       ├── IERC721ReceiverUpgradeable.sol
+│               │       └── IERC721Upgradeable.sol
+│               ├── utils/
+│               │   ├── cryptography/
+│               │   │   ├── ECDSAUpgradeable.sol
+│               │   │   └── EIP712Upgradeable.sol
+│               │   ├── introspection/
+│               │   │   ├── ERC165Upgradeable.sol
+│               │   │   └── IERC165Upgradeable.sol
+│               │   ├── math/
+│               │   │   ├── MathUpgradeable.sol
+│               │   │   ├── SafeCastUpgradeable.sol
+│               │   │   └── SignedMathUpgradeable.sol
+│               │   ├── AddressUpgradeable.sol
+│               │   ├── CheckpointsUpgradeable.sol
+│               │   ├── ContextUpgradeable.sol
+│               │   ├── CountersUpgradeable.sol
+│               │   ├── StorageSlotUpgradeable.sol
+│               │   └── StringsUpgradeable.sol
+├── contracts/
+│   ├── access/
+│   │   └── IAccessControl.sol
+│   ├── governance/
+│   │   └── utils/
+│   │       ├── IVotes.sol
+│   │       └── IGovernor.sol
+│   ├── interfaces/
+│   │   ├── IERC1271.sol
+│   │   ├── IERC165.sol
+│   │   ├── IERC3156FlashBorrower.sol
+│   │   ├── IERC3156FlashLender.sol
+│   │   ├── IERC4906.sol
+│   │   ├── IERC5267.sol
+│   │   ├── IERC5805.sol
+│   │   ├── IERC6372.sol
+│   │   ├── IERC721.sol
+│   │   └── draft-IERC1822.sol
+│   │   └── draft-IERC6093.sol
+│   ├── proxy/
+│   │   └── ERC1967/
+│   │       ├── ERC1967Utils.sol
+│   │       └── beacon/
+│   │           └── IBeacon.sol
+│   ├── token/
+│   │   ├── ERC1155/
+│   │   │   ├── extensions/
+│   │   │   │   ├── IERC1155MetadataURI.sol
+│   │   │   │   └── IERC1155.sol
+│   │   │   └── IERC1155Receiver.sol
+│   │   ├── ERC20/
+│   │   │   ├── extensions/
+│   │   │   │   ├── IERC20Metadata.sol
+│   │   │   │   └── IERC20Permit.sol
+│   │   │   ├── IERC20.sol
+│   │   ├── ERC721/
+│   │   │   └── utils/
+│   └── utils/
+│       ├── Article/
+│       ├── build/
+│       │   ├── CMakeFiles/
+│       │   │   ├── 3.27.7/
+│       │   │   │   ├── CompilerIdC/
+│       │   │   │   │   ├── CMake
+
+CCompilerId.c
+│       │   │   │   │   ├── a.out
+│       │   │   │   │   └── CompilerIdCXX/
+│       │   │   │   │       ├── CMakeCXXCompilerId.cpp
+│       │   │   │   │       └── a.out
+│       │   │   ├── CMakeCCompiler.cmake
+│       │   │   ├── CMakeCXXCompiler.cmake
+│       │   │   ├── CMakeDetermineCompilerABI_C.bin
+│       │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│       │   │   ├── CMakeSystem.cmake
+│       │   │   └── CMakeConfigureLog.yaml
+│       │   └── cmake.check_cache
+│       ├── CMakeCache.txt
+├── cryptoquest/
+│   ├── cryptoquestmmorpg-dapp/
+│   │   ├── assets/
+│   │   │   ├── models/
+│   │   │   │   └── .gitkeep
+│   │   │   ├── sounds/
+│   │   │   │   └── .gitkeep
+│   │   │   └── textures/
+│   │   │       └── .gitkeep
+│   │   ├── build/
+│   │   │   └── obj/
+│   │   │       └── .gitkeep
+│   │   ├── scripts/
+│   │   │   └── .gitkeep
+│   │   ├── cmake/
+│   │   │   ├── modules/
+│   │   │   │   └── .gitkeep
+│   │   │   ├── toolchains/
+│   │   │   │   ├── .gitkeep
+│   │   │   │   ├── Toolchain-arm64.cmake
+│   │   │   │   └── Toolchain-x86_64.cmake
+│   │   │   ├── CMakeLists.txt
+│   │   └── docs/
+│   │       └── README.md
+│   ├── include/
+│   │   └── CryptoQuest/
+│   │       └── .gitkeep
+│   ├── lib/
+│   │   └── .gitkeep
+│   ├── src/
+│   │   ├── ccp/
+│   │   │   ├── GameSessionManager.cpp
+│   │   │   ├── MainWindow.cpp
+│   │   │   ├── MultiplayerGameManager.cpp
+│   │   │   ├── SmartContractInterface.cpp
+│   │   │   ├── SmartContractManager.cpp
+│   │   │   └── main.cpp
+│   │   ├── header/
+│   │   │   ├── GameSessionManager.h
+│   │   │   ├── MainWindow.h
+│   │   │   ├── MultiplayerGameManager.h
+│   │   │   ├── SmartContractInterface.h
+│   │   │   ├── SmartContractManager.h
+│   │   │   └── .gitkeep
+│   ├── js/
 │   │   ├── apps/
-│   │   ├── utils/
-│   │   ├── contracts.js
-│   │   ├── App.js
-│   │   ├── components/
-│   │   ├── Game.js
-│   │   ├── context/
-│   │   └── Web3Context.js
-├── smartcontracts/           # Smart contract files (Solidity)
-│   ├── artifacts/
-│   ├── CQTTokenSaleContractsol.sol
-│   ├── CryptoQuestSwap.sol
-│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
-│   ├── CryptoQuestTheShardsOfGenesisDAO.sol
-│   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
-│   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
-│   ├── CryptoQuestTheShardsOfGenesisNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisStaking.sol
-│   ├── CryptoQuestTheShardsOfGenesisToken.sol
-│   ├── CryptoQuestTheShardsOfGenesisWallet.sol
-│   └── CryptoQueststTheShardsOfGenesisFarming.sol
-├── tests/                    # Test files
-│   ├── integration/
-│   │   └── integration_tests.cpp
-│   └── system/
-│       └── system_tests.cpp
-├── tools/scripts/
-├── .github/                  # GitHub configuration files
-├── CMakeLists.txt            # CMake build configuration
-├── LICENSE                   # License file
-├── Makefile                  # Makefile for additional build commands
-├── README.md                 # Project README
-└── package.json              # NPM package configuration
-```
+│   │   │   ├── utils/
+│   │   │   │   └── contracts.js
+│   │   │   ├── App.js
+│   │   │   ├── components/
+│   │   │   │   ├── Game.js
+│   │   │   ├── context/
+│   │   │   │   ├── Web3Context.js
+│   │   │   ├── contracts/
+│   │   │   │   ├── index.js
+│   │   │   │   ├── web3Modal.js
+│   │   │   ├── smartcontracts/
+│   │   │   │   ├── artifacts/
+│   │   │   │   │   ├── build-info/
+│   │   │   │   │   │   ├── 023fe5e39d2e80373429af963b312257.json
+│   │   │   │   │   │   ├── 19f947929ee77678aaa883e948224616.json
+│   │   │   │   │   │   ├── 349b6770f47943c06b3a5a6943368476.json
+│   │   │   │   │   │   ├── 41b4a0e1f5ff43c5351fa3d2871a23e9.json
+│   │   │   │   │   │   ├── 49e2b8d02672f67f13e34b6ae1933099.json
+│   │   │   │   │   │   ├── 55c00c2af517a1023df52e66779b759b.json
+│   │   │   │   │   │   ├── 658dab6b779d8b5d441eb69bf41c5cd0.json
+│   │   │   │   │   │   ├── 71ab3ccb633467b67d033387ef7a2cc4.json
+│   │   │   │   │   │   ├── 972bdc9997eef260b73b477698da35e4.json
+│   │   │   │   │   │   ├── b07d6966f87fbe94a617b54ace233e52.json
+│   │   │   │   │   │   ├── d0b24742fa78ca2d3f97920f0d48c859.json
+│   │   │   │   │   │   ├── db4643b0199824c5db052bec35f85877.json
+│   │   │   │   │   ├── CQTTokenSaleContract.json
+│   │   │   │   │   ├── CQTTokenSaleContract_metadata.json
+│   │   │   │   │   ├── CryptoQuestShardsOfGenesisFarming.json
+│   │   │   │   │   ├── CryptoQuestShardsOfGenesisFarming_metadata.json
+│   │   │   │   │   ├── CryptoQuestSwap.json
+│   │   │   │   │   ├── CryptoQuestSwap_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesis1155.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesis1155_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookPublishing_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERC721_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken_metadata.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet_metadata.json
+│   │   │   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
+│   │   │   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO_metadata.json
+│   │   │   │   │   ├── IDAO.json
+│   │   │   │
 
+   │   ├── IDAO_metadata.json
+│   │   │   │   │   ├── IERC1155.json
+│   │   │   │   │   ├── IERC1155_metadata.json
+│   │   │   │   │   ├── IERC20.json
+│   │   │   │   │   ├── IERC20_metadata.json
+│   │   │   │   │   ├── IERC721.json
+│   │   │   │   │   ├── IERC721_metadata.json
+│   │   │   │   │   ├── IFarming.json
+│   │   │   │   │   ├── IFarming_metadata.json
+│   │   │   │   │   ├── IStaking.json
+│   │   │   │   │   ├── IStaking_metadata.json
+│   │   │   │   │   ├── CQTTokenSaleContractsol.sol
+│   │   │   │   │   ├── CryptoQuestSwap.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisDAO.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisNFT.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.sol
+│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
+│   │   │   │   │   └── CryptoQueststTheShardsOfGenesisFarming.sol
+│   ├── tests/
+│   │   ├── integration/
+│   │   │   ├── integration_tests.cpp
+│   │   ├── system/
+│   │   │   ├── system_tests.cpp
+│   ├── tools/
+│   │   ├── scripts/
+│   │   │   └── .gitkeep
+│   ├── README.md
+│   ├── node_modules/
+│   ├── .replit
+│   ├── CMakeLists.txt
+│   ├── LICENSE
+│   ├── Makefile
+│   ├── README.md
+│   ├── package-lock.json
+│   ├── package.json
+│   └── replit.nix
+```
 ## Build Instructions
 
 ### Prerequisites
