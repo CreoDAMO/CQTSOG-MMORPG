@@ -1,18 +1,29 @@
 cmake_minimum_required(VERSION 3.10)
-project(CryptoQuest)
 
+# Set the project name
+project(CryptoQuestMMORPG)
+
+# Specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Find and include JSON library
-find_package(nlohmann_json 3.2.0 REQUIRED)
-include_directories(${nlohmann_json_INCLUDE_DIRS})
+# Add the executable
+add_executable(CryptoQuestMMORPG
+    src/ccp/main.cpp
+    src/ccp/GameSessionManager.cpp
+    src/ccp/GameSessionManager.h
+    src/ccp/MainWindow.cpp
+    src/ccp/MainWindow.h
+    src/ccp/MultiplayerGameManager.cpp
+    src/ccp/MultiplayerGameManager.h
+    src/ccp/SmartContractInterface.cpp
+    src/ccp/SmartContractInterface.h
+    src/ccp/SmartContractManager.cpp
+    src/ccp/SmartContractManager.h
+)
 
-# Include web3cpp library
-include_directories(/path/to/web3cpp/include)
-link_directories(/path/to/web3cpp/lib)
-
-# Add your source files
-add_executable(CryptoQuest main.cpp SmartContractManager.cpp)
+# Include directories
+target_include_directories(CryptoQuestMMORPG PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # Link libraries
-target_link_libraries(CryptoQuest PRIVATE nlohmann_json::nlohmann_json web3cpp)
+# target_link_libraries(CryptoQuestMMORPG <libraries>)
