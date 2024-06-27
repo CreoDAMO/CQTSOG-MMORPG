@@ -366,65 +366,59 @@ CryptoQuest: The Shards of Genesis is licensed under the [MIT License](#).
 ## Repository Structure
 
 ```plaintext
-cryptoquest-dapp/
-├── public/
-│   └── CQTSOG-Logo.svg
-├── src/
-│   ├── components/
-│   │   ├── Game.js
-│   │   └── ...
-│   ├── contexts/
-│   │   └── Web3Context.js
-│   ├── contracts/
-│   │   ├── index.js
-│   │   └── web3Modal.js
-│   ├── pages/
-│   │   ├── Home.js
-│   │   ├── Marketplace.js
-│   │   ├── Staking.js
-│   │   └── ...
-│   ├── styles/
-│   │   ├── global.css
-│   │   └── ...
-│   ├── utils/
-│   │   ├── contracts.js
-│   │   └── ...
-│   ├── App.css
-│   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
-├── smartcontracts/
-│   ├── artifacts/
-│   │   └── build-info/
-│   │       └── *.json
-│   ├── CQTTokenSaleContractsol.sol
-│   ├── CryptoQuestSwap.sol
-│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
-│   ├── CryptoQuestTheShardsOfGenesisDAO.sol
-│   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
-│   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
-│   ├── CryptoQuestTheShardsOfGenesisNFT.sol
-│   ├── CryptoQuestTheShardsOfGenesisStaking.sol
-│   ├── CryptoQuestTheShardsOfGenesisToken.sol
-│   ├── CryptoQuestTheShardsOfGenesisWallet.sol
-│   └── CryptoQueststTheShardsOfGenesisFarming.sol
-├── unity-build/
-│   └── ...
-├── ps5-build/
-│   └──
+/cryptoquestmmorpg-dapp
+|-- assets/                   # Asset files (models, sounds, textures)
+|-- build/                    # Build artifacts
+|-- cmake/                    # CMake modules and toolchains
+|-- docs/                     # Documentation
+|-- include/                  # Header files (C++)
+|-- lib/                      # Libraries
+|-- scripts/                  # Scripts
+|-- src/                      # Source files
+|   |-- ccp/                  # C++ source files
+|   |   |-- GameSessionManager.cpp
+|   |   |-- GameSessionManager.h
+|   |   |-- MainWindow.cpp
+|   |   |-- MainWindow.h
+|   |   |-- MultiplayerGameManager.cpp
+|   |   |-- MultiplayerGameManager.h
+|   |   |-- SmartContractInterface.cpp
+|   |   |-- SmartContractInterface.h
+|   |   |-- SmartContractManager.cpp
+|   |   |-- SmartContractManager.h
+|   |   |-- main.cpp
+|   |-- js/                   # JavaScript source files
+|       |-- apps/
+|       |-- utils/
+|       |-- contracts.js
+|       |-- App.js
+|       |-- components/
+|       |-- Game.js
+|       |-- context/
+|       |-- Web3Context.js
+|-- smartcontracts/           # Smart contract files (Solidity)
+|   |-- artifacts/
+|   |-- CQTTokenSaleContractsol.sol
+|   |-- CryptoQuestSwap.sol
+|   |-- CryptoQuestTheShardsOfGenesisBookNFT.sol
+|   |-- CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
+|   |-- CryptoQuestTheShardsOfGenesisDAO.sol
+|   |-- CryptoQuestTheShardsOfGenesisMMORPG.sol
+|   |-- CryptoQuestTheShardsOfGenesisMarketplace.sol
+|   |-- CryptoQuestTheShardsOfGenesisNFT.sol
+|   |-- CryptoQuestTheShardsOfGenesisStaking.sol
+|   |-- CryptoQuestTheShardsOfGenesisToken.sol
+|   |-- CryptoQuestTheShardsOfGenesisWallet.sol
+|   |-- CryptoQueststTheShardsOfGenesisFarming.sol
+|-- tests/                    # Test files
+|   |-- integration/
+|   |   |-- integration_tests.cpp
+|   |-- system/
+|   |   |-- system_tests.cpp
+|-- tools/scripts/
+|-- CMakeLists.txt            # CMake build configuration
+|-- README.md                 # Project README
 
- ...
-├── xbox-build/
-│   └── ...
-├── .eslintrc.cjs
-├── .gitignore
-├── README.md
-├── index.html
-├── package-lock.json
-├── package.json
-├── vite.config.js
-├── Makefile
 ```
 
 This README now includes detailed installation and build instructions for Unity, PS5, and Xbox, along with the necessary project structure updates.
