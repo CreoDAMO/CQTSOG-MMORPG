@@ -59,366 +59,187 @@ Explore the various contracts that power CryptoQuest:
 ![CQTSOG - A book cover for 'CryptoQuest_ The Shards of Genesis' by Jacque DeGraff  The background features a mystical, ancient world with el](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/0940e554-1383-4bdd-985e-1278000d8c24)
 
 
-## Installation
-To install and run CryptoQuest locally, follow these steps:
+## Project Structure
 
-1. **Clone the repository**:
+```
+cryptoquestmmorpg-dapp
+├── assets/                   # Asset files (models, sounds, textures)
+│   ├── models/
+│   ├── sounds/
+│   └── textures/
+├── build/                    # Build artifacts
+│   └── obj/
+├── cmake/                    # CMake modules and toolchains
+│   ├── modules/
+│   └── toolchains/
+├── docs/                     # Documentation
+├── include/                  # Header files (C++)
+│   ├── CryptoQuest/
+│   └── third_party/
+├── lib/                      # Libraries
+├── scripts/                  # Scripts
+├── src/                      # Source files
+│   ├── ccp/                  # C++ source files
+│   │   ├── GameSessionManager.cpp
+│   │   ├── GameSessionManager.h
+│   │   ├── MainWindow.cpp
+│   │   ├── MainWindow.h
+│   │   ├── MultiplayerGameManager.cpp
+│   │   ├── MultiplayerGameManager.h
+│   │   ├── SmartContractInterface.cpp
+│   │   ├── SmartContractInterface.h
+│   │   ├── SmartContractManager.cpp
+│   │   ├── SmartContractManager.h
+│   │   └── main.cpp
+│   ├── js/                   # JavaScript source files
+│   │   ├── apps/
+│   │   ├── utils/
+│   │   ├── contracts.js
+│   │   ├── App.js
+│   │   ├── components/
+│   │   ├── Game.js
+│   │   ├── context/
+│   │   └── Web3Context.js
+├── smartcontracts/           # Smart contract files (Solidity)
+│   ├── artifacts/
+│   ├── CQTTokenSaleContractsol.sol
+│   ├── CryptoQuestSwap.sol
+│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
+│   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
+│   ├── CryptoQuestTheShardsOfGenesisDAO.sol
+│   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
+│   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
+│   ├── CryptoQuestTheShardsOfGenesisNFT.sol
+│   ├── CryptoQuestTheShardsOfGenesisStaking.sol
+│   ├── CryptoQuestTheShardsOfGenesisToken.sol
+│   ├── CryptoQuestTheShardsOfGenesisWallet.sol
+│   └── CryptoQueststTheShardsOfGenesisFarming.sol
+├── tests/                    # Test files
+│   ├── integration/
+│   │   └── integration_tests.cpp
+│   └── system/
+│       └── system_tests.cpp
+├── tools/scripts/
+├── .github/                  # GitHub configuration files
+├── CMakeLists.txt            # CMake build configuration
+├── LICENSE                   # License file
+├── Makefile                  # Makefile for additional build commands
+├── README.md                 # Project README
+└── package.json              # NPM package configuration
+```
+
+## Build Instructions
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+- CMake (version 3.10 or higher)
+- A compatible C++ compiler
+- Node.js and npm (for JavaScript dependencies)
+
+### Building the Project
+
+1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/your_username/cryptoquest.git
-    cd cryptoquestmmorpg-dapp
+    git clone https://github.com/CreoDAMO/CQTSOG-MMORPG.git
+    cd CQTSOG-MMORPG
     ```
 
-2. **Navigate to the project directory**:
+2. **Run CMake**:
+    - Navigate to the root directory of the project where the `CMakeLists.txt` file is located.
+    - Run the following commands to configure and build the project:
     ```bash
-    cd cryptoquestmmorpg-dapp
+    cmake -S . -B build
+    cmake --build build
     ```
 
-3. **Install dependencies**:
+    This will generate the necessary build files in the `build/` directory and compile the project.
+
+3. **Run the Application**:
+    - After building, you can run the application from the `build` directory:
     ```bash
+    ./build/your_executable_name
+    ```
+
+### Setting Up the Frontend DApp
+
+1. **Install JavaScript Dependencies**:
+    ```bash
+    cd src/js
     npm install
     ```
 
-4. **Run the development server**:
+2. **Start the Development Server**:
+    - Run the following command to start the development server:
     ```bash
     npm start
     ```
 
-## Creating a Front-end DApp
-Creating a front-end DApp using C++ to interact with all 21 smart contracts in this project is a crucial step. Follow these detailed steps to set up the C++ front-end:
+    This will start the frontend DApp, allowing you to interact with the deployed smart contracts.
 
-### Setting Up the C++ Front-end
-1. **Install Necessary C++ Dependencies**:
-    ```bash
-    sudo apt-get install qt5-default
+### Interacting with Deployed Smart Contracts
+
+All smart contracts are compiled and verified. The contract ABIs and addresses are available in the `smartcontracts/artifacts/` directory. 
+
+1. **Configure Web3**:
+    - Update `src/js/utils/contracts.js` with the correct contract addresses and ABIs.
+    - Example:
+    ```javascript
+    import Web3 from 'web3';
+    import ContractABI from './path/to/abi.json';
+
+    const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
+    const contractAddress = '0xYourContractAddress';
+    const contract = new web3.eth.Contract(ContractABI, contractAddress);
+
+    export default contract;
     ```
 
-2. **Create a New C++ Project Structure**:
-    ```bash
-    mkdir -p /path-to-your-project/src /path-to-your-project/include
+2. **Use the Smart Contracts in Your Application**:
+    - Interact with the smart contracts using the configured Web3 instance.
+    - Example usage in `src/js/App.js`:
+    ```javascript
+    import React, { useEffect, useState } from 'react';
+    import contract from './utils/contracts';
+
+    const App = () => {
+        const [data, setData] = useState(null);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                const result = await contract.methods.yourMethod().call();
+                setData(result);
+            };
+
+            fetchData();
+        }, []);
+
+        return (
+            <div>
+                <h1>CryptoQuest: The Shards of Genesis</h1>
+                <p>Data from contract: {data}</p>
+            </div>
+        );
+    };
+
+    export default App;
     ```
-
-3. **Create C++ Source Files**:
-    - **Main Application File (main.cpp)**:
-        ```cpp
-        #include <QApplication>
-        #include "MainWindow.h"
-
-        int main(int argc, char *argv[]) {
-            QApplication app(argc, argv);
-            MainWindow window;
-            window.show();
-            return app.exec();
-        }
-        ```
-
-    - **Main Window Header (MainWindow.h)**:
-        ```cpp
-        #include <QWidget>
-        #include "SmartContractManager.h"
-
-        class MainWindow : public QWidget {
-            Q_OBJECT
-
-        public:
-            MainWindow(QWidget *parent = 0);
-
-        private:
-            SmartContractManager contractManager;
-        };
-        ```
-
-    - **Main Window Implementation (MainWindow.cpp)**:
-        ```cpp
-        #include "MainWindow.h"
-
-        MainWindow::MainWindow(QWidget *parent)
-            : QWidget(parent), contractManager("http://localhost:8545") {
-            contractManager.addContract("Token", "0xTokenContractAddress", "TokenContractABI");
-            contractManager.addContract("GameLogic", "0xGameLogicContractAddress", "GameLogicContractABI");
-            // Setup UI and connect signals to contract methods
-        }
-        ```
-
-    - **Smart Contract Manager Header (SmartContractManager.h)**:
-        ```cpp
-        #include <map>
-        #include <web3cpp.h>
-
-        class SmartContractManager {
-        public:
-            SmartContractManager(const std::string& provider);
-            void addContract(const std::string& name, const std::string& address, const std::string& abi);
-            std::string callMethod(const std::string& name, const std::string& method, const Json::Value& params);
-        private:
-            Web3Client client;
-            std::map<std::string, Contract> contracts;
-        };
-        ```
-
-    - **Smart Contract Manager Implementation (SmartContractManager.cpp)**:
-        ```cpp
-        #include "SmartContractManager.h"
-
-        SmartContractManager::SmartContractManager(const std::string& provider) : client(provider) {}
-
-        void SmartContractManager::addContract(const std::string& name, const std::string& address, const std::string& abi) {
-            contracts[name] = client.loadContract(abi, address);
-        }
-
-        std::string SmartContractManager::callMethod(const std::string& name, const std::string& method, const Json::Value& params) {
-            return contracts[name].call(method, params);
-        }
-        ```
-
-### Building the Project
-1. **Compile the Project**:
-    ```bash
-    qmake && make
-    ./YourAppName
-    ```
-
-### Docker Integration
-1. **Dockerfile**:
-    ```dockerfile
-    FROM ubuntu:20.04
-
-    RUN apt-get update && apt-get install -y \
-        build-essential \
-        qt5-default \
-        && rm -rf /var/lib/apt/lists/*
-
-    WORKDIR /app
-    COPY . /app
-
-    RUN qmake && make
-
-    CMD ["./YourAppName"]
-    ```
-
-2. **Build and Run Docker Container**:
-    ```bash
-    docker build -t cryptoquest-app .
-    docker run -it --rm cryptoquest-app
-    ```
-
-### Makefile
-To streamline the build process, you can use the following Makefile:
-
-```makefile
-# Define variables for paths and compiler options
-UNREAL_PROJECT_PATH := /path/to/your/unreal/project
-UNREAL_BUILD_TOOL := $(UNREAL_PROJECT_PATH)/Engine/Build/BatchFiles/RunUAT.sh
-UNREAL_BUILD_CONFIG := Development
-UNREAL_BUILD_PLATFORM := Win64
-
-CXX := g++
-CXXFLAGS := -std=c++17 -O2
-LDFLAGS := -lweb3cpp -lQt5Widgets
-
-SRC_DIR := src
-INC_DIR := include
-BUILD_DIR := build
-DOCKERFILE := Dockerfile
-
-# Define target names
-UNREAL_BUILD_TARGET := YourUnrealProject
-CPP_BUILD_TARGET := YourAppName
-DOCKER_BUILD_TARGET := cryptoquest-app
-
-# Define source files
-CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
-CPP_OBJECTS := $(CPP_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
-
-# Default target
-all: build_unreal build_cpp docker_build
-
-# Build Unreal Engine project
-build_unreal:
-	@echo "Building Unreal Engine project..."
-	$(UNREAL_BUILD_TOOL) BuildCookRun -project=$(UNREAL_PROJECT_PATH)/$(UNREAL_BUILD_TARGET).uproject -noP4 -platform=$(UNREAL_BUILD_PLATFORM) -clientconfig=$(UNREAL_BUILD_CONFIG) -serverconfig=$(UNREAL_BUILD_CONFIG) -cook -allmaps -build -stage -pak -archive -archivedirectory=$(UNREAL_PROJECT_PATH)/Build
-
-# Build C++ front-end
-build_cpp: $(CPP_OBJECTS)
-	@echo "Building C++ front-end..."
-	$(CXX) $(CPP_OBJECTS) $(LDFLAGS) -o $(BUILD_DIR)/$(CPP_BUILD_TARGET)
-
-# Compile C++ source files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.h
-	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# Docker build
-docker_build:
-	@echo "Building Docker container..."
-	docker build -t $(DOCKER_BUILD_TARGET) -f $(DOCKERFILE) .
-
-# Clean build files
-clean:
-	@echo "Cleaning build files..."
-	rm -rf $(BUILD_DIR)
-	rm -rf $(UNREAL_PROJECT_PATH)/Build
-	docker rmi $(DOCKER_BUILD_TARGET)
-
-# Run Docker container
-docker_run:
-	@echo "Running Docker container..."
-	docker run -it --rm $(DOCKER_BUILD_TARGET)
-
-.PHONY: all build_unreal build_cpp docker_build clean docker_run
-```
-
-## Developing CryptoQuest in Unity
-Follow these steps to build and run CryptoQuest in Unity:
-
-### Prerequisites
-- Unity 2021.1.16f1 or later
-
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your_username/cryptoquest.git
-    cd cryptoquest
-    ```
-
-2. Open the project in Unity:
-    ```bash
-    unity /path/to/your/project
-    ```
-
-3. Install required Unity packages via Package Manager:
-    - Add scoped registry:
-        - Name: `OpenUPM`
-        - URL: `https://package.openupm.com`
-        - Scope(s): `com.walletconnect`
-    - Add packages:
-        ```bash
-        openupm add com.walletconnect.modal
-        openupm add com.walletconnect.core
-        ```
-
-4. Configure project settings and build settings as needed.
-
-5. Build the project:
-    - For Windows:
-        ```bash
-        BuildPipeline.BuildPlayer(scenes, "Build/Windows/CryptoQuest.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
-        ```
-    - For macOS:
-        ```bash
-        BuildPipeline.BuildPlayer(scenes, "Build/macOS/CryptoQuest.app", BuildTarget.StandaloneOSX, BuildOptions.None);
-        ```
-    - For Android:
-        ```bash
-        BuildPipeline.BuildPlayer(scenes, "Build/Android/CryptoQuest.aab", BuildTarget.Android, BuildOptions.None);
-        ```
-
-6. Run the build:
-    ```bash
-    ./Build/Windows/CryptoQuest.exe
-    ```
-
-## Developing CryptoQuest for PS5 and Xbox
-Follow these steps to build and run CryptoQuest for PS5 and Xbox:
-
-### Prerequisites
-- Unity 2021.1.16f1 or later
-- PS5/Xbox SDKs
-
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your_username/cryptoquest.git
-    cd cryptoquest
-    ```
-
-2. Open the project in Unity:
-    ```bash
-    unity /path/to/your/project
-    ```
-
-3. Configure project settings and build settings for PS5 and Xbox as needed.
-
-4. Build the project:
-    - For PS5:
-        ```bash
-        BuildPipeline.BuildPlayer(scenes, "Build/PS5/CryptoQuest.pkg", BuildTarget.PS5, BuildOptions.None);
-        ```
-    - For Xbox:
-        ```bash
-        BuildPipeline.BuildPlayer(scenes, "Build/Xbox/CryptoQuest.xdk", BuildTarget.XboxOne, BuildOptions.None);
-        ```
-
-5. Run the build on the respective console.
-
-## FAQs
-### What is CryptoQuest: The Shards of Genesis?
-CryptoQuest is a blockchain-based MMORPG where players own in-game assets as NFTs.
-
-## Conclusion
-Developing CryptoQuest: The Shards of Genesis in Unity or Unreal Engine 5 merges traditional game development with blockchain technology, creating a unique and immersive gaming experience.
 
 ## Contributing
-We welcome contributions! Follow the guidelines in the `CONTRIBUTING.md` file.
+
+Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
 
 ## License
-CryptoQuest: The Shards of Genesis is licensed under the [MIT License](#).
 
-## Repository Structure
+This project is licensed under the MIT License - see the `LICENSE` file for details.
 
-```plaintext
-/cryptoquestmmorpg-dapp
-|-- assets/                   # Asset files (models, sounds, textures)
-|-- build/                    # Build artifacts
-|-- cmake/                    # CMake modules and toolchains
-|-- docs/                     # Documentation
-|-- include/                  # Header files (C++)
-|-- lib/                      # Libraries
-|-- scripts/                  # Scripts
-|-- src/                      # Source files
-|   |-- ccp/                  # C++ source files
-|   |   |-- GameSessionManager.cpp
-|   |   |-- GameSessionManager.h
-|   |   |-- MainWindow.cpp
-|   |   |-- MainWindow.h
-|   |   |-- MultiplayerGameManager.cpp
-|   |   |-- MultiplayerGameManager.h
-|   |   |-- SmartContractInterface.cpp
-|   |   |-- SmartContractInterface.h
-|   |   |-- SmartContractManager.cpp
-|   |   |-- SmartContractManager.h
-|   |   |-- main.cpp
-|   |-- js/                   # JavaScript source files
-|       |-- apps/
-|       |-- utils/
-|       |-- contracts.js
-|       |-- App.js
-|       |-- components/
-|       |-- Game.js
-|       |-- context/
-|       |-- Web3Context.js
-|-- smartcontracts/           # Smart contract files (Solidity)
-|   |-- artifacts/
-|   |-- CQTTokenSaleContractsol.sol
-|   |-- CryptoQuestSwap.sol
-|   |-- CryptoQuestTheShardsOfGenesisBookNFT.sol
-|   |-- CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
-|   |-- CryptoQuestTheShardsOfGenesisDAO.sol
-|   |-- CryptoQuestTheShardsOfGenesisMMORPG.sol
-|   |-- CryptoQuestTheShardsOfGenesisMarketplace.sol
-|   |-- CryptoQuestTheShardsOfGenesisNFT.sol
-|   |-- CryptoQuestTheShardsOfGenesisStaking.sol
-|   |-- CryptoQuestTheShardsOfGenesisToken.sol
-|   |-- CryptoQuestTheShardsOfGenesisWallet.sol
-|   |-- CryptoQueststTheShardsOfGenesisFarming.sol
-|-- tests/                    # Test files
-|   |-- integration/
-|   |   |-- integration_tests.cpp
-|   |-- system/
-|   |   |-- system_tests.cpp
-|-- tools/scripts/
-|-- CMakeLists.txt            # CMake build configuration
-|-- README.md                 # Project README
+## Acknowledgments
+
+- OpenZeppelin for their smart contract libraries.
+- The blockchain and gaming communities for their ongoing support and inspiration.
+
+For more details, please refer to the documentation in the `docs/` directory.
 
 ```
 
-This README now includes detailed installation and build instructions for Unity, PS5, and Xbox, along with the necessary project structure updates.
+This README.md includes detailed instructions on how to set up the project, build it using CMake, and interact with the already deployed and verified smart contracts. This should provide a comprehensive guide for users to get started with the project.
