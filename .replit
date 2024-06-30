@@ -1,0 +1,14 @@
+modules = ["cpp-clang14", "nodejs-20"]
+compile = "make"
+run = "make build"
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+build = ["sh", "-c", "make"]
+run = ["sh", "-c", "make build"]
+
+[[ports]]
+localPort = 3000
+externalPort = 80
