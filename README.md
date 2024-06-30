@@ -43,7 +43,7 @@ In CryptoQuest: The Shards of Genesis, players explore the mythical realm of Cry
   │   │   ├── manifest.json
   │   │   └── robots.txt
   │   ├── src/
-  │   │   ├── contracts/
+  │   │   ├── smartcontracts/
   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.json
   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
   │   │   │   ├── ... (other contract JSON files)
