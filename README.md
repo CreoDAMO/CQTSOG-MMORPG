@@ -6,6 +6,18 @@
 ## Introduction
 Welcome to CryptoQuest: The Shards of Genesis, an ambitious blockchain-based MMORPG where players embark on an epic journey through the realm of Cryptonia. This open-world universe leverages blockchain technology to provide true ownership of in-game assets through NFTs.
 
+## Table of Contents
+- [Features](#game-features)
+- [Game Overview](explanation)
+- [Repository Structure](#repo-files-directory)
+- [Installation](#installation)
+- [Running the App](#running-the-app)
+- [Building the App](#building-the-app)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [CryptoQuest Token Logo](#cqt-logo)
+- [CryptoQuest The Shards Of Genesis Book NFT Cover](#cqtsog-book-nft-cover)
+
 ## Features
 - **True Ownership**: In CryptoQuest, each in-game asset is a unique NFT.
 - **Decentralized Economy**: A decentralized marketplace for trading assets.
@@ -16,6 +28,174 @@ Welcome to CryptoQuest: The Shards of Genesis, an ambitious blockchain-based MMO
 
 ## Game Overview
 In CryptoQuest: The Shards of Genesis, players explore the mythical realm of Cryptonia, uncovering secrets and battling creatures in a quest to reunify the shards of Genesis.
+
+### Repository Structure
+
+```
+/CQTSOG-MMORPG-1/
+  ├── .deps/
+  ├── cryptoquestmmorpg-dapp/
+  │   ├── public/
+  │   │   ├── favicon.ico
+  │   │   ├── index.html
+  │   │   ├── logo192.png
+  │   │   ├── logo512.png
+  │   │   ├── manifest.json
+  │   │   └── robots.txt
+  │   ├── src/
+  │   │   ├── contracts/
+  │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.json
+  │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
+  │   │   │   ├── ... (other contract JSON files)
+  │   │   ├── artifacts/
+  │   │   │   ├── build-info/
+  │   │   │   │   └── ... (build info files)
+  │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.json
+  │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
+  │   │   │   ├── ... (other artifacts JSON files)
+  │   │   ├── components/
+  │   │   │   ├── App.js
+  │   │   │   ├── Game.js
+  │   │   │   ├── Web3Context.js
+  │   │   │   ├── contracts.js
+  │   │   │   ├── web3Modal.js
+  │   │   ├── styles/
+  │   │   │   ├── App.css
+  │   │   │   ├── index.css
+  │   │   ├── index.js
+  │   │   ├── reportWebVitals.js
+  │   │   ├── setupTests.js
+  │   ├── .gitignore
+  │   ├── README.md
+  │   ├── package-lock.json
+  │   ├── package.json
+  │   └── LICENSE
+  ├── .replit
+  ├── Makefile
+  ├── README.md
+  ├── package-lock.json
+  ├── package.json
+  └── node_modules/
+```
+
+### Explanation
+
+1. **Contracts Directory**:
+   - The `contracts/` directory under `src/` should store the ABI JSON files of your deployed contracts for easy integration.
+
+2. **Artifacts Directory**:
+   - The `artifacts/` directory is for build artifacts that include the contract ABIs and metadata. This helps in keeping track of the build process.
+
+3. **Components Directory**:
+   - A new `components/` directory is added under `src/` for organizing React components. Files like `App.js`, `Game.js`, `Web3Context.js`, `contracts.js`, and `web3Modal.js` should reside here.
+
+4. **Styles Directory**:
+   - A new `styles/` directory under `src/` is created for organizing CSS files (`App.css`, `index.css`).
+
+5. **Public Directory**:
+   - Static assets like `favicon.ico`, `index.html`, and logos remain in the `public/` directory.
+
+### Example `contracts.js`
+
+Ensure `contracts.js` properly exports the necessary contract ABIs.
+
+```javascript
+import CryptoQuestTheShardsOfGenesisMMORPG from './contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
+import CryptoQuestTheShardsOfGenesisToken from './contracts/CryptoQuestTheShardsOfGenesisToken.json';
+// Add other contract imports as needed
+
+const CONTRACTS = {
+  CryptoQuestTheShardsOfGenesisMMORPG,
+  CryptoQuestTheShardsOfGenesisToken,
+  // Add other contracts here
+};
+
+export default CONTRACTS;
+```
+
+### Example `index.js`
+
+Ensure `index.js` initializes `web3` correctly and renders the React application.
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import './styles/index.css';
+
+// Import Web3
+import Web3 from 'web3';
+
+// Import contract ABIs
+import CryptoQuestTheShardsOfGenesisMMORPG from './contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
+import CryptoQuestTheShardsOfGenesisToken from './contracts/CryptoQuestTheShardsOfGenesisToken.json';
+// Add other contract imports as needed
+
+// Initialize Web3
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+export { web3, CryptoQuestTheShardsOfGenesisMMORPG, CryptoQuestTheShardsOfGenesisToken };
+```
+
+
+## Installation
+
+To install the dependencies, run:
+
+```sh
+npm install
+```
+
+## Running the App
+
+To start the app in development mode, run:
+
+```sh
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes. You may also see any lint errors in the console.
+
+## Testing
+
+To launch the test runner in interactive watch mode, run:
+
+```sh
+npm test
+```
+
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+## Building the App
+
+To build the app for production to the `build` folder, run:
+
+```sh
+npm run build
+```
+
+It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified, and the filenames include the hashes. Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Ejecting
+
+**Note: this is a one-way operation. Once you eject, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc.) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point, you're on your own.
+
+```sh
+npm run eject
+```
 
 ## Contracts
 ### Verified Contracts Linked On Polygonscan & Tenderly
@@ -57,453 +237,3 @@ Explore the various contracts that power CryptoQuest:
 # CryptoQuest Book NFT:
 
 ![CQTSOG - A book cover for 'CryptoQuest_ The Shards of Genesis' by Jacque DeGraff  The background features a mystical, ancient world with el](https://github.com/CreoDAMO/CQTSOG-MMORPG/assets/151800081/0940e554-1383-4bdd-985e-1278000d8c24)
-
-
-### Repository Structure
-
-```plaintext
-CryptoQuest-Shards-of-Genesis-MMORPG/
-├── .deps/
-│   └── npm/
-│       └── @openzeppelin/
-│           └── contracts-upgradeable/
-│               ├── access/
-│               │   ├── AccessControlUpgradeable.sol
-│               │   └── OwnableUpgradeable.sol
-│               ├── governance/
-│               │   ├── artifacts/
-│               │   │   ├── build-info/
-│               │   │   │   ├── aab2307ecd5276504e169b3aca6086d1.json
-│               │   │   │   ├── TimelockControllerUpgradeable.json
-│               │   │   │   └── TimelockControllerUpgradeable_metadata.json
-│               │   ├── extensions/
-│               │   │   ├── GovernorCountingSimpleUpgradeable.sol
-│               │   │   ├── GovernorSettingsUpgradeable.sol
-│               │   │   ├── GovernorStorageUpgradeable.sol
-│               │   │   ├── GovernorTimelockControlUpgradeable.sol
-│               │   │   ├── GovernorVotesQuorumFractionUpgradeable.sol
-│               │   │   └── GovernorVotesUpgradeable.sol
-│               │   └── utils/
-│               │       ├── VotesUpgradeable.sol
-│               │       ├── GovernorUpgradeable.sol
-│               │       └── TimelockControllerUpgradeable.sol
-│               ├── proxy/
-│               │   └── utils/
-│               │       ├── Initializable.sol
-│               │       └── UUPSUpgradeable.sol
-│               ├── security/
-│               │   └── PausableUpgradeable.sol
-│               └── token/
-│                   ├── ERC1155/
-│                   │   ├── extensions/
-│                   │   │   ├── ERC1155BurnableUpgradeable.sol
-│                   │   │   ├── ERC1155PausableUpgradeable.sol
-│                   │   │   └── ERC1155SupplyUpgradeable.sol
-│                   │   └── utils/
-│                   │       ├── ERC1155HolderUpgradeable.sol
-│                   │       └── ERC1155Upgradeable.sol
-│                   │       └── IERC1155Upgradeable.sol
-│                   ├── ERC20/
-│                   │   ├── extensions/
-│                   │   │   ├── ERC20BurnableUpgradeable.sol
-│                   │   │   ├── ERC20FlashMintUpgradeable.sol
-│                   │   │   ├── ERC20PausableUpgradeable.sol
-│                   │   │   └── ERC20PermitUpgradeable.sol
-│                   │   └── ERC20Upgradeable.sol
-│                   │   └── IERC20Upgradeable.sol
-│                   ├── ERC721/
-│                   │   ├── extensions/
-│                   │   │   ├── ERC721BurnableUpgradeable.sol
-│                   │   │   ├── ERC721EnumerableUpgradeable.sol
-│                   │   │   ├── ERC721PausableUpgradeable.sol
-│                   │   │   └── ERC721URIStorageUpgradeable.sol
-│                   │   └── utils/
-│                   │       ├── ERC721HolderUpgradeable.sol
-│                   │       └── ERC721Upgradeable.sol
-│                   │       └── IERC721Upgradeable.sol
-│               └── utils/
-│                   ├── cryptography/
-│                   │   └── EIP712Upgradeable.sol
-│                   ├── introspection/
-│                   │   ├── ERC165Upgradeable.sol
-│                   │   └── IERC165Upgradeable.sol
-│                   ├── AddressUpgradeable.sol
-│                   ├── ContextUpgradeable.sol
-│                   ├── CountersUpgradeable.sol
-│                   └── NoncesUpgradeable.sol
-│                   └── PausableUpgradeable.sol
-│           └── contracts-upgradeable@4.9.3/
-│               ├── access/
-│               │   ├── AccessControlUpgradeable.sol
-│               │   └── IAccessControlUpgradeable.sol
-│               ├── governance/
-│               │   └── utils/
-│               │       ├── IVotesUpgradeable.sol
-│               │       └── VotesUpgradeable.sol
-│               ├── interfaces/
-│               │   ├── IERC165Upgradeable.sol
-│               │   ├── IERC1967Upgradeable.sol
-│               │   ├── IERC4906Upgradeable.sol
-│               │   ├── IERC5267Upgradeable.sol
-│               │   ├── IERC5805Upgradeable.sol
-│               │   ├── IERC6372Upgradeable.sol
-│               │   ├── IERC721Upgradeable.sol
-│               │   └── draft-IERC1822Upgradeable.sol
-│               ├── proxy/
-│               │   ├── ERC1967/
-│               │   │   └── ERC1967UpgradeUpgradeable.sol
-│               │   └── beacon/
-│               │       └── IBeaconUpgradeable.sol
-│               ├── utils/
-│               │   ├── Initializable.sol
-│               │   └── UUPSUpgradeable.sol
-│               ├── security/
-│               │   └── PausableUpgradeable.sol
-│               ├── token/
-│               │   └── ERC721/
-│               │       ├── extensions/
-│               │       │   ├── ERC721BurnableUpgradeable.sol
-│               │       │   ├── ERC721EnumerableUpgradeable.sol
-│               │       │   ├── ERC721PausableUpgradeable.sol
-│               │       │   ├── ERC721URIStorageUpgradeable.sol
-│               │       │   ├── ERC721VotesUpgradeable.sol
-│               │       │   └── IERC721EnumerableUpgradeable.sol
-│               │       │   └── IERC721MetadataUpgradeable.sol
-│               │       ├── ERC721Upgradeable.sol
-│               │       ├── IERC721ReceiverUpgradeable.sol
-│               │       └── IERC721Upgradeable.sol
-│               ├── utils/
-│               │   ├── cryptography/
-│               │   │   ├── ECDSAUpgradeable.sol
-│               │   │   └── EIP712Upgradeable.sol
-│               │   ├── introspection/
-│               │   │   ├── ERC165Upgradeable.sol
-│               │   │   └── IERC165Upgradeable.sol
-│               │   ├── math/
-│               │   │   ├── MathUpgradeable.sol
-│               │   │   ├── SafeCastUpgradeable.sol
-│               │   │   └── SignedMathUpgradeable.sol
-│               │   ├── AddressUpgradeable.sol
-│               │   ├── CheckpointsUpgradeable.sol
-│               │   ├── ContextUpgradeable.sol
-│               │   ├── CountersUpgradeable.sol
-│               │   ├── StorageSlotUpgradeable.sol
-│               │   └── StringsUpgradeable.sol
-├── contracts/
-│   ├── access/
-│   │   └── IAccessControl.sol
-│   ├── governance/
-│   │   └── utils/
-│   │       ├── IVotes.sol
-│   │       └── IGovernor.sol
-│   ├── interfaces/
-│   │   ├── IERC1271.sol
-│   │   ├── IERC165.sol
-│   │   ├── IERC3156FlashBorrower.sol
-│   │   ├── IERC3156FlashLender.sol
-│   │   ├── IERC4906.sol
-│   │   ├── IERC5267.sol
-│   │   ├── IERC5805.sol
-│   │   ├── IERC6372.sol
-│   │   ├── IERC721.sol
-│   │   └── draft-IERC1822.sol
-│   │   └── draft-IERC6093.sol
-│   ├── proxy/
-│   │   └── ERC1967/
-│   │       ├── ERC1967Utils.sol
-│   │       └── beacon/
-│   │           └── IBeacon.sol
-│   ├── token/
-│   │   ├── ERC1155/
-│   │   │   ├── extensions/
-│   │   │   │   ├── IERC1155MetadataURI.sol
-│   │   │   │   └── IERC1155.sol
-│   │   │   └── IERC1155Receiver.sol
-│   │   ├── ERC20/
-│   │   │   ├── extensions/
-│   │   │   │   ├── IERC20Metadata.sol
-│   │   │   │   └── IERC20Permit.sol
-│   │   │   ├── IERC20.sol
-│   │   ├── ERC721/
-│   │   │   └── utils/
-│   └── utils/
-│       ├── Article/
-│       ├── build/
-│       │   ├── CMakeFiles/
-│       │   │   ├── 3.27.7/
-│       │   │   │   ├── CompilerIdC/
-│       │   │   │   │   ├── CMake
-
-CCompilerId.c
-│       │   │   │   │   ├── a.out
-│       │   │   │   │   └── CompilerIdCXX/
-│       │   │   │   │       ├── CMakeCXXCompilerId.cpp
-│       │   │   │   │       └── a.out
-│       │   │   ├── CMakeCCompiler.cmake
-│       │   │   ├── CMakeCXXCompiler.cmake
-│       │   │   ├── CMakeDetermineCompilerABI_C.bin
-│       │   │   ├── CMakeDetermineCompilerABI_CXX.bin
-│       │   │   ├── CMakeSystem.cmake
-│       │   │   └── CMakeConfigureLog.yaml
-│       │   └── cmake.check_cache
-│       ├── CMakeCache.txt
-├── cryptoquest/
-│   ├── cryptoquestmmorpg-dapp/
-│   │   ├── assets/
-│   │   │   ├── models/
-│   │   │   │   └── .gitkeep
-│   │   │   ├── sounds/
-│   │   │   │   └── .gitkeep
-│   │   │   └── textures/
-│   │   │       └── .gitkeep
-│   │   ├── build/
-│   │   │   └── obj/
-│   │   │       └── .gitkeep
-│   │   ├── scripts/
-│   │   │   └── .gitkeep
-│   │   ├── cmake/
-│   │   │   ├── modules/
-│   │   │   │   └── .gitkeep
-│   │   │   ├── toolchains/
-│   │   │   │   ├── .gitkeep
-│   │   │   │   ├── Toolchain-arm64.cmake
-│   │   │   │   └── Toolchain-x86_64.cmake
-│   │   │   ├── CMakeLists.txt
-│   │   └── docs/
-│   │       └── README.md
-│   ├── include/
-│   │   └── CryptoQuest/
-│   │       └── .gitkeep
-│   ├── lib/
-│   │   └── .gitkeep
-│   ├── src/
-│   │   ├── ccp/
-│   │   │   ├── GameSessionManager.cpp
-│   │   │   ├── MainWindow.cpp
-│   │   │   ├── MultiplayerGameManager.cpp
-│   │   │   ├── SmartContractInterface.cpp
-│   │   │   ├── SmartContractManager.cpp
-│   │   │   └── main.cpp
-│   │   ├── header/
-│   │   │   ├── GameSessionManager.h
-│   │   │   ├── MainWindow.h
-│   │   │   ├── MultiplayerGameManager.h
-│   │   │   ├── SmartContractInterface.h
-│   │   │   ├── SmartContractManager.h
-│   │   │   └── .gitkeep
-│   ├── js/
-│   │   ├── apps/
-│   │   │   ├── utils/
-│   │   │   │   └── contracts.js
-│   │   │   ├── App.js
-│   │   │   ├── components/
-│   │   │   │   ├── Game.js
-│   │   │   ├── context/
-│   │   │   │   ├── Web3Context.js
-│   │   │   ├── contracts/
-│   │   │   │   ├── index.js
-│   │   │   │   ├── web3Modal.js
-│   │   │   ├── smartcontracts/
-│   │   │   │   ├── artifacts/
-│   │   │   │   │   ├── build-info/
-│   │   │   │   │   │   ├── 023fe5e39d2e80373429af963b312257.json
-│   │   │   │   │   │   ├── 19f947929ee77678aaa883e948224616.json
-│   │   │   │   │   │   ├── 349b6770f47943c06b3a5a6943368476.json
-│   │   │   │   │   │   ├── 41b4a0e1f5ff43c5351fa3d2871a23e9.json
-│   │   │   │   │   │   ├── 49e2b8d02672f67f13e34b6ae1933099.json
-│   │   │   │   │   │   ├── 55c00c2af517a1023df52e66779b759b.json
-│   │   │   │   │   │   ├── 658dab6b779d8b5d441eb69bf41c5cd0.json
-│   │   │   │   │   │   ├── 71ab3ccb633467b67d033387ef7a2cc4.json
-│   │   │   │   │   │   ├── 972bdc9997eef260b73b477698da35e4.json
-│   │   │   │   │   │   ├── b07d6966f87fbe94a617b54ace233e52.json
-│   │   │   │   │   │   ├── d0b24742fa78ca2d3f97920f0d48c859.json
-│   │   │   │   │   │   ├── db4643b0199824c5db052bec35f85877.json
-│   │   │   │   │   ├── CQTTokenSaleContract.json
-│   │   │   │   │   ├── CQTTokenSaleContract_metadata.json
-│   │   │   │   │   ├── CryptoQuestShardsOfGenesisFarming.json
-│   │   │   │   │   ├── CryptoQuestShardsOfGenesisFarming_metadata.json
-│   │   │   │   │   ├── CryptoQuestSwap.json
-│   │   │   │   │   ├── CryptoQuestSwap_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesis1155.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesis1155_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookPublishing_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERC721_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisERCNFT_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken_metadata.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet_metadata.json
-│   │   │   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
-│   │   │   │   │   ├── CryptoQuest_TheShardsOfGenesisDAO_metadata.json
-│   │   │   │   │   ├── IDAO.json
-│   │   │   │
-
-   │   ├── IDAO_metadata.json
-│   │   │   │   │   ├── IERC1155.json
-│   │   │   │   │   ├── IERC1155_metadata.json
-│   │   │   │   │   ├── IERC20.json
-│   │   │   │   │   ├── IERC20_metadata.json
-│   │   │   │   │   ├── IERC721.json
-│   │   │   │   │   ├── IERC721_metadata.json
-│   │   │   │   │   ├── IFarming.json
-│   │   │   │   │   ├── IFarming_metadata.json
-│   │   │   │   │   ├── IStaking.json
-│   │   │   │   │   ├── IStaking_metadata.json
-│   │   │   │   │   ├── CQTTokenSaleContractsol.sol
-│   │   │   │   │   ├── CryptoQuestSwap.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisDAO.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisNFT.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisStaking.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.sol
-│   │   │   │   │   ├── CryptoQuestTheShardsOfGenesisWallet.sol
-│   │   │   │   │   └── CryptoQueststTheShardsOfGenesisFarming.sol
-│   ├── tests/
-│   │   ├── integration/
-│   │   │   ├── integration_tests.cpp
-│   │   ├── system/
-│   │   │   ├── system_tests.cpp
-│   ├── tools/
-│   │   ├── scripts/
-│   │   │   └── .gitkeep
-│   ├── README.md
-│   ├── node_modules/
-│   ├── .replit
-│   ├── CMakeLists.txt
-│   ├── LICENSE
-│   ├── Makefile
-│   ├── README.md
-│   ├── package-lock.json
-│   ├── package.json
-│   └── replit.nix
-```
-## Build Instructions
-
-### Prerequisites
-
-Ensure you have the following installed on your system:
-- CMake (version 3.10 or higher)
-- A compatible C++ compiler
-- Node.js and npm (for JavaScript dependencies)
-
-### Building the Project
-
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/CreoDAMO/CQTSOG-MMORPG.git
-    cd CQTSOG-MMORPG
-    ```
-
-2. **Run CMake**:
-    - Navigate to the root directory of the project where the `CMakeLists.txt` file is located.
-    - Run the following commands to configure and build the project:
-    ```bash
-    cmake -S . -B build
-    cmake --build build
-    ```
-
-    This will generate the necessary build files in the `build/` directory and compile the project.
-
-3. **Run the Application**:
-    - After building, you can run the application from the `build` directory:
-    ```bash
-    ./build/your_executable_name
-    ```
-
-### Setting Up the Frontend DApp
-
-1. **Install JavaScript Dependencies**:
-    ```bash
-    cd src/js
-    npm install
-    ```
-
-2. **Start the Development Server**:
-    - Run the following command to start the development server:
-    ```bash
-    npm start
-    ```
-
-    This will start the frontend DApp, allowing you to interact with the deployed smart contracts.
-
-### Interacting with Deployed Smart Contracts
-
-All smart contracts are compiled and verified. The contract ABIs and addresses are available in the `smartcontracts/artifacts/` directory. 
-
-1. **Configure Web3**:
-    - Update `src/js/utils/contracts.js` with the correct contract addresses and ABIs.
-    - Example:
-    ```javascript
-    import Web3 from 'web3';
-    import ContractABI from './path/to/abi.json';
-
-    const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
-    const contractAddress = '0xYourContractAddress';
-    const contract = new web3.eth.Contract(ContractABI, contractAddress);
-
-    export default contract;
-    ```
-
-2. **Use the Smart Contracts in Your Application**:
-    - Interact with the smart contracts using the configured Web3 instance.
-    - Example usage in `src/js/App.js`:
-    ```javascript
-    import React, { useEffect, useState } from 'react';
-    import contract from './utils/contracts';
-
-    const App = () => {
-        const [data, setData] = useState(null);
-
-        useEffect(() => {
-            const fetchData = async () => {
-                const result = await contract.methods.yourMethod().call();
-                setData(result);
-            };
-
-            fetchData();
-        }, []);
-
-        return (
-            <div>
-                <h1>CryptoQuest: The Shards of Genesis</h1>
-                <p>Data from contract: {data}</p>
-            </div>
-        );
-    };
-
-    export default App;
-    ```
-
-## Contributing
-
-Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details.
-
-## Acknowledgments
-
-- OpenZeppelin for their smart contract libraries.
-- The blockchain and gaming communities for their ongoing support and inspiration.
-
-For more details, please refer to the documentation in the `docs/` directory.
-
-```
-
-This README.md includes detailed instructions on how to set up the project, build it using CMake, and interact with the already deployed and verified smart contracts. This should provide a comprehensive guide for users to get started with the project.
