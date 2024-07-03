@@ -1,0 +1,6 @@
+kafka-python
+pyspark
+cryptography
+flask
+torch
+transformers
