@@ -32,134 +32,157 @@ In CryptoQuest: The Shards of Genesis, players explore the mythical realm of Cry
 ### Repository Structure
 
 ```
-/CQTSOG-MMORPG-1/
-  ├── .deps/
-  ├── cryptoquestmmorpg-dapp/
-  │   ├── public/
-  │   │   ├── favicon.ico
-  │   │   ├── index.html
-  │   │   ├── logo192.png
-  │   │   ├── logo512.png
-  │   │   ├── manifest.json
-  │   │   └── robots.txt
-  │   ├── src/
-  │   │   ├── smartcontracts/
-  │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.json
-  │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
-  │   │   │   ├── ... (other contract JSON files)
-  │   │   ├── artifacts/
-  │   │   │   ├── build-info/
-  │   │   │   │   └── ... (build info files)
-  │   │   │   ├── CryptoQuestTheShardsOfGenesisMMORPG.json
-  │   │   │   ├── CryptoQuestTheShardsOfGenesisToken.json
-  │   │   │   ├── ... (other artifacts JSON files)
-  │   │   ├── components/
-  │   │   │   ├── App.js
-  │   │   │   ├── Game.js
-  │   │   │   ├── Web3Context.js
-  │   │   │   ├── contracts.js
-  │   │   │   ├── web3Modal.js
-  │   │   ├── styles/
-  │   │   │   ├── App.css
-  │   │   │   ├── index.css
-  │   │   ├── index.js
-  │   │   ├── reportWebVitals.js
-  │   │   ├── setupTests.js
-  │   ├── .gitignore
-  │   ├── README.md
-  │   ├── package-lock.json
-  │   ├── package.json
-  │   └── LICENSE
-  ├── .replit
-  ├── Makefile
-  ├── README.md
-  ├── package-lock.json
-  ├── package.json
-  └── node_modules/
+cryptoquestmmorpg-dapp/
+├── ai_models/
+│   ├── model_fine_tuning.py
+│   ├── model_quantization.py
+├── contracts/
+│   ├── artifacts/
+│   │   ├── build-info/
+│   │   ├── CQTTokenSaleContract.json
+│   │   ├── CryptoQuestShardsOfGenesisFarming.json
+│   │   ├── CryptoQuestSwap.json
+│   │   ├── CryptoQuestTheShardsOfGenesis1155.json
+│   │   ├── CryptoQuestTheShardsOfGenesisBookNFT.json
+│   │   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.json
+│   │   ├── CryptoQuestTheShardsOfGenesisERC721.json
+│   │   ├── CryptoQuestTheShardsOfGenesisERCNFT.json
+│   │   ├── CryptoQuestTheShardsOfGenesisMMPORPG.json
+│   │   ├── CryptoQuestTheShardsOfGenesisMarketplace.json
+│   │   ├── CryptoQuestTheShardsOfGenesisStaking.json
+│   │   ├── CryptoQuestTheShardsOfGenesisToken.json
+│   │   ├── CryptoQuestTheShardsOfGenesisWallet.json
+│   │   ├── CryptoQuest_TheShardsOfGenesisDAO.json
+│   │   ├── IDAO.json
+│   │   ├── IERC1155.json
+│   │   ├── IERC20.json
+│   │   ├── IERC721.json
+│   │   ├── IFarming.json
+│   │   ├── IStaking.json
+│   ├── CQTTokenSaleContractsol.sol
+│   ├── CryptoQuestSwap.sol
+│   ├── CryptoQuestTheShardsOfGenesisBookNFT.sol
+│   ├── CryptoQuestTheShardsOfGenesisCollectionNFTs.sol
+│   ├── CryptoQuestTheShardsOfGenesisDAO.sol
+│   ├── CryptoQuestTheShardsOfGenesisMMORPG.sol
+│   ├── CryptoQuestTheShardsOfGenesisMarketplace.sol
+│   ├── CryptoQuestTheShardsOfGenesisNFT.sol
+│   ├── CryptoQuestTheShardsOfGenesisStaking.sol
+│   ├── CryptoQuestTheShardsOfGenesisToken.sol
+│   ├── CryptoQuestTheShardsOfGenesisWallet.sol
+│   ├── CryptoQueststTheShardsOfGenesisFarming.sol
+├── data_processing/
+│   ├── data_lakehouse.py
+│   ├── encryption.py
+│   ├── kafka_consumer.py
+│   ├── rbac.py
+│   ├── snowflake_aggregation.py
+├── public/
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+├── src/
+│   ├── components/
+│   │   ├── Character.js
+│   │   ├── ConnectWalletButton.js
+│   │   ├── Game.js
+│   │   ├── TokenActions.js
+│   ├── context/
+│   │   ├── Web3Context.js
+│   ├── hooks/
+│   │   ├── useCryptoQuestMMORPG-Dapp.js
+│   ├── smartcontracts/
+│   │   ├── artifacts/
+│   ├── styles/
+│   │   ├── App.css
+│   │   ├── index.css
+│   ├── utils/
+│   │   ├── web3Modal.js
+│   ├── App.js
+│   ├── contracts.js
+│   ├── index.js
+│   ├── logo.svg
+│   ├── reportWebVitals.js
+│   ├── setupTests.js
+├── .gitignore
+├── .replit
+├── LICENSE
+├── Makefile
+├── README.md
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── tailwind.config.js
 ```
 
-### Explanation
+### Step-by-Step Integration
 
-1. **Contracts Directory**:
-   - The `contracts/` directory under `src/` should store the ABI JSON files of your deployed contracts for easy integration.
+1. **Create the Directories and Files:**
 
-2. **Artifacts Directory**:
-   - The `artifacts/` directory is for build artifacts that include the contract ABIs and metadata. This helps in keeping track of the build process.
+   Manually create the directories and files as per the new structure or use terminal commands.
 
-3. **Components Directory**:
-   - A new `components/` directory is added under `src/` for organizing React components. Files like `App.js`, `Game.js`, `Web3Context.js`, `contracts.js`, and `web3Modal.js` should reside here.
+2. **Move Existing Files:**
 
-4. **Styles Directory**:
-   - A new `styles/` directory under `src/` is created for organizing CSS files (`App.css`, `index.css`).
+   Move your existing files into their respective new locations within the new structure.
 
-5. **Public Directory**:
-   - Static assets like `favicon.ico`, `index.html`, and logos remain in the `public/` directory.
+3. **Add New Scripts:**
 
-### Example `contracts.js`
+   Place the provided Python scripts into the `data_processing` and `ai_models` directories.
 
-Ensure `contracts.js` properly exports the necessary contract ABIs.
+4. **Ensure Dependencies:**
 
-```javascript
-import CryptoQuestTheShardsOfGenesisMMORPG from './contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
-import CryptoQuestTheShardsOfGenesisToken from './contracts/CryptoQuestTheShardsOfGenesisToken.json';
-// Add other contract imports as needed
+   Update your `requirements.txt` with the necessary Python packages:
 
-const CONTRACTS = {
-  CryptoQuestTheShardsOfGenesisMMORPG,
-  CryptoQuestTheShardsOfGenesisToken,
-  // Add other contracts here
-};
+   ```sh
+   kafka-python
+   pyspark
+   cryptography
+   flask
+   torch
+   transformers
+   ```
 
-export default CONTRACTS;
-```
+   Install the dependencies:
 
-### Example `index.js`
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-Ensure `index.js` initializes `web3` correctly and renders the React application.
+5. **Update `package.json`:**
 
-```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import './styles/index.css';
+   Ensure all your npm dependencies are up-to-date as discussed before.
 
-// Import Web3
-import Web3 from 'web3';
+6. **Run Data Processing and AI/ML Scripts:**
 
-// Import contract ABIs
-import CryptoQuestTheShardsOfGenesisMMORPG from './contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
-import CryptoQuestTheShardsOfGenesisToken from './contracts/CryptoQuestTheShardsOfGenesisToken.json';
-// Add other contract imports as needed
+   Execute the scripts as needed for data processing and AI model operations.
 
-// Initialize Web3
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+### Running the Application
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+1. **Start the React Application:**
 
-export { web3, CryptoQuestTheShardsOfGenesisMMORPG, CryptoQuestTheShardsOfGenesisToken };
-```
+   ```sh
+   npm start
+   ```
 
+2. **Execute Data Processing Scripts:**
 
-## Installation
+   ```sh
+   python data_processing/kafka_consumer.py
+   python data_processing/data_lakehouse.py
+   python data_processing/snowflake_aggregation.py
+   python data_processing/encryption.py
+   python data_processing/rbac.py
+   ```
 
-To install the dependencies, run:
+3. **Run AI/ML Scripts:**
 
-```sh
-npm install
-```
-
-## Running the App
-
-To start the app in development mode, run:
-
-```sh
-npm start
-```
+   ```sh
+   python ai_models/model_fine_tuning.py
+   python ai_models/model_quantization.py
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes. You may also see any lint errors in the console.
 
