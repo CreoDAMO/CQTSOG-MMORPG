@@ -1,13 +1,13 @@
-modules = ["web", "nodejs-20"]
+modules = ["nodejs-20", "python-3.10", "web"]
 compile = "make"
-run = "make build"
+run = "make start"
 
 [nix]
 channel = "stable-23_11"
 
 [deployment]
 build = ["sh", "-c", "make"]
-run = ["sh", "-c", "make build"]
+run = ["sh", "-c", "make start"]
 
 [[ports]]
 localPort = 3000
