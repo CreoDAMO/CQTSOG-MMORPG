@@ -37,4 +37,4 @@ def post_data():
     return jsonify({'data': 'Data has been written'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
