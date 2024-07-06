@@ -1,9 +1,9 @@
-modules = ["nodejs-20", "python-3.10", "web"]
+modules = ["web", "nodejs-20", "python-3.12"]
 compile = "make"
 run = "make start"
 
 [nix]
-channel = "stable-23_11"
+channel = "stable-24_05"
 
 [deployment]
 build = ["sh", "-c", "make"]
