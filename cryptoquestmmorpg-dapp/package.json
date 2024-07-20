@@ -1,38 +1,41 @@
 {
-  "name": "cryptoquestmmorpg-dapp",
+  "name": "cryptoquest-the-shards-of-genesis",
   "version": "1.0.0",
+  "description": "CryptoQuest: The Shards of Genesis is an ambitious blockchain-based MMORPG where players embark on an epic journey through the realm of Cryptonia.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CreoDAMO/CQTSOG-MMORPG.git"
+  },
+  "author": "Jacque Antoine DeGraff",
+  "license": "MIT",
   "dependencies": {
-    "@testing-library/jest-dom": "^6.4.6",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.5.2",
-    "@web3-react/core": "8.2.3",
+    "@openzeppelin/contracts": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1",
-    "tailwindcss": "^3.4.4",
-    "concurrently": "8.2.2",
-    "http-proxy-middleware": "3.0.0"
+    "react-scripts": "5.0.1",
+    "web3": "^1.5.2"
   },
   "devDependencies": {
-    "eslint": "9.7.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "3.3.3"
+    "eslint": "^9.7.0",
+    "babel-eslint": "^10.1.0"
   },
-  "scripts": {
-    "start": "concurrently \"cd landing-page && npm start\" \"cd dapp-frontend && npm start\"",
-    "build": "cd landing-page && npm run build && cd ../dapp-frontend && npm run build",
-    "test": "cd landing-page && npm test && cd ../dapp-frontend && npm test",
-    "eject": "cd landing-page && npm run eject && cd ../dapp-frontend && npm run eject",
-    "lint": "eslint 'src/**/*.{js,jsx}'",
-    "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'",
-    "preinstall": "npx npm-force-resolutions"
-  },
-  "resolutions": {
-    "nth-check": "^2.0.1"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
