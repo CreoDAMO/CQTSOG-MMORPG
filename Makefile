@@ -26,7 +26,6 @@ clean:
 	@rm -rf $(APP_NAME)/node_modules
 	@rm -f $(APP_NAME)/package-lock.json
 
-# Custom Commands
 lint:
 	@cd $(APP_NAME) && npm run lint
 
