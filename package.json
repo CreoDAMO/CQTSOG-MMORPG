@@ -10,7 +10,9 @@
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
     "tailwindcss": "^3.4.4",
-    "web-vitals": "^4.2.1"
+    "web-vitals": "^4.2.1",
+    "concurrently": "^7.3.0",  // Added concurrently
+    "http-proxy-middleware": "^2.0.1"  // Added http-proxy-middleware for proxying requests
   },
   "devDependencies": {
     "eslint": "^8.38.0",
@@ -23,10 +25,10 @@
     "prettier": "^2.8.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "concurrently \"cd landing-page && npm start\" \"cd dapp-frontend && npm start\"",
+    "build": "cd landing-page && npm run build && cd ../dapp-frontend && npm run build",
+    "test": "cd landing-page && npm test && cd ../dapp-frontend && npm test",
+    "eject": "cd landing-page && npm run eject && cd ../dapp-frontend && npm run eject",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'",
     "preinstall": "npx npm-force-resolutions"

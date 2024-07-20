@@ -1,36 +1,46 @@
-# Makefile for setting up the cryptoquestmmorpg-dapp project
+# Makefile for setting up the combined project
 
 # Variables
-APP_NAME = cryptoquestmmorpg-dapp
+LANDING_PAGE = landing-page
+DAPP_FRONTEND = dapp-frontend
 
 # Commands
 create-react-app:
-	@npx create-react-app $(APP_NAME)
+	@npx create-react-app $(LANDING_PAGE)
+	@npx @0xpolygon/dapp-launchpad init $(DAPP_FRONTEND)
 
 install-dependencies:
-	@cd $(APP_NAME) && npm install
+	@cd $(LANDING_PAGE) && npm install
+	@cd $(DAPP_FRONTEND) && npm install
 
 start:
-	@cd $(APP_NAME) && npm start
+	@concurrently "cd $(LANDING_PAGE) && npm start" "cd $(DAPP_FRONTEND) && npm start"
 
 build:
-	@cd $(APP_NAME) && npm run build
+	@cd $(LANDING_PAGE) && npm run build
+	@cd $(DAPP_FRONTEND) && npm run build
 
 test:
-	@cd $(APP_NAME) && npm test
+	@cd $(LANDING_PAGE) && npm test
+	@cd $(DAPP_FRONTEND) && npm test
 
 eject:
-	@cd $(APP_NAME) && npm run eject
+	@cd $(LANDING_PAGE) && npm run eject
+	@cd $(DAPP_FRONTEND) && npm run eject
 
 clean:
-	@rm -rf $(APP_NAME)/node_modules
-	@rm -f $(APP_NAME)/package-lock.json
+	@rm -rf $(LANDING_PAGE)/node_modules
+	@rm -f $(LANDING_PAGE)/package-lock.json
+	@rm -rf $(DAPP_FRONTEND)/node_modules
+	@rm -f $(DAPP_FRONTEND)/package-lock.json
 
 lint:
-	@cd $(APP_NAME) && npm run lint
+	@cd $(LANDING_PAGE) && npm run lint
+	@cd $(DAPP_FRONTEND) && npm run lint
 
 format:
-	@cd $(APP_NAME) && npm run format
+	@cd $(LANDING_PAGE) && npm run format
+	@cd $(DAPP_FRONTEND) && npm run format
 
 # Targets
 .PHONY: create-react-app install-dependencies start build test eject clean lint format
