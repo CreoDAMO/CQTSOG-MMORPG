@@ -26,5 +26,12 @@ clean:
 	@rm -rf $(APP_NAME)/node_modules
 	@rm -f $(APP_NAME)/package-lock.json
 
+# Custom Commands
+lint:
+	@cd $(APP_NAME) && npm run lint
+
+format:
+	@cd $(APP_NAME) && npm run format
+
 # Targets
-.PHONY: create-react-app install-dependencies start build test eject clean
+.PHONY: create-react-app install-dependencies start build test eject clean lint format
