@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useContext } from 'react';
 import Web3Provider, { Web3Context } from './components/context/Web3Context';
 import './index.css';
@@ -18,7 +19,6 @@ function App() {
 
 function Game({ contracts, account }) {
   // Use contracts and account in your Game component
-
   return (
     <div>
       {/* Game UI */}

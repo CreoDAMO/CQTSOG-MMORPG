@@ -1,4 +1,4 @@
- Makefile for setting up the cryptoquestmmorpg-dapp project
+# Makefile for setting up the cryptoquestmmorpg-dapp project
 
 # Variables
 APP_NAME = cryptoquestmmorpg-dapp
