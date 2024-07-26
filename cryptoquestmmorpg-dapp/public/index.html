@@ -1,553 +1,1492 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CryptoQuest: The Shards of Genesis</title>
-  <meta name="description" content="Embark on an epic journey through Cryptonia, a blockchain-based MMORPG where reality and digital existence converge. Own in-game assets as NFTs, participate in player governance, and experience a truly decentralized gaming economy.">
-  <meta name="keywords" content="CryptoQuest, MMORPG, blockchain game, NFTs, decentralized economy, player governance, cross-chain interactions">
-  <link rel="icon" href="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link rel="preload" href="/path/to/critical-font.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="/path/to/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.6.6/dist/index.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-XXXXXXXXX-X');
-  </script>
-  <meta property="og:title" content="CryptoQuest: The Shards of Genesis">
-  <meta property="og:description" content="Embark on an epic journey through the realm of Cryptonia, a blockchain-based MMORPG where reality and digital existence converge.">
-  <meta property="og:image" content="/path/to/og-image.png">
-  <meta property="og:url" content="https://cryptoquestmmorpg.quest/lander">
-  <meta name="twitter:card" content="summary_large_image">
-  <style>
-    :root {
-      --primary-color: #6a11cb;
-      --secondary-color: #2575fc;
-      --text-color: #333;
-      --bg-color: #f0f0f0;
-      --neumorphic-light: #ffffff;
-      --neumorphic-dark: #d1d9e6;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-    }
-    .neumorphic {
-      background: var(--bg-color);
-      border-radius: 50px;
-      box-shadow: 20px 20px 60px var(--neumorphic-dark),
-                  -20px -20px 60px var(--neumorphic-light);
-    }
-    .neumorphic-inset {
-      background: var(--bg-color);
-      border-radius: 50px;
-      box-shadow: inset 20px 20px 60px var(--neumorphic-dark),
-                  inset -20px -20px 60px var(--neumorphic-light);
-    }
-    .gradient-text {
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
-    }
-    .dark-mode {
-      --text-color: #f0f0f0;
-      --bg-color: #333;
-      --neumorphic-light: #3a3a3a;
-      --neumorphic-dark: #292929;
-    }
-  </style>
-  <!-- Lazy Loading Images -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-      if ("IntersectionObserver" in window) {
-        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              let lazyImage = entry.target;
-              lazyImage.src = lazyImage.dataset.src;
-              lazyImage.classList.remove("lazy");
-              lazyImageObserver.unobserve(lazyImage);
-            }
-          });
-        });
-        lazyImages.forEach(function(lazyImage) {
-          lazyImageObserver.observe(lazyImage);
-        });
-      } else {
-        lazyImages.forEach(function(lazyImage) {
-          lazyImage.src = lazyImage.dataset.src;
-          lazyImage.classList.remove("lazy");
-        });
-      }
-    });
-  </script>
-</head>
-<body class="min-h-screen flex flex-col">
-  <nav class="neumorphic p-4 mb-8">
-    <div class="container mx-auto flex justify-between items-center">
-      <a href="#" class="flex items-center">
-        <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="CryptoQuest Logo" class="h-10 w-10 mr-3">
-        <span class="text-xl font-bold gradient-text">CryptoQuest</span>
-      </a>
-      <div class="hidden md:flex space-x-4">
-        <a href="#features" class="hover:text-primary-color transition-colors">Features</a>
-        <a href="#marketplace" class="hover:text-primary-color transition-colors">Marketplace</a>
-        <a href="#governance" class="hover:text-primary-color transition-colors">Governance</a>
-        <a href="#tokenomics" class="hover:text-primary-color transition-colors">Tokenomics</a>
-        <a href="#ps5-development" class="hover:text-primary-color transition-colors">PS5 Development</a>
-        <a href="#xbox-development" class="hover:text-primary-color transition-colors">Xbox Development</a>
-        <a href="#unity" class="hover:text-primary-color transition-colors">Unity</a>
-        <a href="#unreal-engine-5" class="hover:text-primary-color transition-colors">Unreal Engine 5</a>
-        <a href="#cqt-token" class="hover:text-primary-color transition-colors">CQT Token</a>
-        <a href="#buy-token" class="hover:text-primary-color transition-colors">Buy Token</a>
-        <a href="#airdrop" class="hover:text-primary-color transition-colors">Airdrop</a>
-        <a href="#join-development" class="hover:text-primary-color transition-colors">Join Development</a>
-        <a href="#investor-perks" class="hover:text-primary-color transition-colors">Investor Perks</a>
-        <a href="#community-forum" class="hover:text-primary-color transition-colors">Community Forum</a>
-        <a href="#book-nft" class="hover:text-primary-color transition-colors">Book NFT</a>
-        <a href="#connect" class="hover:text-primary-color transition-colors">Connect</a>
-        <a href="#newsletter" class="hover:text-primary-color transition-colors">Newsletter</a>
-        <a href="#white-paper" class="hover:text-primary-color transition-colors">White Paper</a>
-        <a href="#merchandise" class="hover:text-primary-color transition-colors">Merchandise</a>
-        <a href="#chatbot" class="hover:text-primary-color transition-colors">Chatbot</a>
-      </div>
-      <button id="connect-wallet" class="neumorphic px-4 py-2 rounded-full hover:bg-primary-color hover:text-white transition-colors">Connect Wallet</button>
-    </div>
-  </nav>
-
-  <header class="container mx-auto text-center mb-16">
-    <h1 class="text-5xl font-bold mb-4 gradient-text">CryptoQuest: The Shards of Genesis</h1>
-    <p class="text-xl mb-8">Embark on an epic journey through Cryptonia, where blockchain and fantasy collide.</p>
-    <div class="flex justify-center space-x-4">
-      <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="Game Visual" class="w-1/3 neumorphic p-4 animate-float">
-      <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="Token Visual" class="w-1/3 neumorphic p-4 animate-float" style="animation-delay: 2s;">
-    </div>
-  </header>
-
-  <main class="container mx-auto">
-    <section id="features" class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Key Features</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-coins text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Decentralized Economy</h3>
-          <p>Experience a player-driven economy powered by blockchain technology.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-vote-yea text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Player Governance</h3>
-          <p>Participate in shaping the future of Cryptonia through decentralized voting.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-hammer text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Item Crafting & Enchanting</h3>
-          <p>Create and enhance unique items using blockchain-verified recipes and materials.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-key text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">True Ownership</h3>
-          <p>Own your in-game assets with unique NFTs, ensuring true ownership and value.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-users text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Community Engagement</h3>
-          <p>Join a vibrant community of players, forge alliances, and embark on thrilling adventures.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-cogs text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Cross-Chain Interactions</h3>
-          <p>Interact with multiple blockchains for expanded possibilities.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="marketplace" class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">NFT Marketplace</h2>
-      <div class="neumorphic p-6 rounded-lg">
-        <p class="mb-4">Trade your in-game assets as unique NFTs on our decentralized marketplace.</p>
-        <div id="nft-showcase" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <!-- NFT items will be dynamically loaded here -->
-        </div>
-      </div>
-    </section>
-
-    <section id="governance" class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Governance Dashboard</h2>
-      <div class="neumorphic p-6 rounded-lg">
-        <p class="mb-4">Vote on important decisions that shape the future of CryptoQuest.</p>
-        <div id="governance-proposals" class="space-y-4">
-          <!-- Governance proposals will be dynamically loaded here -->
-        </div>
-      </div>
-    </section>
-
-    <section id="tokenomics" class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token</h2>
-      <div class="neumorphic p-6 rounded-lg">
-        <div id="token-info" class="mb-4">
-          <!-- Token information will be dynamically loaded here -->
-        </div>
-        <div id="token-chart" class="h-64 neumorphic-inset">
-          <!-- Token price chart will be dynamically loaded here -->
-        </div>
-      </div>
-    </section>
-
-    <section id="ps5-development" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for PS5</h2>
-      <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the PS5 platform, leveraging Unity and Unreal Engine 5.</p>
-      <div class="text-center">
-        <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-PS5" class="btn btn-primary btn-lg">Read the PS5 Development Guide</a>
-      </div>
-    </section>
-
-    <section id="xbox-development" class="py-5 bg-light">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for Xbox</h2>
-      <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the Xbox platform, leveraging Unity and Unreal Engine 5.</p>
-      <div class="text-center">
-        <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-Xbox" class="btn btn-primary btn-lg">Read the Xbox Development Guide</a>
-      </div>
-    </section>
-
-    <section id="unity" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Unity Development</h2>
-      <p class="lead text-center mb-8">Discover how we utilize Unity to bring CryptoQuest to life, creating immersive environments and seamless gameplay experiences.</p>
-      <div class="text-center">
-        <a href="https://unity.com/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unity</a>
-      </div>
-    </section>
-
-    <section id="unreal-engine-5" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Unreal Engine 5 Development</h2>
-      <p class="lead text-center mb-8">Explore the capabilities of Unreal Engine 5 and how it powers the stunning graphics and dynamic gameplay in CryptoQuest.</p>
-      <div class="text-center">
-        <a href="https://www.unrealengine.com/en-US/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unreal Engine 5</a>
-      </div>
-    </section>
-
-    <section id="cqt-token" class="bg-light py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">CQT CryptoQuest Token</h2>
-      <p class="lead text-center mb-8">The CQT CryptoQuest Token is an essential part of the CryptoQuest ecosystem, providing players with a unique way to own and trade assets, participate in governance, and enjoy various in-game benefits.</p>
-      <div class="text-center">
-        <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="CQT CryptoQuest Token" class="img-fluid mb-3">
-        <a href="https://polygonscan.com/address/0x94ef57abfbff1ad70bd00a921e1d2437f31c1665" class="btn btn-primary btn-lg" target="_blank">View on PolygonScan</a>
-        <ul class="list-group text-left mt-3">
-          <li class="list-group-item">Token Contract: <a href="https://polygonscan.com/address/0xb30837f54924b88294f524d3e13667396d3f3c8a#code" target="_blank">0xb30837f54924b88294f524d3e13667396d3f3c8a</a></li>
-          <li class="list-group-item">Polygon Network: Seamless integration with the Polygon blockchain.</li>
-          <li class="list-group-item">Governance: Participate in shaping the future of CryptoQuest through token-based voting.</li>
-          <li class="list-group-item">Rewards: Earn rewards and in-game benefits by holding and staking CQT tokens.</li>
-          <li class="list-group-item">Market: Buy, sell, and trade assets within the CryptoQuest marketplace using CQT tokens.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="buy-token" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Buy CQT Token</h2>
-      <p class="lead text-center mb-8">Purchase the CQT CryptoQuest Token to enjoy exclusive in-game benefits, governance rights, and more. Follow the steps below to buy CQT tokens.</p>
-      <div class="text-center">
-        <button id="buyCQTButton" class="btn btn-primary btn-lg">Buy CQT Token</button>
-      </div>
-    </section>
-
-    <section id="wallet-functions" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Wallet Functions</h2>
-      <div class="text-center">
-        <button id="stakeTokensButton" class="btn btn-primary btn-lg mr-2">Stake Tokens</button>
-        <button id="unstakeTokensButton" class="btn btn-primary btn-lg">Unstake Tokens</button>
-      </div>
-    </section>
-
-    <section id="swap-functions" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Swap Functions</h2>
-      <div class="text-center">
-        <button id="addLiquidityButton" class="btn btn-primary btn-lg mr-2">Add Liquidity</button>
-        <button id="removeLiquidityButton" class="btn btn-primary btn-lg">Remove Liquidity</button>
-        <button id="swapMATICForTokensButton" class="btn btn-primary btn-lg mt-4 mr-2">Swap MATIC for Tokens</button>
-        <button id="swapTokensForMATICButton" class="btn btn-primary btn-lg mt-4">Swap Tokens for MATIC</button>
-      </div>
-    </section>
-
-    <section id="airdrop" class="bg-light py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token Airdrop</h2>
-      <p class="lead text-center mb-8">Participate in our airdrop event to receive free CQT tokens. Complete the tasks below to qualify for the airdrop.</p>
-      <div class="text-center">
-        <a href="https://cryptoquestmmorpg.quest/lander" class="btn btn-primary btn-lg">Join Airdrop</a>
-      </div>
-    </section>
-
-    <section id="join-development" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Development</h2>
-      <p class="lead text-center mb-8">Want to help shape the future of CryptoQuest? Join our vibrant community of developers and contribute to the project's evolution!</p>
-      <div class="text-center">
-        <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki" class="btn btn-primary btn-lg">Visit the Wiki</a>
-      </div>
-    </section>
-
-    <section id="investor-perks" class="py-5 bg-light">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Investor Perks</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-trophy text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Early Access and Beta Testing</h3>
-          <p>Get early access to game features and participate in beta testing phases before the public release.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-gem text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Exclusive NFTs and In-Game Assets</h3>
-          <p>Receive special edition NFTs and unique in-game assets reserved exclusively for investors.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-coins text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Revenue Sharing</h3>
-          <p>Earn a percentage of the revenue generated from the game, providing a direct financial return on your investment.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-vote-yea text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Governance Tokens</h3>
-          <p>Participate in decision-making processes with allocated governance tokens.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-users text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">VIP Events and Meetups</h3>
-          <p>Receive invitations to exclusive events, meetups, and conferences with the development team.</p>
-        </div>
-        <div class="neumorphic p-6 rounded-lg">
-          <i class="fas fa-award text-4xl mb-4 gradient-text"></i>
-          <h3 class="text-xl font-semibold mb-2">Recognition and Credits</h3>
-          <p>Get special recognition in the game credits and on the official website.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="community-forum" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Community Forum</h2>
-      <p class="lead text-center mb-8">Engage with other players, share your experiences, and participate in discussions on our community forum.</p>
-      <div class="text-center">
-        <a href="https://discord.com/invite/NSDxccdf" class="btn btn-primary btn-lg" target="_blank">Visit the Forum</a>
-      </div>
-    </section>
-
-    <section id="book-nft" class="bg-light py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis Book NFT</h2>
-      <p class="lead text-center mb-8">Discover the exclusive CryptoQuest Book NFT series, each representing a unique chapter, character, location, element, and rarity within the CryptoQuest universe. Own a piece of the story and earn rewards!</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <p class="mb-4">Our NFT smart contract ensures true ownership, allowing players to buy, sell, and trade their books securely on the blockchain. With roles for pausing, minting, upgrading, and managing royalties, our system is robust and adaptable.</p>
-          <ul class="list-disc pl-5">
-            <li class="mb-2">Pauser Role: Pause and unpause the contract to control minting and transfers.</li>
-            <li class="mb-2">Minter Role: Mint new NFTs with unique metadata and attributes.</li>
-            <li class="mb-2">Royalty Manager Role: Set and manage royalty fees for secondary sales.</li>
-            <li class="mb-2">Book Manager Role: Add new books to the collection with detailed descriptions and media.</li>
-            <li class="mb-2">Publisher Role: Publish books, making them available for players.</li>
-          </ul>
-          <button id="buyBookNFTButton" class="btn btn-primary btn-lg mt-4">Buy an NFT Book</button>
-        </div>
-        <div>
-          <img src="https://cf-ipfs.com/ipfs/bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa" class="img-fluid rounded-lg lazy" alt="CryptoQuest Book NFT">
-        </div>
-      </div>
-    </section>
-
-    <section id="connect" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Connect with Us</h2>
-      <div class="text-center">
-        <p class="lead mb-4">Follow us on social media to stay updated with the latest news and developments.</p>
-        <div class="flex justify-center space-x-4">
-          <a href="https://twitter.com/CreoDAMO" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-          <a href="https://www.facebook.com/profile.php?id=61554683433668" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-          <a href="https://www.instagram.com/creodamoinc" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-          <a href="https://www.linkedin.com/company/creodamo" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="newsletter" class="bg-light py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Join Our Newsletter</h2>
-      <p class="lead text-center mb-8">Stay informed about CryptoQuest by subscribing to our newsletter. Get the latest updates, exclusive content, and more delivered straight to your inbox.</p>
-      <div class="text-center">
-        <form action="https://cryptoquestmmorpg.quest/newsletter" method="post" class="w-full max-w-md mx-auto">
-          <div class="flex items-center border-b border-b-2 border-primary-color py-2">
-            <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="email" placeholder="Enter your email address" aria-label="Email">
-            <button class="btn btn-primary" type="submit">Subscribe</button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <section id="white-paper" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Read Our White Paper</h2>
-      <p class="lead text-center mb-8">Dive deep into the details of CryptoQuest: The Shards of Genesis by reading our comprehensive white paper.</p>
-      <div class="text-center">
-        <a href="https://cryptoquestmmorpg.quest/white-paper.pdf" class="btn btn-primary btn-lg" target="_blank">Download White Paper</a>
-      </div>
-    </section>
-
-    <section id="merchandise" class="bg-light py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Exclusive Merchandise</h2>
-      <p class="lead text-center mb-8">Subscribe to receive exclusive CryptoQuest merchandise, including apparel, accessories, and collectibles.</p>
-      <div class="text-center">
-        <a href="https://cryptoquestmmorpg.store" class="btn btn-primary btn-lg" target="_blank">Visit Merchandise Store</a>
-      </div>
-    </section>
-
-    <section id="chatbot" class="py-5">
-      <h2 class="text-3xl font-bold mb-8 gradient-text">Chat with Our Bot</h2>
-      <p class="lead text-center mb-8">Need help or have questions? Chat with our interactive bot to get instant support and information about CryptoQuest.</p>
-      <div class="text-center">
-        <button id="chatbotButton" class="btn btn-primary btn-lg">Start Chat</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="neumorphic mt-auto p-4">
-    <div class="container mx-auto text-center">
-      <p>&copy; 2024 CryptoQuest: The Shards of Genesis. All rights reserved.</p>
-      <div class="flex justify-center space-x-4">
-        <a href="https://twitter.com/CreoDAMO" class="hover:text-primary-color">Twitter</a>
-        <a href="https://discord.com/invite/NSDxccdf" class="hover:text-primary-color">Discord</a>
-        <a href="https://medium.com/@creodamo" class="hover:text-primary-color">Medium</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    let web3;
-    let userAddress;
-
-    async function connectWallet() {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          await window.ethereum.request({ method: 'eth_requestAccounts' });
-          web3 = new Web3(window.ethereum);
-          const accounts = await web3.eth.getAccounts();
-          userAddress = accounts[0];
-          document.getElementById('connect-wallet').textContent = `${userAddress.substr(0, 6)}...${userAddress.substr(-4)}`;
-        } catch (error) {
-          console.error("User denied account access");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoQuest: The Shards of Genesis</title>
+    <meta name="description" content="Embark on an epic journey through Cryptonia, a blockchain-based MMORPG where reality and digital existence converge. Own in-game assets as NFTs, participate in player governance, and experience a truly decentralized gaming economy.">
+    <meta name="keywords" content="CryptoQuest, MMORPG, blockchain game, NFTs, decentralized economy, player governance, cross-chain interactions">
+    <link rel="icon" href="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preload" href="/path/to/critical-font.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="stylesheet" href="/path/to/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.6.6/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-XXXXXXXXX-X');
+    </script>
+    <meta property="og:title" content="CryptoQuest: The Shards of Genesis">
+    <meta property="og:description" content="Embark on an epic journey through the realm of Cryptonia, a blockchain-based MMORPG where reality and digital existence converge.">
+    <meta property="og:image" content="/path/to/og-image.png">
+    <meta property="og:url" content="https://cryptoquestmmorpg.quest/lander">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --text-color: #333;
+            --bg-color: #f0f0f0;
+            --neumorphic-light: #ffffff;
+            --neumorphic-dark: #d1d9e6;
         }
-      } else {
-        console.log('Non-Ethereum browser detected. Consider installing MetaMask!');
-      }
-    }
 
-    document.getElementById('connect-wallet').addEventListener('click', connectWallet);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
 
-    async function loadNFTs() {
-      const nfts = [
-        { id: 1, name: "Legendary Sword", image: "https://dweb.link/ipfs/bafkreigmxgubizwg53fs5gbgxctxevwxrjavjos3xxsmbesday6e3pghry" },
-        { id: 2, name: "Magic Amulet", image: "https://dweb.link/ipfs/bafybeiflwus5z5fpbaj5dcnabvibrohvpyxlljkufazjls3v5yffrruaka" },
-        { id: 3, name: "Dragon Egg", image: "https://dweb.link/ipfs/bafkreifjg35ab4bcffjnsav4u6op3d5hy7aid7ag2bamiahzgdih6ttiie" },
-        { id: 4, name: "Ancient Scroll", image: "https://dweb.link/ipfs/bafybeibibui7u3hg3zptgd4rmyugetvxjdl4z5mh5envhia73hafz7e44y" }
-      ];
+        .neumorphic {
+            background: var(--bg-color);
+            border-radius: 50px;
+            box-shadow: 20px 20px 60px var(--neumorphic-dark), -20px -20px 60px var(--neumorphic-light);
+        }
 
-      const nftShowcase = document.getElementById('nft-showcase');
-      nfts.forEach(nft => {
-        const nftElement = document.createElement('div');
-        nftElement.className = 'neumorphic p-4 rounded-lg';
-        nftElement.innerHTML = `
-          <img src="${nft.image}" alt="${nft.name}" class="w-full h-40 object-cover rounded-lg mb-2">
-          <h4 class="font-semibold">${nft.name}</h4>
-        `;
-        nftShowcase.appendChild(nftElement);
-      });
-    }
+        .neumorphic-inset {
+            background: var(--bg-color);
+            border-radius: 50px;
+            box-shadow: inset 20px 20px 60px var(--neumorphic-dark), inset -20px -20px 60px var(--neumorphic-light);
+        }
 
-    async function loadGovernanceProposals() {
-      const proposals = [
-        { id: 1, title: "Introduce New Quest Line", votes: 1500 },
-        { id: 2, title: "Adjust Token Emission Rate", votes: 2000 },
-        { id: 3, title: "Add New Character Class", votes: 1800 }
-      ];
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-      const governanceProposals = document.getElementById('governance-proposals');
-      proposals.forEach(proposal => {
-        const proposalElement = document.createElement('div');
-        proposalElement.className = 'neumorphic p-4 rounded-lg';
-        proposalElement.innerHTML = `
-          <h4 class="font-semibold">${proposal.title}</h4>
-          <p>Votes: ${proposal.votes}</p>
-          <button class="mt-2 px-4 py-2 bg-primary-color text-white rounded-full">Vote</button>
-        `;
-        governanceProposals.appendChild(proposalElement);
-      });
-    }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
 
-    async function loadTokenInfo() {
-      try {
-        const response = await axios.get('https://api.coingecko.com/api/v3/coins/ethereum');
-        const data = response.data;
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
 
-        const tokenInfo = document.getElementById('token-info');
-        tokenInfo.innerHTML = `
-          <p>Current Price: $${data.market_data.current_price.usd}</p>
-          <p>24h Change: ${data.market_data.price_change_percentage_24h.toFixed(2)}%</p>
-          <p>Market Cap: $${data.market_data.market_cap.usd.toLocaleString()}</p>
-        `;
-      } catch (error) {
-        console.error("Error fetching token data:", error);
-      }
-    }
+            50% {
+                transform: translateY(-20px);
+            }
 
-    window.addEventListener('load', async () => {
-      await loadNFTs();
-      await loadGovernanceProposals();
-      await loadTokenInfo();
-    });
+            100% {
+                transform: translateY(0px);
+            }
+        }
 
-    function initBackgroundAnimation() {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById('background-animation').appendChild(renderer.domElement);
+        .dark-mode {
+            --text-color: #f0f0f0;
+            --bg-color: #333;
+            --neumorphic-light: #3a3a3a;
+            --neumorphic-dark: #292929;
+        }
 
-      const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-      const material = new THREE.MeshBasicMaterial({ color: 0x6a11cb, wireframe: true });
-      const torus = new THREE.Mesh(geometry, material);
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-      scene.add(torus);
-      camera.position.z = 30;
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #3F3D56;
+            --accent-color: #F50057;
+            --background-light: #F0F0F3;
+            --background-dark: #1A1A1D;
+            --text-light: #333;
+            --text-dark: #F0F0F3;
+            --shadow-light: 10px 10px 20px #D1D9E6, -10px -10px 20px #FFFFFF;
+            --shadow-dark: 10px 10px 20px #151517, -10px -10px 20px #1F1F23;
+        }
 
-      function animate() {
-        requestAnimationFrame(animate);
-        torus.rotation.x += 0.01;
-        torus.rotation.y += 0.005;
-        renderer.render(scene, camera);
-      }
-      animate();
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    darkModeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-    });
+        body.light-mode {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
-  </script>
-  <button onclick="toggleDarkMode()" class="fixed top-4 right-4 p-2 bg-gray-200 dark:bg-gray-800 rounded-full">Toggle Dark Mode</button>
-  <button id="chatbotButton" class="fixed bottom-4 right-4 p-2 bg-blue-500 text-white rounded-full">Chat</button>
-  <div id="token-info" class="p-4"></div>
-  <div id="cqt-balance" class="p-4"></div>
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .neumorphic {
+            border-radius: 15px;
+            background: var(--background-light);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .neumorphic {
+            background: var(--background-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .neumorphic:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .video-section {
+            padding: 4rem 0;
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .video-item {
+            width: 100%;
+            max-width: 560px;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+    </style>
+    <!-- Lazy Loading Images -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+                lazyImages.forEach(function (lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                lazyImages.forEach(function (lazyImage) {
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                });
+            }
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-light: #f0f4f8;
+            --background-dark: #2c3e50;
+            --text-light: #333;
+            --text-dark: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background-color: var(--background-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .section {
+            background-color: var(--background-dark);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .contract-card {
+            background: var(--background-light);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 8px 8px 15px #d1d9e6, -8px -8px 15px #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .contract-card {
+            background: var(--background-dark);
+            box-shadow: 8px 8px 15px #1c2630, -8px -8px 15px #3c5670;
+        }
+
+        .contract-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .contract-card:hover .tooltip {
+            opacity: 1;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .expanded .collapsible-content {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .chart-container {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            height: 400px;
+        }
+
+        .dark-mode .chart-container {
+            background-color: var(--background-dark);
+        }
+
+        .persona {
+            background-color: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .dark-mode .persona {
+            background-color: #1c2b3a;
+        }
+
+        .team-member {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .team-member {
+            background-color: #1c2b3a;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .token-distribution {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .token-item {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .dark-mode .token-item {
+            background-color: #1c2b3a;
+        }
+
+        .financial-item {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dark-mode .financial-item {
+            background-color: #1c2b3a;
+        }
+
+        .financial-item span:first-child {
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col light-mode bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
+    <nav class="neumorphic p-4 mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="CryptoQuest Logo" class="h-10 w-10 mr-3">
+                <span class="text-xl font-bold gradient-text">CryptoQuest</span>
+            </a>
+            <div class="hidden md:flex space-x-4">
+                <a href="#features" class="hover:text-primary-color transition-colors">Features</a>
+                <a href="#marketplace" class="hover:text-primary-color transition-colors">Marketplace</a>
+                <a href="#governance" class="hover:text-primary-color transition-colors">Governance</a>
+                <a href="#tokenomics" class="hover:text-primary-color transition-colors">Tokenomics</a>
+                <a href="#ps5-development" class="hover:text-primary-color transition-colors">PS5 Development</a>
+                <a href="#xbox-development" class="hover:text-primary-color transition-colors">Xbox Development</a>
+                <a href="#unity" class="hover:text-primary-color transition-colors">Unity</a>
+                <a href="#unreal-engine-5" class="hover:text-primary-color transition-colors">Unreal Engine 5</a>
+                <a href="#cqt-token" class="hover:text-primary-color transition-colors">CQT Token</a>
+                <a href="#buy-token" class="hover:text-primary-color transition-colors">Buy Token</a>
+                <a href="#airdrop" class="hover:text-primary-color transition-colors">Airdrop</a>
+                <a href="#join-development" class="hover:text-primary-color transition-colors">Join Development</a>
+                <a href="#investor-perks" class="hover:text-primary-color transition-colors">Investor Perks</a>
+                <a href="#community-forum" class="hover:text-primary-color transition-colors">Community Forum</a>
+                <a href="#book-nft" class="hover:text-primary-color transition-colors">Book NFT</a>
+                <a href="#connect" class="hover:text-primary-color transition-colors">Connect</a>
+                <a href="#newsletter" class="hover:text-primary-color transition-colors">Newsletter</a>
+                <a href="#white-paper" class="hover:text-primary-color transition-colors">White Paper</a>
+                <a href="#merchandise" class="hover:text-primary-color transition-colors">Merchandise</a>
+                <a href="#chatbot" class="hover:text-primary-color transition-colors">Chatbot</a>
+            </div>
+            <button id="connect-wallet" class="neumorphic px-4 py-2 rounded-full hover:bg-primary-color hover:text-white transition-colors">Connect Wallet</button>
+        </div>
+    </nav>
+
+    <header class="container mx-auto text-center mb-16">
+        <h1 class="text-5xl font-bold mb-4 gradient-text">CryptoQuest: The Shards of Genesis</h1>
+        <p class="text-xl mb-8">Embark on an epic journey through Cryptonia, where blockchain and fantasy collide.</p>
+        <div class="flex justify-center space-x-4">
+            <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="Game Visual" class="w-1/3 neumorphic p-4 animate-float">
+            <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="Token Visual" class="w-1/3 neumorphic p-4 animate-float" style="animation-delay: 2s;">
+        </div>
+    </header>
+
+    <main class="container mx-auto">
+        <section id="features" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-coins text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Decentralized Economy</h3>
+                    <p>Experience a player-driven economy powered by blockchain technology.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-vote-yea text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Player Governance</h3>
+                    <p>Participate in shaping the future of Cryptonia through decentralized voting.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-hammer text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Item Crafting & Enchanting</h3>
+                    <p>Create and enhance unique items using blockchain-verified recipes and materials.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-key text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">True Ownership</h3>
+                    <p>Own your in-game assets with unique NFTs, ensuring true ownership and value.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-users text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Community Engagement</h3>
+                    <p>Join a vibrant community of players, forge alliances, and embark on thrilling adventures.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-cogs text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Cross-Chain Interactions</h3>
+                    <p>Interact with multiple blockchains for expanded possibilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="marketplace" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">NFT Marketplace</h2>
+            <div class="neumorphic p-6 rounded-lg">
+                <p class="mb-4">Trade your in-game assets as unique NFTs on our decentralized marketplace.</p>
+                <div id="nft-showcase" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- NFT items will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="governance" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Governance Dashboard</h2>
+            <div class="neumorphic p-6 rounded-lg">
+                <p class="mb-4">Vote on important decisions that shape the future of CryptoQuest.</p>
+                <div id="governance-proposals" class="space-y-4">
+                    <!-- Governance proposals will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="tokenomics" class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token</h2>
+            <div class="neumorphic p-6 rounded-lg">
+                <div id="token-info" class="mb-4">
+                    <!-- Token information will be dynamically loaded here -->
+                </div>
+                <div id="token-chart" class="h-64 neumorphic-inset">
+                    <!-- Token price chart will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="ps5-development" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for PS5</h2>
+            <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the PS5 platform, leveraging Unity and Unreal Engine 5.</p>
+            <div class="text-center">
+                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-PS5" class="btn btn-primary btn-lg">Read the PS5 Development Guide</a>
+            </div>
+        </section>
+
+        <section id="xbox-development" class="py-5 bg-light">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for Xbox</h2>
+            <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the Xbox platform, leveraging Unity and Unreal Engine 5.</p>
+            <div class="text-center">
+                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-Xbox" class="btn btn-primary btn-lg">Read the Xbox Development Guide</a>
+            </div>
+        </section>
+
+        <section id="unity" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Unity Development</h2>
+            <p class="lead text-center mb-8">Discover how we utilize Unity to bring CryptoQuest to life, creating immersive environments and seamless gameplay experiences.</p>
+            <div class="text-center">
+                <a href="https://unity.com/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unity</a>
+            </div>
+        </section>
+
+        <section id="unreal-engine-5" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Unreal Engine 5 Development</h2>
+            <p class="lead text-center mb-8">Explore the capabilities of Unreal Engine 5 and how it powers the stunning graphics and dynamic gameplay in CryptoQuest.</p>
+            <div class="text-center">
+                <a href="https://www.unrealengine.com/en-US/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unreal Engine 5</a>
+            </div>
+        </section>
+
+        <section id="cqt-token" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">CQT CryptoQuest Token</h2>
+            <p class="lead text-center mb-8">The CQT CryptoQuest Token is an essential part of the CryptoQuest ecosystem, providing players with a unique way to own and trade assets, participate in governance, and enjoy various in-game benefits.</p>
+            <div class="text-center">
+                <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="CQT CryptoQuest Token" class="img-fluid mb-3">
+                <a href="https://polygonscan.com/address/0x94ef57abfbff1ad70bd00a921e1d2437f31c1665" class="btn btn-primary btn-lg" target="_blank">View on PolygonScan</a>
+                <ul class="list-group text-left mt-3">
+                    <li class="list-group-item">Token Contract: <a href="https://polygonscan.com/address/0xb30837f54924b88294f524d3e13667396d3f3c8a#code" target="_blank">0xb30837f54924b88294f524d3e13667396d3f3c8a</a></li>
+                    <li class="list-group-item">Polygon Network: Seamless integration with the Polygon blockchain.</li>
+                    <li class="list-group-item">Governance: Participate in shaping the future of CryptoQuest through token-based voting.</li>
+                    <li class="list-group-item">Rewards: Earn rewards and in-game benefits by holding and staking CQT tokens.</li>
+                    <li class="list-group-item">Market: Buy, sell, and trade assets within the CryptoQuest marketplace using CQT tokens.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="buy-token" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Buy CQT Token</h2>
+            <p class="lead text-center mb-8">Purchase the CQT CryptoQuest Token to enjoy exclusive in-game benefits, governance rights, and more. Follow the steps below to buy CQT tokens.</p>
+            <div class="text-center">
+                <div class="neumorphic p-8 max-w-md w-full mx-auto">
+                    <h1 class="text-3xl font-bold mb-6 text-center">Buy CQT Tokens</h1>
+                    <div class="mb-4">
+                        <label for="amount" class="block mb-2">Amount of CQT to buy:</label>
+                        <input type="number" id="amount" class="w-full p-2 rounded neumorphic" placeholder="Enter amount">
+                    </div>
+                    <button id="buyCQTButton" class="w-full bg-blue-500 text-white p-2 rounded neumorphic hover:bg-blue-600 transition-colors">
+                        Buy CQT
+                    </button>
+                    <p id="statusCQT" class="mt-4 text-center"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="wallet-functions" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Wallet Functions</h2>
+            <div class="text-center">
+                <button id="stakeTokensButton" class="btn btn-primary btn-lg mr-2">Stake Tokens</button>
+                <button id="unstakeTokensButton" class="btn btn-primary btn-lg">Unstake Tokens</button>
+            </div>
+        </section>
+
+        <section id="swap-functions" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Swap Functions</h2>
+            <div class="text-center">
+                <button id="addLiquidityButton" class="btn btn-primary btn-lg mr-2">Add Liquidity</button>
+                <button id="removeLiquidityButton" class="btn btn-primary btn-lg">Remove Liquidity</button>
+                <button id="swapMATICForTokensButton" class="btn btn-primary btn-lg mt-4 mr-2">Swap MATIC for Tokens</button>
+                <button id="swapTokensForMATICButton" class="btn btn-primary btn-lg mt-4">Swap Tokens for MATIC</button>
+            </div>
+        </section>
+
+        <section id="airdrop" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token Airdrop</h2>
+            <p class="lead text-center mb-8">Participate in our airdrop event to receive free CQT tokens. Complete the tasks below to qualify for the airdrop.</p>
+            <div class="text-center">
+                <a href="https://cryptoquestmmorpg.quest/lander" class="btn btn-primary btn-lg">Join Airdrop</a>
+            </div>
+        </section>
+
+        <section id="join-development" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Development</h2>
+            <p class="lead text-center mb-8">Want to help shape the future of CryptoQuest? Join our vibrant community of developers and contribute to the project's evolution!</p>
+            <div class="text-center">
+                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki" class="btn btn-primary btn-lg">Visit the Wiki</a>
+            </div>
+        </section>
+
+        <section id="investor-perks" class="py-5 bg-light">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Investor Perks</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-trophy text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Early Access and Beta Testing</h3>
+                    <p>Get early access to game features and participate in beta testing phases before the public release.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-gem text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Exclusive NFTs and In-Game Assets</h3>
+                    <p>Receive special edition NFTs and unique in-game assets reserved exclusively for investors.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-coins text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Revenue Sharing</h3>
+                    <p>Earn a percentage of the revenue generated from the game, providing a direct financial return on your investment.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-vote-yea text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Governance Tokens</h3>
+                    <p>Participate in decision-making processes with allocated governance tokens.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-users text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">VIP Events and Meetups</h3>
+                    <p>Receive invitations to exclusive events, meetups, and conferences with the development team.</p>
+                </div>
+                <div class="neumorphic p-6 rounded-lg">
+                    <i class="fas fa-award text-4xl mb-4 gradient-text"></i>
+                    <h3 class="text-xl font-semibold mb-2">Recognition and Credits</h3>
+                    <p>Get special recognition in the game credits and on the official website.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="community-forum" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Community Forum</h2>
+            <p class="lead text-center mb-8">Engage with other players, share your experiences, and participate in discussions on our community forum.</p>
+            <div class="text-center">
+                <a href="https://discord.com/invite/NSDxccdf" class="btn btn-primary btn-lg" target="_blank">Visit the Forum</a>
+            </div>
+        </section>
+
+        <section id="book-nft" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis Book NFT</h2>
+            <p class="lead text-center mb-8">Discover the exclusive CryptoQuest Book NFT series, each representing a unique chapter, character, location, element, and rarity within the CryptoQuest universe. Own a piece of the story and earn rewards!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="mb-4">Our NFT smart contract ensures true ownership, allowing players to buy, sell, and trade their books securely on the blockchain. With roles for pausing, minting, upgrading, and managing royalties, our system is robust and adaptable.</p>
+                    <ul class="list-disc pl-5">
+                        <li class="mb-2">Pauser Role: Pause and unpause the contract to control minting and transfers.</li>
+                        <li class="mb-2">Minter Role: Mint new NFTs with unique metadata and attributes.</li>
+                        <li class="mb-2">Royalty Manager Role: Set and manage royalty fees for secondary sales.</li>
+                        <li class="mb-2">Book Manager Role: Add new books to the collection with detailed descriptions and media.</li>
+                        <li class="mb-2">Publisher Role: Publish books, making them available for players.</li>
+                    </ul>
+                    <button id="buyNFTBookButton" class="btn btn-primary btn-lg mt-4">Buy an NFT Book</button>
+                    <p id="statusNFTBook" class="mt-4"></p>
+                </div>
+                <div>
+                    <img src="https://bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa.ipfs.dweb.link/" alt="CryptoQuest: The Shards of Genesis Book Cover" class="book-cover">
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Connect with Us</h2>
+            <div class="text-center">
+                <p class="lead mb-4">Follow us on social media to stay updated with the latest news and developments.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="https://twitter.com/CreoDAMO" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://www.facebook.com/profile.php?id=61554683433668" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://www.instagram.com/creodamoinc" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.linkedin.com/company/creodamo" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="newsletter" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Join Our Newsletter</h2>
+            <p class="lead text-center mb-8">Stay informed about CryptoQuest by subscribing to our newsletter. Get the latest updates, exclusive content, and more delivered straight to your inbox.</p>
+            <div class="text-center">
+                <form action="https://cryptoquestmmorpg.quest/newsletter" method="post" class="w-full max-w-md mx-auto">
+                    <div class="flex items-center border-b border-b-2 border-primary-color py-2">
+                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="email" placeholder="Enter your email address" aria-label="Email">
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="white-paper" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis - Enhanced Whitepaper</h2>
+            <div class="flex justify-end mb-4">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="ml-2 text-gray-700 dark:text-gray-300">Dark Mode</span>
+            </div>
+
+            <!-- Executive Summary Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Executive Summary</h2>
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Project Overview</h3>
+                    <p>CryptoQuest: The Shards of Genesis (CQTSOG) is a revolutionary blockchain-based MMORPG that integrates decentralized technology to offer players true ownership of in-game assets via NFTs. The game features an immersive world enhanced by AI and AR/VR technologies, creating a player-driven economy and unique gameplay experiences.</p>
+                    <p><strong>Company:</strong> CreoDAMO Inc.</p>
+                    <p><strong>Founder & President:</strong> Jacque Antoine DeGraff</p>
+                    <p><strong>Location:</strong> Miami, Florida</p>
+                    <p><strong>Contact:</strong> Jacquedegraff@creodamo.com</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Vision Statement</h3>
+                    <p>To create a groundbreaking MMORPG that empowers players with true ownership, fosters community-driven governance, and sets new standards in blockchain gaming.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Unique Selling Proposition (USP)</h3>
+                    <p>CryptoQuest stands out with its innovative integration of AI, AR/VR technologies, and decentralized governance, offering an unparalleled immersive experience and a truly player-driven economy.</p>
+                </div>
+            </div>
+
+            <!-- Company Description Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Company Description</h2>
+                <div class="mb-6">
+                    <p>CreoDAMO, standing for Decentralized Asset Management and Optimization, is a visionary project helmed by a dedicated solo entrepreneur. It aims to transform asset management through blockchain technology and AI.</p>
+                    <p><strong>Mission:</strong> Pioneer the integration of blockchain technology into the gaming industry, providing players with ownership, transparency, and an engaging, interactive environment.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Core Values</h3>
+                    <ul class="list-disc pl-5">
+                        <li><strong>Innovation:</strong> Constantly pushing the boundaries of technology and gameplay.</li>
+                        <li><strong>Transparency:</strong> Ensuring fairness and clarity in all aspects of the game.</li>
+                        <li><strong>Community:</strong> Building a strong, inclusive community where players have a voice.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Market Analysis Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Market Analysis</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Industry Overview</h3>
+                    <p>The global gaming industry is projected to reach $200 billion by 2024, with blockchain gaming becoming a significant segment. The rise of NFTs and play-to-earn models are driving new growth opportunities.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Target Market</h3>
+                    <p><strong>Primary:</strong> Gamers aged 18-35 interested in blockchain technology and NFTs.</p>
+                    <p><strong>Secondary:</strong> Cryptocurrency enthusiasts and blockchain investors.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Competitive Analysis</h3>
+                    <p>Competitors include Axie Infinity, Decentraland, and The Sandbox. CQTSOG differentiates itself through its immersive gameplay, advanced technological integration, and player-driven economy.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Market Size and Growth Projections</h3>
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold">User Personas</h3>
+                    <div class="persona">
+                        <h4 class="text-xl font-bold">Persona 1: Alex</h4>
+                        <ul class="list-disc pl-5">
+                            <li>25 years old, avid gamer since childhood. Spends 15 hours/week gaming.</li>
+                            <li>Frustrated by "pay-to-win" models where real money is required to progress. Wants to retain value from time invested.</li>
+                            <li>Enjoys MMORPGs for their open worlds and community aspects. Last game was World of Warcraft but lost interest after a few years.</li>
+                        </ul>
+                    </div>
+                    <div class="persona">
+                        <h4 class="text-xl font-bold">Persona 2: Jamie</h4>
+                        <ul class="list-disc pl-5">
+                            <li>32, has followed cryptocurrency for 5 years and sees the potential of blockchain to revolutionize industries like gaming.</li>
+                            <li>Used to play games more casually but now prefers investing spare income. Looking for new opportunities in emerging technologies.</li>
+                            <li>Intrigued by "play-to-earn" models after learning about Axie Infinity but wants a more engaging gaming experience.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organization and Management Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Organization and Management</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Leadership Team</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Founder & President</h4>
+                            <p>Jacque Antoine DeGraff</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">CEO</h4>
+                            <p>To be announced</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">CTO</h4>
+                            <p>To be announced</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Lead Developer</h4>
+                            <p>To be announced</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Marketing Director</h4>
+                            <p>To be announced</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Blockchain Specialist</h4>
+                            <p>To be announced</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Advisors</h3>
+                    <p>Blockchain experts, game design veterans, and financial analysts.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Team Bios</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Jacque Antoine DeGraff</h4>
+                            <p>Founder and President with over 15 years of experience in game development and blockchain technology.</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">CEO</h4>
+                            <p>Experienced executive with a background in tech startups and game publishing.</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">CTO</h4>
+                            <p>Tech expert specializing in blockchain integration and scalable architectures.</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Lead Developer</h4>
+                            <p>Senior game developer with extensive experience in MMORPGs.</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Marketing Director</h4>
+                            <p>Marketing strategist with a track record of successful game launches.</p>
+                        </div>
+                        <div class="team-member">
+                            <h4 class="text-xl font-bold">Blockchain Specialist</h4>
+                            <p>Expert in blockchain technologies and smart contracts.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold">Organizational Chart</h3>
+                    <div class="chart-container">
+                        <div id="orgChart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tokenomics Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Tokenomics</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">CQT (CryptoQuest Token)</h3>
+                    <p>The CryptoQuest ecosystem is powered by the CQT (CryptoQuest Token), an ERC-20 token built on the Ethereum blockchain. The CQT token serves as the primary currency for in-game transactions, player-to-player trades, and interactions with the broader CryptoQuest ecosystem.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Token Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="tokenDistributionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Token Utility</h3>
+                    <div class="token-distribution">
+                        <div class="token-item">
+                            <h4 class="font-bold">In-Game Transactions</h4>
+                            <p>CQT tokens will be used for purchasing in-game items, services, and land.</p>
+                        </div>
+                        <div class="token-item">
+                            <h4 class="font-bold">Player-to-Player Trades</h4>
+                            <p>Players can use CQT tokens to trade NFT-based assets on the CryptoQuest marketplace.</p>
+                        </div>
+                        <div class="token-item">
+                            <h4 class="font-bold">Governance</h4>
+                            <p>CQT token holders will have a say in the decision-making process for the game's development and ecosystem.</p>
+                        </div>
+                        <div class="token-item">
+                            <h4 class="font-bold">Staking and Rewards</h4>
+                            <p>Players can stake their CQT tokens to earn additional rewards and participate in the game's governance.</p>
+                        </div>
+                        <div class="token-item">
+                            <h4 class="font-bold">Cross-Chain Interactions</h4>
+                            <p>CQT tokens can be used for interactions with other blockchain-based games and platforms, fostering a broader ecosystem.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold">Token Release Schedule</h3>
+                    <div class="chart-container">
+                        <div id="tokenReleaseChart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Projections Section -->
+            <div class="section fade-in">
+                <h2 class="text-3xl font-bold mb-6">Financial Projections</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Revenue and Expense Projections</h3>
+                    <div class="chart-container">
+                        <canvas id="financialProjectionsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Profit/Loss</h3>
+                    <div class="financial-item">
+                        <span>Year 1:</span>
+                        <span class="text-red-500">-$1,500,000</span>
+                    </div>
+                    <div class="financial-item">
+                        <span>Year 2:</span>
+                        <span class="text-green-500">$2,000,000</span>
+                    </div>
+                    <div class="financial-item">
+                        <span>Year 3:</span>
+                        <span class="text-green-500">$6,500,000</span>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold">Sensitivity Analysis</h3>
+                    <ul class="list-disc pl-5">
+                        <li><strong>Base Case:</strong> Expected growth rate and revenue projections.</li>
+                        <li><strong>Optimistic Case:</strong> 25% higher retention from engaging gameplay fueling 25% higher revenue.</li>
+                        <li><strong>Pessimistic Case:</strong> Delays or lower interest temporarily slowing growth 15-20%.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold">Break-Even Analysis</h3>
+                    <p>The project is expected to break even by Year 2 with a user base of 100,000 active players.</p>
+                </div>
+            </div>
+
+            <!-- Contract Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Contract cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Contract Visualization Section -->
+            <div id="contractVisualization" class="chart-container mt-12"></div>
+
+            <!-- Token Economy Section -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-4">Token Economy</h2>
+                <canvas id="tokenEconomyChart"></canvas>
+            </div>
+        </section>
+
+        <!-- New Sections -->
+        <section id="merchandise" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Exclusive Merchandise</h2>
+            <p class="lead text-center mb-8">Subscribe to receive exclusive CryptoQuest merchandise, including apparel, accessories, and collectibles.</p>
+            <div class="text-center">
+                <a href="https://cryptoquestmmorpg.store" class="btn btn-primary btn-lg" target="_blank">Visit Merchandise Store</a>
+            </div>
+        </section>
+
+        <section id="chatbot" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Chat with Our Bot</h2>
+            <p class="lead text-center mb-8">Need help or have questions? Chat with our interactive bot to get instant support and information about CryptoQuest.</p>
+            <div class="text-center">
+                <button id="chatbotButton" class="btn btn-primary btn-lg">Start Chat</button>
+            </div>
+        </section>
+
+        <section id="featured-videos" class="video-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">CryptoQuest: The Shards of Genesis</h2>
+                <div class="video-container">
+                    <div class="video-item neumorphic" data-aos="fade-up">
+                        <video controls>
+                            <source src="https://dweb.link/ipfs/bafybeidt2qcw7z2gaoruk3fgjo6q4zmss6guscopzkf3indhg2bajp54du" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3 class="text-xl font-semibold mb-2">Business Proposal</h3>
+                            <p>Discover the exciting business opportunities in CryptoQuest MMORPG.</p>
+                        </div>
+                    </div>
+                    <div class="video-item neumorphic" data-aos="fade-up" data-aos-delay="100">
+                        <video controls>
+                            <source src="https://dweb.link/ipfs/bafybeihangqczpyntquaeafoafm4qbbqxw3z6i3euncgevvlwwwbm7q3yy" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h3 class="text-xl font-semibold mb-2">Game Introduction</h3>
+                            <p>Get a first look at the immersive world of CryptoQuest MMORPG.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.27.3/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.0/dist/ethers.umd.min.js"></script>
+    <script>
+        // Sample contract data
+        const contracts = [
+            { name: 'Token Contract', description: 'Manages the creation and distribution of tokens', abi: '...', functions: ['transfer', 'balanceOf'] },
+            { name: 'Staking Contract', description: 'Handles token staking and rewards', abi: '...', functions: ['stake', 'unstake', 'getRewards'] },
+            { name: 'Governance Contract', description: 'Manages voting and proposal creation', abi: '...', functions: ['createProposal', 'vote', 'executeProposal'] }
+        ];
+
+        // Create contract cards
+        const contractContainer = document.querySelector('.grid');
+        contracts.forEach(contract => {
+            const card = document.createElement('div');
+            card.className = 'contract-card';
+            card.innerHTML = `
+                <h3 class="text-xl font-bold mb-2">${contract.name}</h3>
+                <p class="mb-4">${contract.description}</p>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    View Details
+                </button>
+                <div class="tooltip">
+                    <strong>ABI:</strong> ${contract.abi}<br>
+                    <strong>Functions:</strong> ${contract.functions.join(', ')}
+                </div>
+                <div class="collapsible-content mt-4">
+                    <h4 class="font-bold mb-2">Contract ABI:</h4>
+                    <pre class="bg-gray-200 p-2 rounded overflow-x-auto">${contract.abi}</pre>
+                    <h4 class="font-bold mt-4 mb-2">Available Functions:</h4>
+                    <ul class="list-disc pl-5">
+                        ${contract.functions.map(func => `<li>${func}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            contractContainer.appendChild(card);
+
+            const button = card.querySelector('button');
+            const collapsibleContent = card.querySelector('.collapsible-content');
+            button.addEventListener('click', () => {
+                card.classList.toggle('expanded');
+            });
+        });
+
+        // Contract Visualization
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        document.getElementById("contractVisualization").appendChild(svg);
+
+        contracts.forEach((contract, index) => {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", 100 + index * 200);
+            circle.setAttribute("cy", 200);
+            circle.setAttribute("r", 50);
+            circle.setAttribute("fill", `hsl(${index * 120}, 70%, 60%)`);
+            svg.appendChild(circle);
+
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", 100 + index * 200);
+            text.setAttribute("y", 200);
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("dominant-baseline", "middle");
+            text.setAttribute("fill", "white");
+            text.textContent = contract.name.split(' ')[0];
+            svg.appendChild(text);
+
+            if (index > 0) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", 100 + (index - 1) * 200 + 50);
+                line.setAttribute("y1", 200);
+                line.setAttribute("x2", 100 + index * 200 - 50);
+                line.setAttribute("y2", 200);
+                line.setAttribute("stroke", `hsl(${index * 60}, 70%, 60%)`);
+                line.setAttribute("stroke-width", 3);
+                line.classList.add("animated-line");
+                svg.appendChild(line);
+            }
+        });
+
+        // Token Economy Chart
+        const tokenEconomyCtx = document.getElementById('tokenEconomyChart').getContext('2d');
+        new Chart(tokenEconomyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Circulating Supply', 'Staked Tokens', 'Treasury'],
+                datasets: [{
+                    data: [50, 30, 20],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Token Distribution'
+                    }
+                }
+            }
+        });
+
+        // Market Growth Chart
+        const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
+        new Chart(marketGrowthCtx, {
+            type: 'line',
+            data: {
+                labels: ['2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: 'Market Size (Billion $)',
+                    data: [150, 170, 200, 230, 260],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    fill: true,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)'
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Gaming Market Growth Projections'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Organizational Chart
+        const orgChartOptions = {
+            chart: {
+                type: 'treemap',
+                height: 350
+            },
+            series: [{
+                data: [
+                    { x: 'Founder & President', y: 100 },
+                    { x: 'CEO', y: 80 },
+                    { x: 'CTO', y: 70 },
+                    { x: 'Lead Developer', y: 60 },
+                    { x: 'Marketing Director', y: 60 },
+                    { x: 'Blockchain Specialist', y: 60 }
+                ]
+            }],
+            colors: ['#3B93A5', '#F7B844', '#ADD8C7', '#EC3C65', '#CDD7B6', '#C1F666'],
+            plotOptions: {
+                treemap: {
+                    distributed: true,
+                    enableShades: false
+                }
+            },
+            title: {
+                text: 'CryptoQuest Organizational Structure'
+            },
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
+        };
+
+        const orgChart = new ApexCharts(document.querySelector("#orgChart"), orgChartOptions);
+        orgChart.render();
+
+        // Token Distribution Chart
+        const tokenDistributionCtx = document.getElementById('tokenDistributionChart').getContext('2d');
+        new Chart(tokenDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Public Sale', 'Team', 'Advisors', 'Ecosystem Fund', 'Marketing', 'Reserve'],
+                datasets: [{
+                    data: [40, 20, 5, 15, 10, 10],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'CQT Token Distribution'
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+
+        // Token Release Schedule
+        const tokenReleaseOptions = {
+            series: [{
+                name: 'Token Release',
+                data: [10, 20, 35, 55, 80, 100]
+            }],
+            chart: {
+                height: 350,
+                type: 'area',
+                animations: {
+                    enabled: true,
+                    easing: 'easeinout',
+                    speed: 800,
+                    animateGradually: {
+                        enabled: true,
+                        delay: 150
+                    },
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 350
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                categories: ['Month 1', 'Month 3', 'Month 6', 'Month 12', 'Month 18', 'Month 24']
+            },
+            yaxis: {
+                title: {
+                    text: 'Percentage Released'
+                },
+                max: 100
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.7,
+                    opacityTo: 9,
+                    stops: [0, 90, 100]
+                }
+            },
+            title: {
+                text: 'CQT Token Release Schedule',
+                align: 'left'
+            }
+        };
+
+        const tokenReleaseChart = new ApexCharts(document.querySelector("#tokenReleaseChart"), tokenReleaseOptions);
+        tokenReleaseChart.render();
+
+        // Financial Projections Chart
+        const financialProjectionsCtx = document.getElementById('financialProjectionsChart').getContext('2d');
+        new Chart(financialProjectionsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [1000000, 5000000, 12000000],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Expenses',
+                    data: [2500000, 3000000, 3500000],
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Financial Projections'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart',
+                    from: {
+                        y: 500
+                    }
+                }
+            }
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Web3 integration for buying CQT tokens and NFTBook
+        const CQTContractAddress = '0x126d0a70e6413ec44d977c41024a76d84cedb4a4'; // Replace with your actual CQT contract address
+        const CQTContractABI = [ /* Add your CQT contract ABI here */ ];
+
+        const NFTBookContractAddress = '0x1234567890123456789012345678901234567890'; // Replace with actual NFTBook contract address
+        const NFTBookContractABI = [ /* Add your NFTBook contract ABI here */ ];
+
+        let web3;
+        let CQTContract;
+        let NFTBookContract;
+        let userAccount;
+
+        async function init() {
+            if (typeof window.ethereum !== 'undefined') {
+                web3 = new Web3(window.ethereum);
+                try {
+                    // Request account access
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await web3.eth.getAccounts();
+                    userAccount = accounts[0];
+                    CQTContract = new web3.eth.Contract(CQTContractABI, CQTContractAddress);
+                    NFTBookContract = new web3.eth.Contract(NFTBookContractABI, NFTBookContractAddress);
+
+                    document.getElementById('buyCQTButton').addEventListener('click', buyCQT);
+                    document.getElementById('buyNFTBookButton').addEventListener('click', buyNFTBook);
+
+                    // Update status
+                    document.getElementById('statusCQT').textContent = 'Connected to wallet';
+                    document.getElementById('statusNFTBook').textContent = 'Connected to wallet';
+
+                    updateNFTBookPrice();
+                } catch (error) {
+                    console.error("User denied account access");
+                    document.getElementById('statusCQT').textContent = 'Please connect to MetaMask';
+                    document.getElementById('statusNFTBook').textContent = 'Please connect to MetaMask';
+                }
+            } else {
+                console.log('MetaMask not detected');
+                document.getElementById('statusCQT').textContent = 'Please install MetaMask';
+                document.getElementById('statusNFTBook').textContent = 'Please install MetaMask';
+            }
+        }
+
+        async function buyCQT() {
+            const amount = document.getElementById('amount').value;
+            if (!amount || amount <= 0) {
+                Swal.fire('Error', 'Please enter a valid amount', 'error');
+                return;
+            }
+
+            try {
+                const tokenPrice = await CQTContract.methods.tokenPricePublic().call();
+                const totalCost = web3.utils.toBN(amount).mul(web3.utils.toBN(tokenPrice));
+
+                await CQTContract.methods.buyTokens(amount).send({
+                    from: userAccount,
+                    value: totalCost.toString()
+                });
+
+                Swal.fire('Success', `Successfully purchased ${amount} CQT tokens!`, 'success');
+            } catch (error) {
+                console.error('Error buying tokens:', error);
+                Swal.fire('Error', 'Failed to buy tokens. Please try again.', 'error');
+            }
+        }
+
+        async function updateNFTBookPrice() {
+            const price = await NFTBookContract.methods.getPrice().call();
+            document.getElementById('price').textContent = web3.utils.fromWei(price, 'ether') + ' ETH';
+        }
+
+        async function buyNFTBook() {
+            const status = document.getElementById('statusNFTBook');
+            status.textContent = 'Processing...';
+            status.className = 'loading';
+
+            try {
+                const price = await NFTBookContract.methods.getPrice().call();
+                await NFTBookContract.methods.mint().send({from: userAccount, value: price});
+                status.textContent = 'Success! NFTBook purchased.';
+                status.className = '';
+            } catch (error) {
+                console.error(error);
+                status.textContent = 'Error: ' + error.message;
+                status.className = '';
+            }
+        }
+
+        window.addEventListener('load', init);
+    </script>
 </body>
 </html>
