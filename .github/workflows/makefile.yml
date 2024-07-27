@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Install Node.js dependencies
       run: |
@@ -37,6 +37,7 @@ jobs:
 
     - name: Install Python dependencies
       run: |
+        cd data-processing-and-analytics
         python3 -m venv env
         source env/bin/activate
         pip install -r requirements.txt
