@@ -7,7 +7,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'"
   },
   "repository": {
     "type": "git",
@@ -16,15 +18,19 @@
   "author": "Jacque Antoine DeGraff",
   "license": "MIT",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.0.0",
+    "@openzeppelin/contracts": "^4.9.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "web3": "^4.11.0"
+    "web3": "^4.11.0",
+    "ethers": "^6.0.5",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^9.7.0",
-    "babel-eslint": "^10.1.0"
+    "eslint": "^8.47.0",
+    "babel-eslint": "^10.1.0",
+    "prettier": "^3.0.0"
   },
   "browserslist": {
     "production": [
