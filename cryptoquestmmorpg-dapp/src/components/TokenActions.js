@@ -1,16 +1,17 @@
-// src/components/TokenActions.js
-import React from 'react';
-import useCryptoQuest from '../hooks/useCryptoQuest';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const TokenActions = () => {
-  const { buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity } = useCryptoQuest();
-  const [amount, setAmount] = useState('');
-
-  const handleChange = (e) => setAmount(e.target.value);
+const TokenActions = ({ buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity }) => {
+  const [amount, setAmount] = useState(0);
 
   return (
-    <div>
-      <input type="number" value={amount} onChange={handleChange} placeholder="Amount" />
+    <div className="TokenActions">
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter amount"
+      />
       <button onClick={() => buyToken(amount)}>Buy Token</button>
       <button onClick={() => stakeTokens(amount)}>Stake Tokens</button>
       <button onClick={() => unstakeTokens(amount)}>Unstake Tokens</button>
@@ -19,6 +20,15 @@ const TokenActions = () => {
       <button onClick={() => removeLiquidity(amount)}>Remove Liquidity</button>
     </div>
   );
+};
+
+TokenActions.propTypes = {
+  buyToken: PropTypes.func.isRequired,
+  stakeTokens: PropTypes.func.isRequired,
+  unstakeTokens: PropTypes.func.isRequired,
+  swapTokens: PropTypes.func.isRequired,
+  addLiquidity: PropTypes.func.isRequired,
+  removeLiquidity: PropTypes.func.isRequired,
 };
 
 export default TokenActions;

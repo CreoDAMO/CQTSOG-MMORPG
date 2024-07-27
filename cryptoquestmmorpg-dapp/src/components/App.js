@@ -1,29 +1,23 @@
-// src/App.js
 import React, { useContext } from 'react';
-import Web3Provider, { Web3Context } from './components/context/Web3Context';
-import './index.css';
+import { Web3Context } from './context/Web3Context';
+import TokenActions from './TokenActions';
+import Character from './Character';
 
-function App() {
-  const { connectWallet, contracts, account } = useContext(Web3Context);
+const App = () => {
+  const { connectWallet } = useContext(Web3Context);
 
   return (
-    <Web3Provider>
-      <div className="App">
-        <h1>CryptoQuest DApp</h1>
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to CryptoQuest: The Shards of Genesis</h1>
         <button onClick={connectWallet}>Connect Wallet</button>
-        <Game contracts={contracts} account={account} />
-      </div>
-    </Web3Provider>
-  );
-}
-
-function Game({ contracts, account }) {
-  // Use contracts and account in your Game component
-  return (
-    <div>
-      {/* Game UI */}
+      </header>
+      <main>
+        <TokenActions />
+        <Character id={1} />
+      </main>
     </div>
   );
-}
+};
 
 export default App;

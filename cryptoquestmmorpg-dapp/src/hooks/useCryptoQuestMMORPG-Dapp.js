@@ -1,9 +1,8 @@
-// src/hooks/useCryptoQuestMMORPG-Dapp.js
 import { useContext } from 'react';
 import { Web3Context } from '../context/Web3Context';
 
-const useCryptoQuest = () => {
-  const { contracts } = useContext(Web3Context);
+const useCryptoQuestMMORPGDapp = () => {
+  const { contracts, account } = useContext(Web3Context);
 
   const getCharacter = async (id) => {
     return await contracts.cryptoQuest.methods.getCharacter(id).call();
@@ -36,4 +35,4 @@ const useCryptoQuest = () => {
   return { getCharacter, buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity };
 };
 
-export default useCryptoQuestMMORPG-Dapp;
+export default useCryptoQuestMMORPGDapp;
