@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// src/components/TokenActions.js
+import React, { useState, useContext } from 'react';
+import { Web3Context } from '../context/Web3Context';
 
-const TokenActions = ({ buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity }) => {
-  const [amount, setAmount] = useState(0);
+const TokenActions = () => {
+  const { buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity } = useContext(Web3Context);
+  const [amount, setAmount] = useState('');
 
   return (
-    <div className="TokenActions">
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        placeholder="Enter amount"
-      />
+    <div>
+      <h2>Token Actions</h2>
+      <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
       <button onClick={() => buyToken(amount)}>Buy Token</button>
       <button onClick={() => stakeTokens(amount)}>Stake Tokens</button>
       <button onClick={() => unstakeTokens(amount)}>Unstake Tokens</button>
@@ -20,15 +18,6 @@ const TokenActions = ({ buyToken, stakeTokens, unstakeTokens, swapTokens, addLiq
       <button onClick={() => removeLiquidity(amount)}>Remove Liquidity</button>
     </div>
   );
-};
-
-TokenActions.propTypes = {
-  buyToken: PropTypes.func.isRequired,
-  stakeTokens: PropTypes.func.isRequired,
-  unstakeTokens: PropTypes.func.isRequired,
-  swapTokens: PropTypes.func.isRequired,
-  addLiquidity: PropTypes.func.isRequired,
-  removeLiquidity: PropTypes.func.isRequired,
 };
 
 export default TokenActions;

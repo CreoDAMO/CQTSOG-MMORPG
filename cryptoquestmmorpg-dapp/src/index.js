@@ -1,11 +1,11 @@
+// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import Web3Provider from './context/Web3Context';
-import './index.css';
+import App from './components/App'; // Adjusted the import path
+import './styles/index.css'; // Ensure this matches the actual file name and location
+import Web3Provider from './context/Web3Context'; // Ensure this matches the actual file name and location
 
-const rootElement = document.getElementById('root');
-const root = ReactDOM.createRoot(rootElement);
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
