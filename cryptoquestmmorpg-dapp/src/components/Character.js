@@ -1,7 +1,7 @@
 // src/components/Character.js
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { Web3Context } from '../context/Web3Context';
+import PropTypes from 'prop-types';
 
 const Character = ({ id }) => {
   const { getCharacter } = useContext(Web3Context);
