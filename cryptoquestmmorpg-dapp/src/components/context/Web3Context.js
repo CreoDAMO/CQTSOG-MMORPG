@@ -1,45 +1,71 @@
 // src/context/Web3Context.js
 import React, { createContext, useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-import { web3Modal, getLibrary } from '../utils/web3Modal';
+import Web3 from 'web3';
+import web3Modal from '../utils/web3Modal';
+import { contracts as contractInfo } from '../contracts';
 
 export const Web3Context = createContext();
 
-export const Web3Provider = ({ children }) => {
-    const [provider, setProvider] = useState(null);
-    const [library, setLibrary] = useState(null);
-    const [account, setAccount] = useState(null);
-    const [chainId, setChainId] = useState(null);
+const Web3Provider = ({ children }) => {
+  const [web3, setWeb3] = useState(null);
+  const [account, setAccount] = useState(null);
+  const [contracts, setContracts] = useState({});
 
-    const connect = async () => {
-        const instance = await web3Modal.connect();
-        const library = getLibrary(instance);
-        const accounts = await library.listAccounts();
-        const network = await library.getNetwork();
+  useEffect(() => {
+    if (web3 && account) {
+      const cryptoQuestContract = new web3.eth.Contract(contractInfo.CryptoQuestTheShardsOfGenesisMMORPG.abi, contractInfo.CryptoQuestTheShardsOfGenesisMMORPG.address);
+      const walletContract = new web3.eth.Contract(contractInfo.CryptoQuestTheShardsOfGenesisWallet.abi, contractInfo.CryptoQuestTheShardsOfGenesisWallet.address);
+      const swapContract = new web3.eth.Contract(contractInfo.CryptoQuestSwap.abi, contractInfo.CryptoQuestSwap.address);
 
-        setProvider(instance);
-        setLibrary(library);
-        if (accounts) setAccount(accounts[0]);
-        setChainId(network.chainId);
-    };
+      setContracts({
+        cryptoQuest: cryptoQuestContract,
+        wallet: walletContract,
+        swap: swapContract,
+      });
+    }
+  }, [web3, account]);
 
-    const disconnect = async () => {
-        web3Modal.clearCachedProvider();
-        setProvider(null);
-        setLibrary(null);
-        setAccount(null);
-        setChainId(null);
-    };
+  const connectWallet = async () => {
+    const provider = await web3Modal.connect();
+    const web3Instance = new Web3(provider);
+    const accounts = await web3Instance.eth.getAccounts();
+    setWeb3(web3Instance);
+    setAccount(accounts[0]);
+  };
 
-    useEffect(() => {
-        if (web3Modal.cachedProvider) {
-            connect();
-        }
-    }, []);
+  const getCharacter = async (id) => {
+    return await contracts.cryptoQuest.methods.getCharacter(id).call();
+  };
 
-    return (
-        <Web3Context.Provider value={{ connect, disconnect, provider, library, account, chainId }}>
-            {children}
-        </Web3Context.Provider>
-    );
+  const buyToken = async (amount) => {
+    return await contracts.cryptoQuest.methods.buyToken().send({ from: account, value: amount });
+  };
+
+  const stakeTokens = async (amount) => {
+    return await contracts.wallet.methods.stakeTokens(amount).send({ from: account });
+  };
+
+  const unstakeTokens = async (amount) => {
+    return await contracts.wallet.methods.unstakeTokens(amount).send({ from: account });
+  };
+
+  const swapTokens = async (amount) => {
+    return await contracts.swap.methods.swapTokens(amount).send({ from: account });
+  };
+
+  const addLiquidity = async (amount) => {
+    return await contracts.swap.methods.addLiquidity(amount).send({ from: account });
+  };
+
+  const removeLiquidity = async (amount) => {
+    return await contracts.swap.methods.removeLiquidity(amount).send({ from: account });
+  };
+
+  return (
+    <Web3Context.Provider value={{ connectWallet, getCharacter, buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity }}>
+      {children}
+    </Web3Context.Provider>
+  );
 };
+
+export default Web3Provider;
