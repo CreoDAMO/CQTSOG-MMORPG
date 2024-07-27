@@ -1,9 +1,9 @@
 // src/context/Web3Context.js
 import React, { createContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Web3 from 'web3';
 import web3Modal from '../utils/web3Modal';
 import { contracts as contractInfo } from '../contracts';
+import PropTypes from 'prop-types';
 
 export const Web3Context = createContext();
 
