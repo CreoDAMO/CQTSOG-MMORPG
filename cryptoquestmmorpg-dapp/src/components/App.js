@@ -1,6 +1,6 @@
 // src/components/App.js
 import React, { useContext } from 'react';
-import { Web3Context } from '../context/Web3Context';
+import { Web3Context } from '../components/Web3Context';
 import TokenActions from './TokenActions';
 import Character from './Character';
 

@@ -1,6 +1,6 @@
 // src/components/ConnectWalletButton.js
 import React, { useContext } from 'react';
-import { Web3Context } from '../context/Web3Context';
+import { Web3Context } from '../components/Web3Context';
 
 const ConnectWalletButton = () => {
   const { connectWallet } = useContext(Web3Context);

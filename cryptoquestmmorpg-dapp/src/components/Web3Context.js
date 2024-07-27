@@ -1,4 +1,4 @@
-// src/components/context/Web3Context.js
+// src/components/Web3Context.js
 import React, { createContext, useState, useEffect } from 'react';
 import Web3 from 'web3';
 import web3Modal from '../utils/web3Modal';

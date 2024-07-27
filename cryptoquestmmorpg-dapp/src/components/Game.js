@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Web3Context } from '../context/Web3Context';
+import { Web3Context } from '../components/Web3Context';
 import { getCryptoQuestTheShardsOfGenesisMMPORPGContract } from '../utils/contracts';
 
 const Game = () => {
