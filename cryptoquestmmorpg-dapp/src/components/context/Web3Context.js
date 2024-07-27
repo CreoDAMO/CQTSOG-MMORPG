@@ -1,5 +1,6 @@
 // src/context/Web3Context.js
 import React, { createContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Web3 from 'web3';
 import web3Modal from '../utils/web3Modal';
 import { contracts as contractInfo } from '../contracts';
@@ -66,6 +67,10 @@ const Web3Provider = ({ children }) => {
       {children}
     </Web3Context.Provider>
   );
+};
+
+Web3Provider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Web3Provider;

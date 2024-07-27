@@ -1,5 +1,6 @@
 // src/components/Character.js
 import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Web3Context } from '../context/Web3Context';
 
 const Character = ({ id }) => {
@@ -26,6 +27,10 @@ const Character = ({ id }) => {
       <p>Level: {character.level}</p>
     </div>
   );
+};
+
+Character.propTypes = {
+  id: PropTypes.number.isRequired,
 };
 
 export default Character;
