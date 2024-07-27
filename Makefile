@@ -38,10 +38,6 @@ test:
 	# Navigate into the project directory and run tests
 	@cd $(APP_NAME) && npm test
 
-lint:
-	# Navigate into the project directory and run linter
-	@cd $(APP_NAME) && npm run lint
-
 format:
 	# Navigate into the project directory and run prettier
 	@cd $(APP_NAME) && npm run format
@@ -60,4 +56,4 @@ clean-python-env:
 	@rm -rf $(PYTHON_ENV)
 
 # Targets
-.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env start build test lint format eject clean clean-python-env
+.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env start build test format eject clean clean-python-env
