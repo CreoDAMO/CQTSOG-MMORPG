@@ -3,7 +3,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import Web3 from 'web3';
 import web3Modal from '../utils/web3Modal';
 import { contracts as contractInfo } from '../contracts';
-import PropTypes from 'prop-types';
 
 export const Web3Context = createContext();
 
@@ -67,10 +66,6 @@ const Web3Provider = ({ children }) => {
       {children}
     </Web3Context.Provider>
   );
-};
-
-Web3Provider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Web3Provider;
