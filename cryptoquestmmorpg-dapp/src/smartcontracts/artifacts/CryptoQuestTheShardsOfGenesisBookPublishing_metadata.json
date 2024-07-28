@@ -1,7 +1,7 @@
 {
   "name": "CryptoQuest: The Shards of Genesis Book",
   "description": "An epic fantasy adventure set in the world of Cryptonia...",
-  "image": "https://your-repo-url/path-to-image.png",
+  "image": "https://dweb.link/ipfs/bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa",
   "attributes": [
     {
       "trait_type": "Author",
@@ -16,6 +16,6 @@
       "value": "First Edition: 2004"
     }
   ],
-  "external_url_pdf": "ipfs://<CID-of-PDF>",
-  "external_url_epub": "ipfs://<CID-of-ePub>"
+  "external_url_pdf": "https://dweb.link/ipfs/bafybeiheteomouzh5hffdpkjlqktn2k3vpdufcmpxy5kivtpydnpoise74",
+  "external_url_epub": "https://dweb.link/ipfs/bafybeiaml6wnblgri6uuor6vemvsc2vp2ge5gzmzr746rpb55yipjldjgm"
 }
