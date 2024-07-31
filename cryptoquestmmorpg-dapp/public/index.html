@@ -508,6 +508,7 @@
             </div>
         </section>
 
+       <!-- Enhanced NFT Marketplace Section -->
         <section id="marketplace" class="mb-16">
             <h2 class="text-3xl font-bold mb-8 gradient-text">NFT Marketplace</h2>
             <div class="neumorphic p-6 rounded-lg">
@@ -515,9 +516,28 @@
                 <div id="nft-showcase" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <!-- NFT items will be dynamically loaded here -->
                 </div>
+                <div id="analytics" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Marketplace Analytics</h3>
+                    <p>Total Listings: <span id="totalListings"></span></p>
+                    <p>Active Listings: <span id="activeListings"></span></p>
+                    <p>Sold Listings: <span id="soldListings"></span></p>
+                    <p>Top Seller: <span id="topSeller"></span></p>
+                </div>
+                <div id="filters" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Filter Listings</h3>
+                    <label for="category">Category:</label>
+                    <select id="categoryFilter" class="w-full p-2 rounded neumorphic mb-4">
+                        <!-- Categories will be dynamically loaded here -->
+                    </select>
+                    <label for="rarity">Rarity:</label>
+                    <select id="rarityFilter" class="w-full p-2 rounded neumorphic">
+                        <!-- Rarities will be dynamically loaded here -->
+                    </select>
+                </div>
             </div>
         </section>
 
+        <!-- Enhanced Governance Dashboard Section -->
         <section id="governance" class="mb-16">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Governance Dashboard</h2>
             <div class="neumorphic p-6 rounded-lg">
@@ -525,17 +545,91 @@
                 <div id="governance-proposals" class="space-y-4">
                     <!-- Governance proposals will be dynamically loaded here -->
                 </div>
+                <div id="createProposal" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Create Proposal</h3>
+                    <form>
+                        <label for="proposalDescription">Description:</label>
+                        <textarea id="proposalDescription" class="w-full p-2 rounded neumorphic mb-4"></textarea>
+                        <button type="button" class="btn btn-primary" onclick="createProposal()">Submit Proposal</button>
+                    </form>
+                </div>
+                <div id="metrics" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Metrics and Reports</h3>
+                    <button type="button" class="btn btn-primary mb-4" onclick="viewTreasuryReport()">View Treasury Report</button>
+                    <button type="button" class="btn btn-primary" onclick="viewGameMetrics()">View Game Metrics</button>
+                </div>
             </div>
         </section>
 
-        <section id="tokenomics" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <div id="token-info" class="mb-4">
-                    <!-- Token information will be dynamically loaded here -->
+        <section id="tokenomics" class="py-16 bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Tokenomics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="neumorphic p-6">
+                        <h3 class="text-xl font-semibold mb-4">CQT Token Distribution</h3>
+                        <canvas id="tokenDistributionChart" width="400" height="400"></canvas>
+                    </div>
+                    <div class="neumorphic p-6">
+                        <h3 class="text-xl font-semibold mb-4">Token Utility</h3>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>Governance voting</li>
+                            <li>In-game purchases</li>
+                            <li>Staking rewards</li>
+                            <li>Liquidity provision</li>
+                            <li>NFT minting</li>
+                        </ul>
+                    </div>
                 </div>
-                <div id="token-chart" class="h-64 neumorphic-inset">
-                    <!-- Token price chart will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <section id="development" class="py-16">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Development Roadmap</h2>
+                <div class="relative">
+                    <div class="absolute h-full w-1 bg-primary-color left-1/2 transform -translate-x-1/2"></div>
+                    <div class="relative z-10">
+                        <div class="neumorphic mb-8 p-6 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg mb-2">Q3 2024: Alpha Launch</h3>
+                            <p>Initial game mechanics, basic NFT functionality, and core smart contracts.</p>
+                        </div>
+                        <div class="neumorphic mb-8 p-6 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg mb-2">Q4 2024: Beta Release</h3>
+                            <p>Enhanced gameplay, marketplace integration, and governance system implementation.</p>
+                        </div>
+                        <div class="neumorphic mb-8 p-6 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg mb-2">Q1 2025: Full Launch</h3>
+                            <p>Complete game world, advanced crafting system, and cross-chain interactions.</p>
+                        </div>
+                        <div class="neumorphic mb-8 p-6 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg mb-2">Q2 2025: Expansion</h3>
+                            <p>New realms, advanced PvP features, and integration with major DeFi protocols.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cqt-token" class="py-16 bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center gradient-text">CQT Token</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="neumorphic p-6">
+                        <h3 class="text-xl font-semibold mb-4">Token Price</h3>
+                        <p class="text-2xl font-bold">$0.30 USD</p>
+                        <p class="text-sm text-gray-500">Last updated: <span id="price-update-time"></span></p>
+                    </div>
+                    <div class="neumorphic p-6">
+                        <h3 class="text-xl font-semibold mb-4">Market Cap</h3>
+                        <p class="text-2xl font-bold">$300,000,000 USD</p>
+                    </div>
+                    <div class="neumorphic p-6">
+                        <h3 class="text-xl font-semibold mb-4">Total Supply</h3>
+                        <p class="text-2xl font-bold">1,000,000,000 CQT</p>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <a href="#" class="cta-button">Buy CQT Tokens</a>
                 </div>
             </div>
         </section>
@@ -1060,6 +1154,17 @@
             </div>
         </section>
     </main>
+
+    <footer class="neumorphic py-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 CreoDAMO Inc: CryptoQuest The Shards of Genesis MMORPG. All rights reserved.</p>
+            <div class="mt-4">
+                <a href="#" class="mx-2 hover:text-accent-color">Privacy Policy</a>
+                <a href="#" class="mx-2 hover:text-accent-color">Terms of Service</a>
+                <a href="#" class="mx-2 hover:text-accent-color">Contact Us</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
