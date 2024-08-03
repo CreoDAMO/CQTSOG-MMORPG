@@ -1,6 +1,8 @@
 # CryptoQuest MMORPG: The Shards of Genesis
 ## WhitePaper
 
+![CQTSOG-Whitepaper](https://github.com/user-attachments/assets/7d026c76-f89f-4e71-a751-304a9e30bad1)
+
 ---
 
 ## Executive Summary
