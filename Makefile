@@ -9,15 +9,15 @@ create-react-app:
 
 install-dependencies:
 	# Navigate into the project directory and install dependencies
-	@cd $(APP_NAME) && npm install
+	@cd $(APP_NAME) && npm install --legacy-peer-deps
 	# Install PostCSS and Tailwind CSS
-	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer
+	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 	# Initialize Tailwind CSS configuration files
 	@cd $(APP_NAME) && npx tailwindcss init -p
 
 install-blockchain-dependencies:
 	# Navigate into the project directory and install blockchain-specific dependencies
-	@cd $(APP_NAME) && npm install web3 ethers
+	@cd $(APP_NAME) && npm install web3 ethers --legacy-peer-deps
 
 setup-python-env:
 	# Set up Python virtual environment and install dependencies
