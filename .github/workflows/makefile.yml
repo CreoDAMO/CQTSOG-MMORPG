@@ -1,0 +1,58 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: make install-dependencies
+
+    - name: Install blockchain dependencies
+      run: make install-blockchain-dependencies
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Set up Python environment
+      run: make setup-python-env
+
+    - name: Build arbitrage bot
+      run: make build-bot
+
+    - name: Run arbitrage bot
+      run: make run-bot
+
+    - name: Build project
+      run: make build
+
+    - name: Test project
+      run: make test
+
+    - name: Format code
+      run: make format
+
+    - name: Eject project configuration (optional)
+      run: make eject
+
+    - name: Clean project
+      run: make clean
+
+    - name: Clean Python environment
+      run: make clean-python-env
