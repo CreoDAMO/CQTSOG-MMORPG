@@ -19,11 +19,17 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install dependencies
-      run: make install-dependencies
+    - name: Install project dependencies
+      run: cd cryptoquestmmorpg-dapp && npm install
+
+    - name: Install Tailwind and PostCSS dependencies
+      run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer
 
     - name: Install blockchain dependencies
-      run: make install-blockchain-dependencies
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers
+
+    - name: Initialize Tailwind CSS
+      run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -31,25 +37,27 @@ jobs:
         python-version: '3.x'
 
     - name: Set up Python environment
-      run: make setup-python-env
+      run: |
+        python3 -m venv env
+        env/bin/pip install -r requirements.txt
 
     - name: Build arbitrage bot
-      run: make build-bot
+      run: cd cryptoquestmmorpg-dapp && node src/build-arbitrage-bot.js
 
     - name: Run arbitrage bot
-      run: make run-bot
+      run: cd cryptoquestmmorpg-dapp && node src/arbitrage-bot.js
 
     - name: Build project
-      run: make build
+      run: cd cryptoquestmmorpg-dapp && npm run build
 
     - name: Test project
-      run: make test
+      run: cd cryptoquestmmorpg-dapp && npm test
 
     - name: Format code
-      run: make format
+      run: cd cryptoquestmmorpg-dapp && npm run format
 
     - name: Eject project configuration (optional)
-      run: make eject
+      run: cd cryptoquestmmorpg-dapp && npm run eject
 
     - name: Clean project
       run: make clean
