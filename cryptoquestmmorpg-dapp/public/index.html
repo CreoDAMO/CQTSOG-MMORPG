@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -29,6 +30,7 @@
     <meta property="og:image" content="/path/to/og-image.png">
     <meta property="og:url" content="https://cryptoquestmmorpg.quest/lander">
     <meta name="twitter:card" content="summary_large_image">
+
     <style>
         :root {
             --primary-color: #6a11cb;
@@ -43,18 +45,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .neumorphic {
             background: var(--bg-color);
             border-radius: 50px;
             box-shadow: 20px 20px 60px var(--neumorphic-dark), -20px -20px 60px var(--neumorphic-light);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .neumorphic-inset {
             background: var(--bg-color);
             border-radius: 50px;
             box-shadow: inset 20px 20px 60px var(--neumorphic-dark), inset -20px -20px 60px var(--neumorphic-light);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .gradient-text {
@@ -100,11 +105,6 @@
             --text-dark: #F0F0F3;
             --shadow-light: 10px 10px 20px #D1D9E6, -10px -10px 20px #FFFFFF;
             --shadow-dark: 10px 10px 20px #151517, -10px -10px 20px #1F1F23;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         body.light-mode {
@@ -176,6 +176,13 @@
         .video-info {
             padding: 1rem;
         }
+
+        #darkModeToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
     </style>
     <!-- Lazy Loading Images -->
     <script>
@@ -202,234 +209,29 @@
                 });
             }
         });
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('dark-mode', isDarkMode);
+        }
+
+        function loadDarkModeSetting() {
+            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDarkModeSetting);
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
     </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --background-light: #f0f4f8;
-            --background-dark: #2c3e50;
-            --text-light: #333;
-            --text-dark: #ecf0f1;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .dark-mode {
-            background-color: var(--background-dark);
-            color: var(--text-dark);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section {
-            background-color: var(--background-light);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .dark-mode .section {
-            background-color: var(--background-dark);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .contract-card {
-            background: var(--background-light);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px;
-            box-shadow: 8px 8px 15px #d1d9e6, -8px -8px 15px #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        .dark-mode .contract-card {
-            background: var(--background-dark);
-            box-shadow: 8px 8px 15px #1c2630, -8px -8px 15px #3c5670;
-        }
-
-        .contract-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .tooltip {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 10;
-        }
-
-        .contract-card:hover .tooltip {
-            opacity: 1;
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .expanded .collapsible-content {
-            max-height: 1000px;
-            transition: max-height 0.5s ease-in;
-        }
-
-        .chart-container {
-            background-color: #f8fafc;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            height: 400px;
-        }
-
-        .dark-mode .chart-container {
-            background-color: var(--background-dark);
-        }
-
-        .persona {
-            background-color: #e8f4fd;
-            border-left: 4px solid #3498db;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .dark-mode .persona {
-            background-color: #1c2b3a;
-        }
-
-        .team-member {
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .dark-mode .team-member {
-            background-color: #1c2b3a;
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .token-distribution {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .token-item {
-            flex: 1;
-            min-width: 200px;
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .dark-mode .token-item {
-            background-color: #1c2b3a;
-        }
-
-        .financial-item {
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .dark-mode .financial-item {
-            background-color: #1c2b3a;
-        }
-
-        .financial-item span:first-child {
-            font-weight: bold;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider {
-            background-color: var(--primary-color);
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(26px);
-        }
-    </style>
 </head>
 
 <body class="min-h-screen flex flex-col light-mode bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
+    <button id="darkModeToggle" class="neumorphic px-4 py-2">Toggle Dark Mode</button>
+
     <nav class="neumorphic p-4 mb-8">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="flex items-center">
@@ -508,7 +310,6 @@
             </div>
         </section>
 
-       <!-- Enhanced NFT Marketplace Section -->
         <section id="marketplace" class="mb-16">
             <h2 class="text-3xl font-bold mb-8 gradient-text">NFT Marketplace</h2>
             <div class="neumorphic p-6 rounded-lg">
@@ -537,7 +338,6 @@
             </div>
         </section>
 
-        <!-- Enhanced Governance Dashboard Section -->
         <section id="governance" class="mb-16">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Governance Dashboard</h2>
             <div class="neumorphic p-6 rounded-lg">
@@ -551,6 +351,8 @@
                         <label for="proposalDescription">Description:</label>
                         <textarea id="proposalDescription" class="w-full p-2 rounded neumorphic mb-4"></textarea>
                         <button type="button" class="btn btn-primary" onclick="createProposal()">Submit Proposal</button>
+
+
                     </form>
                 </div>
                 <div id="metrics" class="mt-8">
@@ -666,22 +468,6 @@
             </div>
         </section>
 
-        <section id="cqt-token" class="bg-light py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">CQT CryptoQuest Token</h2>
-            <p class="lead text-center mb-8">The CQT CryptoQuest Token is an essential part of the CryptoQuest ecosystem, providing players with a unique way to own and trade assets, participate in governance, and enjoy various in-game benefits.</p>
-            <div class="text-center">
-                <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="CQT CryptoQuest Token" class="img-fluid mb-3">
-                <a href="https://polygonscan.com/address/0x94ef57abfbff1ad70bd00a921e1d2437f31c1665" class="btn btn-primary btn-lg" target="_blank">View on PolygonScan</a>
-                <ul class="list-group text-left mt-3">
-                    <li class="list-group-item">Token Contract: <a href="https://polygonscan.com/address/0xb30837f54924b88294f524d3e13667396d3f3c8a#code" target="_blank">0xb30837f54924b88294f524d3e13667396d3f3c8a</a></li>
-                    <li class="list-group-item">Polygon Network: Seamless integration with the Polygon blockchain.</li>
-                    <li class="list-group-item">Governance: Participate in shaping the future of CryptoQuest through token-based voting.</li>
-                    <li class="list-group-item">Rewards: Earn rewards and in-game benefits by holding and staking CQT tokens.</li>
-                    <li class="list-group-item">Market: Buy, sell, and trade assets within the CryptoQuest marketplace using CQT tokens.</li>
-                </ul>
-            </div>
-        </section>
-
         <section id="buy-token" class="py-5">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Buy CQT Token</h2>
             <p class="lead text-center mb-8">Purchase the CQT CryptoQuest Token to enjoy exclusive in-game benefits, governance rights, and more. Follow the steps below to buy CQT tokens.</p>
@@ -702,9 +488,42 @@
 
         <section id="wallet-functions" class="py-5">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Wallet Functions</h2>
-            <div class="text-center">
-                <button id="stakeTokensButton" class="btn btn-primary btn-lg mr-2">Stake Tokens</button>
-                <button id="unstakeTokensButton" class="btn btn-primary btn-lg">Unstake Tokens</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-6">
+                    <h3 class="text-xl font-semibold mb-4">Stake Tokens</h3>
+                    <label for="stakeAmount" class="block mb-2">Amount to Stake:</label>
+                    <input type="number" id="stakeAmount" class="w-full p-2 rounded mb-4">
+                    <button id="stakeTokensButton" class="btn btn-primary w-full">Stake Tokens</button>
+                </div>
+               
+
+ <div class="neumorphic p-6">
+                    <h3 class="text-xl font-semibold mb-4">Unstake Tokens</h3>
+                    <button id="unstakeTokensButton" class="btn btn-primary w-full">Unstake Tokens</button>
+                </div>
+                <div class="neumorphic p-6">
+                    <h3 class="text-xl font-semibold mb-4">Role Management</h3>
+                    <label for="roleAccount" class="block mb-2">Account Address:</label>
+                    <input type="text" id="roleAccount" class="w-full p-2 rounded mb-4">
+                    <label for="roleType" class="block mb-2">Role:</label>
+                    <select id="roleType" class="w-full p-2 rounded mb-4">
+                        <option value="ADMIN_ROLE">Admin</option>
+                        <option value="PAUSER_ROLE">Pauser</option>
+                        <option value="UPGRADER_ROLE">Upgrader</option>
+                    </select>
+                    <button id="grantRoleButton" class="btn btn-primary w-full mb-4">Grant Role</button>
+                    <button id="revokeRoleButton" class="btn btn-primary w-full">Revoke Role</button>
+                </div>
+                <div class="neumorphic p-6">
+                    <h3 class="text-xl font-semibold mb-4">Submit Transaction</h3>
+                    <label for="txTo" class="block mb-2">To Address:</label>
+                    <input type="text" id="txTo" class="w-full p-2 rounded mb-4">
+                    <label for="txValue" class="block mb-2">Value (ETH):</label>
+                    <input type="number" id="txValue" class="w-full p-2 rounded mb-4">
+                    <label for="txData" class="block mb-2">Data:</label>
+                    <input type="text" id="txData" class="w-full p-2 rounded mb-4">
+                    <button id="submitTxButton" class="btn btn-primary w-full">Submit Transaction</button>
+                </div>
             </div>
         </section>
 
@@ -779,23 +598,32 @@
         </section>
 
         <section id="book-nft" class="bg-light py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis Book NFT</h2>
-            <p class="lead text-center mb-8">Discover the exclusive CryptoQuest Book NFT series, each representing a unique chapter, character, location, element, and rarity within the CryptoQuest universe. Own a piece of the story and earn rewards!</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <p class="mb-4">Our NFT smart contract ensures true ownership, allowing players to buy, sell, and trade their books securely on the blockchain. With roles for pausing, minting, upgrading, and managing royalties, our system is robust and adaptable.</p>
-                    <ul class="list-disc pl-5">
-                        <li class="mb-2">Pauser Role: Pause and unpause the contract to control minting and transfers.</li>
-                        <li class="mb-2">Minter Role: Mint new NFTs with unique metadata and attributes.</li>
-                        <li class="mb-2">Royalty Manager Role: Set and manage royalty fees for secondary sales.</li>
-                        <li class="mb-2">Book Manager Role: Add new books to the collection with detailed descriptions and media.</li>
-                        <li class="mb-2">Publisher Role: Publish books, making them available for players.</li>
-                    </ul>
-                    <button id="buyNFTBookButton" class="btn btn-primary btn-lg mt-4">Buy an NFT Book</button>
-                    <p id="statusNFTBook" class="mt-4"></p>
-                </div>
-                <div>
-                    <img src="https://bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa.ipfs.dweb.link/" alt="CryptoQuest: The Shards of Genesis Book Cover" class="book-cover">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold mb-8 gradient-text text-center">CryptoQuest: The Shards of Genesis Book NFT</h2>
+                <p class="lead text-center mb-8">Discover the exclusive CryptoQuest Book NFT series, each representing a unique chapter, character, location, element, and rarity within the CryptoQuest universe. Own a piece of the story and earn rewards!</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="mb-4">Our NFT smart contract ensures true ownership, allowing players to buy, sell, and trade their books securely on the blockchain. With roles for pausing, minting, upgrading, and managing royalties, our system is robust and adaptable.</p>
+                        <ul class="list-disc pl-5">
+                            <li class="mb-2">Pauser Role: Pause and unpause the contract to control minting and transfers.</li>
+                            <li class="mb-2">Minter Role: Mint new NFTs with unique metadata and attributes.</li>
+                            <li class="mb-2">Royalty Manager Role: Set and manage royalty fees for secondary sales.</li>
+                            <li class="mb-2">Book Manager Role: Add new books to the collection with detailed descriptions and media.</li>
+                            <li class="mb-2">Publisher Role: Publish books, making them available for players.</li>
+                        </ul>
+                        <div class="mt-4">
+                            <label for="tierSelect" class="block mb-2">Select Tier:</label>
+                            <select id="tierSelect" class="w-full p-2 rounded neumorphic mb-4">
+                                <!-- Tiers will be dynamically loaded here -->
+                            </select>
+                            <button id="buyNFTBookButton" class="btn btn-primary btn-lg">Buy an NFT Book</button>
+                            <p id="statusNFTBook" class="mt-4"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa.ipfs.dweb.link/" alt="CryptoQuest: The Shards of Genesis Book Cover" class="book-cover">
+                    </div>
                 </div>
             </div>
         </section>
@@ -826,7 +654,7 @@
             </div>
         </section>
 
-        <section id="white-paper" class="py-5">
+         <section id="white-paper" class="py-5">
             <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis - Enhanced Whitepaper</h2>
             <div class="flex justify-end mb-4">
                 <label class="toggle-switch">
@@ -1109,7 +937,6 @@
             </div>
         </section>
 
-        <!-- New Sections -->
         <section id="merchandise" class="bg-light py-5">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Exclusive Merchandise</h2>
             <p class="lead text-center mb-8">Subscribe to receive exclusive CryptoQuest merchandise, including apparel, accessories, and collectibles.</p>
@@ -1153,6 +980,51 @@
                 </div>
             </div>
         </section>
+
+        <section id="poolInfo" class="neumorphic mt-12">
+            <h2 class="text-2xl font-bold mb-4">Current Pool Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">CQT / MATIC</h3>
+                    <p>Fee: 0.30%</p>
+                    <p>Status: In range</p>
+                    <p>Current Price: 1.72404 CQT per MATIC</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Liquidity</h3>
+                    <p>CQT: 30.00 (41%)</p>
+                    <p>MATIC: 25.34 (59%)</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-xl font-semibold mb-2">Price Range</h3>
+                <p>Min Price: 1.53109 CQT per MATIC</p>
+                <p>Max Price: 2.05436 CQT per MATIC</p>
+            </div>
+        </section>
+
+        <section id="botConfig" class="neumorphic mt-12">
+            <h2 class="text-2xl font-bold mb-4">Bot Configuration</h2>
+            <form id="botConfigForm">
+                <div class="mb-4">
+                    <label for="reinvestmentRate" class="block mb-2">Reinvestment Rate (%)</label>
+                    <input type="number" id="reinvestmentRate" name="reinvestmentRate" class="w-full p-2 rounded" min="0" max="100">
+                </div>
+                <div class="mb-4">
+                    <label for="flashLoanProvider" class="block mb-2">Flash Loan Provider</label>
+                    <select id="flashLoanProvider" name="flashLoanProvider" class="w-full p-2 rounded">
+                        <option value="aave">Aave</option>
+                        <option value="dydx">dYdX</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-secondary-color text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 transition">Update Configuration</button>
+            </form>
+        </section>
+
+        <section id="performanceChart" class="neumorphic mt-12">
+            <h2 class="text-2xl font-bold mb-4">Bot Performance</h2>
+            <canvas id="botPerformanceChart"></canvas>
+        </section>
     </main>
 
     <footer class="neumorphic py-8">
@@ -1173,368 +1045,52 @@
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.0/dist/ethers.umd.min.js"></script>
     <script src="https://chatgpt.com/g/g-okli7Xlbi-cryptoquest-guide.js"></script>
     <script>
-        // Sample contract data
-        const contracts = [
-            { name: 'Token Contract', description: 'Manages the creation and distribution of tokens', abi: '...', functions: ['transfer', 'balanceOf'] },
-            { name: 'Staking Contract', description: 'Handles token staking and rewards', abi: '...', functions: ['stake', 'unstake', 'getRewards'] },
-            { name: 'Governance Contract', description: 'Manages voting and proposal creation', abi: '...', functions: ['createProposal', 'vote', 'executeProposal'] }
-        ];
+        const CQTSalesContractAddress = '0xc36fc9872Bd271BD80365517958e6F48D3b4FA91'; // Replace with your actual CQT contract address
+        const CQTSalesContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressRemovedFromWhitelist","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"FundsWithdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPrice","type":"uint256"},{"indexed":false,"internalType":"string","name":"role","type":"string"}],"name":"TokenPriceUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"purchaser","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensPurchased","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensReleased","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newCap","type":"uint256"}],"name":"TotalCapUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"COMMUNITY_MEMBER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INVESTOR_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"addAddressToWhitelist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"addCommunityMember","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"addInvestor","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"buyTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"founder","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"_tokenAddress","type":"address"},{"internalType":"address","name":"_proxyAddress","type":"address"},{"internalType":"uint256","name":"_tokenPriceInvestor","type":"uint256"},{"internalType":"uint256","name":"_tokenPriceCommunity","type":"uint256"},{"internalType":"uint256","name":"_tokenPricePublic","type":"uint256"},{"internalType":"uint256","name":"_totalCap","type":"uint256"},{"internalType":"uint256","name":"_releaseTime","type":"uint256"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"purchasedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"releaseTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"releaseTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"removeAddressFromWhitelist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"removeCommunityMember","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"removeInvestor","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newPrice","type":"uint256"},{"internalType":"string","name":"role","type":"string"}],"name":"setTokenPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newCap","type":"uint256"}],"name":"setTotalCap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPriceCommunity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPriceInvestor","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPricePublic","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalCap","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"vestedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"whitelistedAddresses","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add ABI Here
 
-        // Create contract cards
-        const contractContainer = document.querySelector('.grid');
-        contracts.forEach(contract => {
-            const card = document.createElement('div');
-            card.className = 'contract-card';
-            card.innerHTML = `
-                <h3 class="text-xl font-bold mb-2">${contract.name}</h3>
-                <p class="mb-4">${contract.description}</p>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    View Details
-                </button>
-                <div class="tooltip">
-                    <strong>ABI:</strong> ${contract.abi}<br>
-                    <strong>Functions:</strong> ${contract.functions.join(', ')}
-                </div>
-                <div class="collapsible-content mt-4">
-                    <h4 class="font-bold mb-2">Contract ABI:</h4>
-                    <pre class="bg-gray-200 p-2 rounded overflow-x-auto">${contract.abi}</pre>
-                    <h4 class="font-bold mt-4 mb-2">Available Functions:</h4>
-                    <ul class="list-disc pl-5">
-                        ${contract.functions.map(func => `<li>${func}</li>`).join('')}
-                    </ul>
-                </div>
-            `;
-            contractContainer.appendChild(card);
+        const NFTBookSalesContractAddress = '0x8206b3a98dbd4e3cd767e0e5caba6c6af68044c8'; // Replace with actual NFTBook contract address
+        const NFTBookSalesContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"CQT","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MATIC","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAYMENT_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"USDC","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"WETH","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"}],"name":"addTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tierId","type":"uint256"},{"internalType":"address","name":"paymentToken","type":"address"},{"internalType":"string","name":"uri","type":"string"},{"components":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata","name":"metadata","type":"tuple"}],"name":"buyNFT","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"paymentManager","type":"address"},{"internalType":"address","name":"nftAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"nftContract","outputs":[{"internalType":"contract CryptoQuestTheShardsOfGenesisBookNFT","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"nftAddress","type":"address"}],"name":"setNFTContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tierCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tiers","outputs":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"},{"internalType":"uint256","name":"sold","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tierId","type":"uint256"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"}],"name":"updateTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address payable","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawFunds","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add ABI Here
 
-            const button = card.querySelector('button');
-            const collapsibleContent = card.querySelector('.collapsible-content');
-            button.addEventListener('click', () => {
-                card.classList.toggle('expanded');
-            });
-        });
+        const walletContractAddress = '0xf60d96cfa71c6fe7fe18ca028041ca7f42b543bd'; // Replace with your Wallet contract address
+        const walletContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"startTime","type":"uint256"}],"name":"TokensStaked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"TokensUnstaked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionConfirmed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionExecuted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionSubmitted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"confirmTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"daoAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc1155Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc20Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc721Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"executeTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"farmingAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"admin","type":"address"},{"internalType":"uint256","name":"_requiredConfirmations","type":"uint256"},{"internalType":"uint256","name":"_stakingRate","type":"uint256"},{"internalType":"address","name":"_erc20Address","type":"address"},{"internalType":"address","name":"_erc721Address","type":"address"},{"internalType":"address","name":"_erc1155Address","type":"address"},{"internalType":"address","name":"_daoAddress","type":"address"},{"internalType":"address","name":"_stakingAddress","type":"address"},{"internalType":"address","name":"_farmingAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"isConfirmed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"requiredConfirmations","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"revokeConfirmation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_daoAddress","type":"address"}],"name":"setDAOAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc1155Address","type":"address"}],"name":"setERC1155Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc20Address","type":"address"}],"name":"setERC20Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc721Address","type":"address"}],"name":"setERC721Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_farmingAddress","type":"address"}],"name":"setFarmingAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_stakingAddress","type":"address"}],"name":"setStakingAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"stakeTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"submitTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"},{"internalType":"bool","name":"executed","type":"bool"},{"internalType":"uint256","name":"numConfirmations","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unstakeTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"stateMutability":"payable","type":"receive"}]; // Add Wallet contract ABI here
 
-        // Contract Visualization
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "100%");
-        svg.setAttribute("height", "100%");
-        document.getElementById("contractVisualization").appendChild(svg);
-
-        contracts.forEach((contract, index) => {
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("cx", 100 + index * 200);
-            circle.setAttribute("cy", 200);
-            circle.setAttribute("r", 50);
-            circle.setAttribute("fill", `hsl(${index * 120}, 70%, 60%)`);
-            svg.appendChild(circle);
-
-            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            text.setAttribute("x", 100 + index * 200);
-            text.setAttribute("y", 200);
-            text.setAttribute("text-anchor", "middle");
-            text.setAttribute("dominant-baseline", "middle");
-            text.setAttribute("fill", "white");
-            text.textContent = contract.name.split(' ')[0];
-            svg.appendChild(text);
-
-            if (index > 0) {
-                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", 100 + (index - 1) * 200 + 50);
-                line.setAttribute("y1", 200);
-                line.setAttribute("x2", 100 + index * 200 - 50);
-                line.setAttribute("y2", 200);
-                line.setAttribute("stroke", `hsl(${index * 60}, 70%, 60%)`);
-                line.setAttribute("stroke-width", 3);
-                line.classList.add("animated-line");
-                svg.appendChild(line);
-            }
-        });
-
-        // Token Economy Chart
-        const tokenEconomyCtx = document.getElementById('tokenEconomyChart').getContext('2d');
-        new Chart(tokenEconomyCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Circulating Supply', 'Staked Tokens', 'Treasury'],
-                datasets: [{
-                    data: [50, 30, 20],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Token Distribution'
-                    }
-                }
-            }
-        });
-
-        // Market Growth Chart
-        const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
-        new Chart(marketGrowthCtx, {
-            type: 'line',
-            data: {
-                labels: ['2022', '2023', '2024', '2025', '2026'],
-                datasets: [{
-                    label: 'Market Size (Billion $)',
-                    data: [150, 170, 200, 230, 260],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1,
-                    fill: true,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)'
-                }]
-            },
-            options: {
-                responsive: true,
-                animation: {
-                    duration: 2000,
-                    easing: 'easeOutQuart'
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        text: 'Gaming Market Growth Projections'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        // Organizational Chart
-        const orgChartOptions = {
-            chart: {
-                type: 'treemap',
-                height: 350
-            },
-            series: [{
-                data: [
-                    { x: 'Founder & President', y: 100 },
-                    { x: 'CEO', y: 80 },
-                    { x: 'CTO', y: 70 },
-                    { x: 'Lead Developer', y: 60 },
-                    { x: 'Marketing Director', y: 60 },
-                    { x: 'Blockchain Specialist', y: 60 }
-                ]
-            }],
-            colors: ['#3B93A5', '#F7B844', '#ADD8C7', '#EC3C65', '#CDD7B6', '#C1F666'],
-            plotOptions: {
-                treemap: {
-                    distributed: true,
-                    enableShades: false
-                }
-            },
-            title: {
-                text: 'CryptoQuest Organizational Structure'
-            },
-            animations: {
-                enabled: true,
-                easing: 'easeinout',
-                speed: 800,
-                animateGradually: {
-                    enabled: true,
-                    delay: 150
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 350
-                }
-            }
-        };
-
-        const orgChart = new ApexCharts(document.querySelector("#orgChart"), orgChartOptions);
-        orgChart.render();
-
-        // Token Distribution Chart
-        const tokenDistributionCtx = document.getElementById('tokenDistributionChart').getContext('2d');
-        new Chart(tokenDistributionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Public Sale', 'Team', 'Advisors', 'Ecosystem Fund', 'Marketing', 'Reserve'],
-                datasets: [{
-                    data: [40, 20, 5, 15, 10, 10],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    },
-                    title: {
-                        display: true,
-                        text: 'CQT Token Distribution'
-                    }
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                }
-            }
-        });
-
-        // Token Release Schedule
-        const tokenReleaseOptions = {
-            series: [{
-                name: 'Token Release',
-                data: [10, 20, 35, 55, 80, 100]
-            }],
-            chart: {
-                height: 350,
-                type: 'area',
-                animations: {
-                    enabled: true,
-                    easing: 'easeinout',
-                    speed: 800,
-                    animateGradually: {
-                        enabled: true,
-                        delay: 150
-                    },
-                    dynamicAnimation: {
-                        enabled: true,
-                        speed: 350
-                    }
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth'
-            },
-            xaxis: {
-                categories: ['Month 1', 'Month 3', 'Month 6', 'Month 12', 'Month 18', 'Month 24']
-            },
-            yaxis: {
-                title: {
-                    text: 'Percentage Released'
-                },
-                max: 100
-            },
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 9,
-                    stops: [0, 90, 100]
-                }
-            },
-            title: {
-                text: 'CQT Token Release Schedule',
-                align: 'left'
-            }
-        };
-
-        const tokenReleaseChart = new ApexCharts(document.querySelector("#tokenReleaseChart"), tokenReleaseOptions);
-        tokenReleaseChart.render();
-
-        // Financial Projections Chart
-        const financialProjectionsCtx = document.getElementById('financialProjectionsChart').getContext('2d');
-        new Chart(financialProjectionsCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Year 1', 'Year 2', 'Year 3'],
-                datasets: [{
-                    label: 'Revenue',
-                    data: [1000000, 5000000, 12000000],
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Expenses',
-                    data: [2500000, 3000000, 3500000],
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Financial Projections'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeInOutQuart',
-                    from: {
-                        y: 500
-                    }
-                }
-            }
-        });
-
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-        });
-
-        // Web3 integration for buying CQT tokens and NFTBook
-        const CQTContractAddress = '0xc36fc9872Bd271BD80365517958e6F48D3b4FA91'; // Replace with your actual CQT contract address
-        const CQTContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressRemovedFromWhitelist","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"FundsWithdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"}];
-
-        const NFTBookContractAddress = '0x6b07aD60b1d448D0e1cE9dCB24A85B3ab18b9b1E'; // Replace with actual NFTBook contract address
-        const NFTBookContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"ERC721EnumerableForbiddenBatchMint","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"owner","type":"address"}],"name":"ERC721IncorrectOwner","type":"error"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ERC721InsufficientApproval","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC721InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"operator","type":"address"}],"name":"ERC721InvalidOperator","type":"error"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"ERC721InvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC721InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC721InvalidSender","type":"error"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ERC721NonexistentToken","type":"error"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"ERC721OutOfBoundsIndex","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_toTokenId","type":"uint256"}],"name":"BatchMetadataUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"bookId","type":"uint256"},{"indexed":false,"internalType":"string","name":"title","type":"string"},{"indexed":false,"internalType":"string","name":"description","type":"string"},{"indexed":false,"internalType":"string","name":"image","type":"string"},{"indexed":false,"internalType":"string","name":"pdfUrl","type":"string"},{"indexed":false,"internalType":"string","name":"epubUrl","type":"string"}],"name":"BookAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"bookId","type":"uint256"}],"name":"BookPublished","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_tokenId","type":"uint256"}],"name":"MetadataUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"string","name":"uri","type":"string"},{"components":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"indexed":false,"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata","name":"metadata","type":"tuple"}],"name":"NFTMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"BOOK_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINTER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAYMENT_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PUBLISHER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ROYALTY_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"string","name":"pdfUrl","type":"string"},{"internalType":"string","name":"epubUrl","type":"string"}],"name":"addBook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"addPaymentToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"bookCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"books","outputs":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"string","name":"pdfUrl","type":"string"},{"internalType":"string","name":"epubUrl","type":"string"},{"internalType":"bool","name":"isPublished","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"bookId","type":"uint256"}],"name":"getBook","outputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"image","type":"string"},{"internalType":"string","name":"pdfUrl","type":"string"},{"internalType":"string","name":"epubUrl","type":"string"},{"internalType":"bool","name":"isPublished","type":"bool"}],"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Book","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"minter","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"royaltyManager","type":"address"},{"internalType":"address","name":"paymentManager","type":"address"},{"internalType":"address","name":"bookManager","type":"address"},{"internalType":"address","name":"publisher","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"string","name":"uri","type":"string"},{"internalType":"address","name":"paymentToken","type":"address"},{"components":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata","name":"metadata","type":"tuple"}],"name":"mintNFT","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nftPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"bookId","type":"uint256"}],"name":"publishBook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"removePaymentToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"string","name":"uri","type":"string"},{"components":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata","name":"metadata","type":"tuple"}],"name":"safeMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"setNftPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint96","name":"feeNumerator","type":"uint96"}],"name":"setRoyaltyInfo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tokenMetadata","outputs":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"}];
+        const swapContractAddress = '0xYourSwapContractAddress'; // Replace with your Swap contract address
+        const swapContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"provider","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"LiquidityAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"provider","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"LiquidityRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"swapper","type":"address"},{"indexed":true,"internalType":"address","name":"nftContract","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"}],"name":"NFTSwapped","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"swapper","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"}],"name":"TokenSwapped","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEE_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LIQUIDITY_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"}],"name":"addLiquidity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"cqtNFT","outputs":[{"internalType":"contract IERC721Upgradeable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"cqtToken","outputs":[{"internalType":"contract IERC20Upgradeable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"liquidityManager","type":"address"},{"internalType":"address","name":"cqtTokenAddress","type":"address"},{"internalType":"address","name":"cqtNFTAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"liquidityPools","outputs":[{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"ethAmount","type":"uint256"},{"internalType":"uint256","name":"totalLiquidity","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"removeLiquidity","outputs":[{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"ethAmount","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapETHForNFT","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"minTokens","type":"uint256"}],"name":"swapETHForTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapNFTForETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapTokensForETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"newTokenAmount","type":"uint256"},{"internalType":"uint256","name":"newEthAmount","type":"uint256"}],"name":"updateLiquidityPool","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"withdrawNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add Swap contract ABI here
 
         let web3;
         let CQTContract;
         let NFTBookContract;
+        let walletContract;
+        let swapContract;
         let userAccount;
 
         async function init() {
             if (typeof window.ethereum !== 'undefined') {
                 web3 = new Web3(window.ethereum);
                 try {
-                    // Request account access
                     await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const accounts = await web3.eth.getAccounts();
                     userAccount = accounts[0];
                     CQTContract = new web3.eth.Contract(CQTContractABI, CQTContractAddress);
                     NFTBookContract = new web3.eth.Contract(NFTBookContractABI, NFTBookContractAddress);
+                    walletContract = new web3.eth.Contract(walletContractABI, walletContractAddress);
+                    swapContract = new web3.eth.Contract(swapContractABI, swapContractAddress);
 
                     document.getElementById('buyCQTButton').addEventListener('click', buyCQT);
                     document.getElementById('buyNFTBookButton').addEventListener('click', buyNFTBook);
+                    document.getElementById('stakeTokensButton').addEventListener('click', stakeTokens);
+                    document.getElementById('unstakeTokensButton').addEventListener('click', unstakeTokens);
+                    document.getElementById('grantRoleButton').addEventListener('click', grantRole);
+                    document.getElementById('revokeRoleButton').addEventListener('click', revokeRole);
+                    document.getElementById('submitTxButton').addEventListener('click', submitTransaction);
+                    document.getElementById('addLiquidityButton').addEventListener('click', addLiquidity);
+                    document.getElementById('removeLiquidityButton').addEventListener('click', removeLiquidity);
+                    document.getElementById('swapMATICForTokensButton').addEventListener('click', swapMATICForTokens);
+                    document.getElementById('swapTokensForMATICButton').addEventListener('click', swapTokensForMATIC);
+                    loadTiers();
 
-                    // Update status
                     document.getElementById('statusCQT').textContent = 'Connected to wallet';
                     document.getElementById('statusNFTBook').textContent = 'Connected to wallet';
-
-                    updateNFTBookPrice();
                 } catch (error) {
                     console.error("User denied account access");
                     document.getElementById('statusCQT').textContent = 'Please connect to MetaMask';
@@ -1544,6 +1100,22 @@
                 console.log('MetaMask not detected');
                 document.getElementById('statusCQT').textContent = 'Please install MetaMask';
                 document.getElementById('statusNFTBook').textContent = 'Please install MetaMask';
+            }
+        }
+
+        async function loadTiers() {
+            try {
+                const tierCount = await NFTBookContract.methods.tierCount().call();
+                const tierSelect = document.getElementById('tierSelect');
+                for (let i = 0; i < tierCount; i++) {
+                    const tier = await NFTBookContract.methods.tiers(i).call();
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = Tier ${i + 1}: Price ${web3.utils.fromWei(tier.price, 'ether')} ETH, Supply ${tier.supply - tier.sold}/${tier.supply};
+                    tierSelect.appendChild(option);
+                }
+            } catch (error) {
+                console.error('Error loading tiers:', error);
             }
         }
 
@@ -1557,48 +1129,469 @@
             try {
                 const tokenPrice = await CQTContract.methods.tokenPricePublic().call();
                 const totalCost = web3.utils.toBN(amount).mul(web3.utils.toBN(tokenPrice));
+                const gas = await CQTContract.methods.buyTokens(amount).estimateGas({ from: userAccount });
 
                 await CQTContract.methods.buyTokens(amount).send({
                     from: userAccount,
-                    value: totalCost.toString()
+                    value: totalCost.toString(),
+                    gas: gas
                 });
 
-                Swal.fire('Success', `Successfully purchased ${amount} CQT tokens!`, 'success');
+                Swal.fire('Success', Successfully purchased ${amount} CQT tokens!, 'success');
             } catch (error) {
                 console.error('Error buying tokens:', error);
                 Swal.fire('Error', 'Failed to buy tokens. Please try again.', 'error');
             }
         }
 
-        async function updateNFTBookPrice() {
-            const price = await NFTBookContract.methods.nftPrice().call();
-            document.getElementById('price').textContent = web3.utils.fromWei(price, 'ether') + ' ETH';
-        }
-
         async function buyNFTBook() {
+            document.getElementById('progressIndicator').classList.remove('hidden');
+            const tierId = document.getElementById('tierSelect').value;
             const status = document.getElementById('statusNFTBook');
             status.textContent = 'Processing...';
-            status.className = 'loading';
 
             try {
-                const price = await NFTBookContract.methods.nftPrice().call();
-                await NFTBookContract.methods.mintNFT().send({from: userAccount, value: price});
-                status.textContent = 'Success! NFTBook purchased.';
-                status.className = '';
+                const tier = await NFTBookContract.methods.tiers(tierId).call();
+                const price = tier.price;
+                await NFTBookContract.methods.buyNFT(tierId, '0x0000000000000000000000000000000000000000', 'https://example.com/nft-metadata.json', {
+                    chapter: 'Chapter 1',
+                    character: 'Hero',
+                    location: 'Genesis',
+                    element: 'Fire',
+                    rarity: 'Rare'
+                }).send({ from: userAccount, value: price });
+
+                status.textContent = 'Success! NFT Book purchased.';
             } catch (error) {
                 console.error(error);
-                status.textContent = 'Error: ' + error.message;
-                status.className = '';
+                status.textContent = Error: ${error.message};
+            }
+
+            document.getElementById('progressIndicator').classList.add('hidden');
+        }
+
+        async function stakeTokens() {
+            const amount = document.getElementById('stakeAmount').value;
+            if (amount > 0) {
+                try {
+                    await walletContract.methods.stakeTokens(web3.utils.toWei(amount, 'ether')).send({ from: userAccount });
+                    Swal.fire('Success', 'Tokens staked successfully', 'success');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            } else {
+                Swal.fire('Error', 'Please enter a valid amount', 'error');
+            }
+        }
+
+        async function unstakeTokens() {
+            try {
+                await walletContract.methods.unstakeTokens().send({ from: userAccount });
+                Swal.fire('Success', 'Tokens unstaked successfully', 'success');
+            } catch (error) {
+                Swal.fire('Error', error.message, 'error');
+            }
+        }
+
+        async function grantRole() {
+            const role = document.getElementById('roleType').value;
+            const accountAddress = document.getElementById('roleAccount').value;
+            try {
+                await walletContract.methods.grantRole(web3.utils.keccak256(role), accountAddress).send({ from: userAccount });
+                Swal.fire('Success', Role ${role} granted to ${accountAddress}, 'success');
+            } catch (error) {
+                Swal.fire('Error', error.message, 'error');
+            }
+        }
+
+        async function revokeRole() {
+            const role = document.getElementById('roleType').value;
+            const accountAddress = document.getElementById('roleAccount').value;
+            try {
+                await walletContract.methods.revokeRole(web3.utils.keccak256(role), accountAddress).send({ from: userAccount });
+                Swal.fire('Success', Role ${role} revoked from ${accountAddress}, 'success');
+            } catch (error) {
+                Swal.fire('Error', error.message, 'error');
+            }
+        }
+
+        async function submitTransaction() {
+            const to = document.getElementById('txTo').value;
+            const value = document.getElementById('txValue').value;
+            const data = document.getElementById('txData').value;
+            try {
+                await walletContract.methods.submitTransaction(to, web3.utils.toWei(value, 'ether'), data).send({ from: userAccount });
+                Swal.fire('Success', 'Transaction submitted successfully', 'success');
+            } catch (error) {
+                Swal.fire('Error', error.message, 'error');
+            }
+        }
+
+        async function addLiquidity() {
+            const tokenAmount = document.getElementById('tokenAmount').value;
+            const maticAmount = document.getElementById('maticAmount').value;
+            if (tokenAmount > 0 && maticAmount > 0) {
+                try {
+                    await swapContract.methods.addLiquidity(web3.utils.toWei(tokenAmount, 'ether'), web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
+                    Swal.fire('Success', 'Liquidity added successfully', 'success');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            } else {
+                Swal.fire('Error', 'Please enter valid amounts', 'error');
+            }
+        }
+
+        async function removeLiquidity() {
+            const tokenAmount = document.getElementById('removeTokenAmount').value;
+            const maticAmount = document.getElementById('removeMaticAmount').value;
+            if (tokenAmount > 0 && maticAmount > 0) {
+                try {
+                    await swapContract.methods.removeLiquidity(web3.utils.toWei(tokenAmount, 'ether'), web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
+                    Swal.fire('Success', 'Liquidity removed successfully', 'success');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            } else {
+                Swal.fire('Error', 'Please enter valid amounts', 'error');
+            }
+        }
+
+        async function swapMATICForTokens() {
+            const maticAmount = document.getElementById('swapMaticAmount').value;
+            if (maticAmount > 0) {
+                try {
+                    await swapContract.methods.swapMATICForTokens(web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
+                    Swal.fire('Success', 'MATIC swapped for tokens successfully', 'success');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            } else {
+                Swal.fire('Error', 'Please enter a valid amount', 'error');
+            }
+        }
+
+        async function swapTokensForMATIC() {
+            const tokenAmount = document.getElementById('swapTokenAmount').value;
+            if (tokenAmount > 0) {
+                try {
+                    await swapContract.methods.swapTokensForMATIC(web3.utils.toWei(tokenAmount, 'ether')).send({ from: userAccount });
+                    Swal.fire('Success', 'Tokens swapped for MATIC successfully', 'success');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                }
+            } else {
+                Swal.fire('Error', 'Please enter a valid amount', 'error');
             }
         }
 
         window.addEventListener('load', init);
 
-        // Chatbot integration
-        document.getElementById('chatbotButton').addEventListener('click', function() {
-            CryptoquestAI.openChat();
+        const Web3 = require('web3');
+        const { ethers } = require('ethers');
+        const detectEthereumProvider = require('@metamask/detect-provider');
+        const { Token, Fetcher, Route } = require('@uniswap/sdk');
+        const { LendingPoolAddressesProvider, LendingPool } = require('@aave/protocol-js');
+        const { LedgerSigner } = require('@ethersproject/hardware-wallets');
+
+        const INFURA_URL = 'https://polygon-mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID';
+        let provider, signer;
+
+        async function setupProvider() {
+            const ethereumProvider = await detectEthereumProvider();
+            if (ethereumProvider) {
+                provider = new ethers.providers.Web3Provider(ethereumProvider);
+                await ethereumProvider.request({ method: 'eth_requestAccounts' });
+
+                // Choose between MetaMask and Ledger based on preference
+                signer = provider.getSigner(); // For MetaMask
+                // signer = new LedgerSigner(provider); // For Ledger
+            } else {
+                console.error('Please install MetaMask!');
+            }
+        }
+
+        const CQT_ADDRESS = '0x94ef57abfBff1AD70bD00a921e1d2437f31C1665';
+        const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270';
+        const AAVE_LENDING_POOL_ADDRESS_PROVIDER = '0x24a0e79e7ab9f4f4f2de9bafbf45303b093a7d34';
+        const UNISWAP_POOL_ADDRESS = '0x0b3CD8a843DEFDF01564a0342a89ba06c4fC9394';
+        const UNISWAP_POOL_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"Collect","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"CollectProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid1","type":"uint256"}],"name":"Flash","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextOld","type":"uint16"},{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextNew","type":"uint16"}],"name":"IncreaseObservationCardinalityNext","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Initialize","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"feeProtocol0Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol0New","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1New","type":"uint8"}],"name":"SetFeeProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"int256","name":"amount0","type":"int256"},{"indexed":false,"internalType":"int256","name":"amount1","type":"int256"},{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"uint128","name":"liquidity","type":"uint128"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Swap","type":"event"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"}],"name":"burn","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collect","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collectProtocol","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"fee","outputs":[{"internalType":"uint24","name":"","type":"uint24"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal0X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal1X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"flash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"}],"name":"increaseObservationCardinalityNext","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"liquidity","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxLiquidityPerTick","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"mint","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"observations","outputs":[{"internalType":"uint32","name":"blockTimestamp","type":"uint32"},{"internalType":"int56","name":"tickCumulative","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityCumulativeX128","type":"uint160"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint32[]","name":"secondsAgos","type":"uint32[]"}],"name":"observe","outputs":[{"internalType":"int56[]","name":"tickCumulatives","type":"int56[]"},{"internalType":"uint160[]","name":"secondsPerLiquidityCumulativeX128s","type":"uint160[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"positions","outputs":[{"internalType":"uint128","name":"liquidity","type":"uint128"},{"internalType":"uint256","name":"feeGrowthInside0LastX128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthInside1LastX128","type":"uint256"},{"internalType":"uint128","name":"tokensOwed0","type":"uint128"},{"internalType":"uint128","name":"tokensOwed1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"protocolFees","outputs":[{"internalType":"uint128","name":"token0","type":"uint128"},{"internalType":"uint128","name":"token1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"feeProtocol0","type":"uint8"},{"internalType":"uint8","name":"feeProtocol1","type":"uint8"}],"name":"setFeeProtocol","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"slot0","outputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"internalType":"int24","name":"tick","type":"int24"},{"internalType":"uint16","name":"observationIndex","type":"uint16"},{"internalType":"uint16","name":"observationCardinality","type":"uint16"},{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"},{"internalType":"uint8","name":"feeProtocol","type":"uint8"},{"internalType":"bool","name":"unlocked","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"}],"name":"snapshotCumulativesInside","outputs":[{"internalType":"int56","name":"tickCumulativeInside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityInsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsInside","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"bool","name":"zeroForOne","type":"bool"},{"internalType":"int256","name":"amountSpecified","type":"int256"},{"internalType":"uint160","name":"sqrtPriceLimitX96","type":"uint160"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"swap","outputs":[{"internalType":"int256","name":"amount0","type":"int256"},{"internalType":"int256","name":"amount1","type":"int256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"int16","name":"","type":"int16"}],"name":"tickBitmap","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tickSpacing","outputs":[{"internalType":"int24","name":"","type":"int24"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"","type":"int24"}],"name":"ticks","outputs":[{"internalType":"uint128","name":"liquidityGross","type":"uint128"},{"internalType":"int128","name":"liquidityNet","type":"int128"},{"internalType":"uint256","name":"feeGrowthOutside0X128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthOutside1X128","type":"uint256"},{"internalType":"int56","name":"tickCumulativeOutside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityOutsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsOutside","type":"uint32"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]; // Uniswap V3 pool ABI
+
+        async function getPairData() {
+            try {
+                const cqtToken = new Token(137, CQT_ADDRESS, 18);
+                const maticToken = new Token(137, MATIC_ADDRESS, 18);
+                const pair = await Fetcher.fetchPairData(cqtToken, maticToken, provider);
+                const route = new Route([pair], maticToken);
+                console.log(1 MATIC = ${route.midPrice.toSignificant(6)} CQT);
+                console.log(1 CQT = ${route.midPrice.invert().toSignificant(6)} MATIC);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function executeFlashLoan(borrowAmount) {
+            const lendingPoolAddressesProvider = new ethers.Contract(
+                AAVE_LENDING_POOL_ADDRESS_PROVIDER,
+                LendingPoolAddressesProvider,
+                signer
+            );
+
+            const lendingPoolAddress = await lendingPoolAddressesProvider.getLendingPool();
+            const lendingPool = new ethers.Contract(lendingPoolAddress, LendingPool, signer);
+
+            const tx = await lendingPool.flashLoan(
+                await signer.getAddress(),
+                MATIC_ADDRESS,
+                borrowAmount,
+                0,
+                await signer.getAddress(),
+                '0x',
+                0
+            );
+
+            await tx.wait();
+            console.log(Flash loan executed: ${tx.hash});
+        }
+
+        async function executeFlashLoanWithDYDX(borrowAmount) {
+            // Implement dYdX flash loan logic here
+        }
+
+        async function reinvestProfits(profits, reinvestPercentage) {
+            const amountToReinvest = profits * (reinvestPercentage / 100);
+
+            const cqtToken = new Token(137, CQT_ADDRESS, 18);
+            const maticToken = new Token(137, MATIC_ADDRESS, 18);
+            const pair = await Fetcher.fetchPairData(cqtToken, maticToken, provider);
+            const route = new Route([pair], maticToken);
+
+            const maticAmount = amountToReinvest / parseFloat(route.midPrice.toSignificant(6));
+            const cqtAmount = amountToReinvest;
+
+            await addLiquidity(cqtAmount, maticAmount);
+        }
+
+        async function addLiquidity(amountCQT, amountMATIC) {
+            const poolContract = new ethers.Contract(UNISWAP_POOL_ADDRESS, UNISWAP_POOL_ABI, signer);
+
+            const tx = await poolContract.mint({
+                tickLower: getTick(1.53109), // Min price
+                tickUpper: getTick(2.05436), // Max price
+                amount0Desired: ethers.utils.parseUnits(amountCQT.toString(), 'ether'),
+                amount1Desired: ethers.utils.parseUnits(amountMATIC.toString(), 'ether'),
+                amount0Min: 0,
+                amount1Min: 0,
+                recipient: await signer.getAddress(),
+                deadline: Math.floor(Date.now() / 1000) + 60 * 20
+            });
+
+            await tx.wait();
+            console.log(Liquidity added: ${tx.hash});
+        }
+
+        function getTick(price) {
+            return Math.floor(Math.log(price) / Math.log(1.0001));
+        }
+
+        function calculateReinvestmentPercentage(profits) {
+            if (profits > 100) return 60;
+            if (profits > 50) return 50;
+            return 40;
+        }
+
+        async function executeTrade(buyExchange, sellExchange, amount) {
+            let profits = 0;
+
+            if (buyExchange === 'sushiswap' && sellExchange === 'uniswap') {
+                const buyResult = await buyOnSushiSwap(amount);
+                const sellResult = await sellOnUniswap(amount);
+                profits = sellResult - buyResult;
+            } else if (buyExchange === 'uniswap' && sellExchange === 'sushiswap') {
+                const buyResult = await buyOnUniswap(amount);
+                const sellResult = await sellOnSushiSwap(amount);
+                profits = sellResult - buyResult;
+            }
+
+            const reinvestPercentage = calculateReinvestmentPercentage(profits);
+            console.log(Reinvesting ${reinvestPercentage}% of profits);
+
+            if (profits > 0) {
+                await reinvestProfits(profits, reinvestPercentage);
+            }
+        }
+
+        // Implement buy and sell functions as needed
+        async function buyOnSushiSwap(amount) {
+            // Implement SushiSwap buy logic here
+            // Return the cost in MATIC
+        }
+
+        async function sellOnUniswap(amount) {
+            // Implement Uniswap sell logic here
+            // Return the proceeds in MATIC
+        }
+
+        async function buyOnUniswap(amount) {
+            // Implement Uniswap buy logic here
+            // Return the cost in MATIC
+        }
+
+        async function sellOnSushiSwap(amount) {
+            // Implement SushiSwap sell logic here
+            // Return the proceeds in MATIC
+        }
+
+        async function buyOnBalancer(amount) {
+            // Implement Balancer buy logic here
+            // Return the cost in MATIC
+        }
+
+        async function sellOnBalancer(amount) {
+            // Implement Balancer sell logic here
+            // Return the proceeds in MATIC
+        }
+
+        // Update executeTrade to support new exchanges
+        async function execute
+
+Trade(buyExchange, sellExchange, amount) {
+            let profits = 0;
+
+            if (buyExchange === 'balancer' && sellExchange === 'uniswap') {
+                const buyResult = await buyOnBalancer(amount);
+                const sellResult = await sellOnUniswap(amount);
+                profits = sellResult - buyResult;
+            } else if (buyExchange === 'sushiswap' && sellExchange === 'uniswap') {
+                const buyResult = await buyOnSushiSwap(amount);
+                const sellResult = await sellOnUniswap(amount);
+                profits = sellResult - buyResult;
+            }
+
+            const reinvestPercentage = calculateReinvestmentPercentage(profits);
+            console.log(Reinvesting ${reinvestPercentage}% of profits);
+
+            if (profits > 0) {
+                await reinvestProfits(profits, reinvestPercentage);
+            }
+        }
+
+        async function main() {
+            await setupProvider();
+            await getPairData();
+
+            const amount = 100; // Amount in MATIC
+
+            // Use Aave or dYdX based on conditions
+            const useAave = document.getElementById('flashLoanProvider').value === 'aave';
+            if (useAave) {
+                await executeFlashLoan(ethers.utils.parseUnits(amount.toString(), 'ether'));
+            } else {
+                await executeFlashLoanWithDYDX(ethers.utils.parseUnits(amount.toString(), 'ether'));
+            }
+
+            await executeTrade('sushiswap', 'uniswap', amount);
+        }
+
+        document.getElementById('botConfigForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const reinvestmentRate = document.getElementById('reinvestmentRate').value;
+            const flashLoanProvider = document.getElementById('flashLoanProvider').value;
+
+            // Update the configuration and run the bot with the new settings
+            await main();
+        });
+
+        window.addEventListener('load', setupProvider);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Token Distribution Chart
+            const tokenDistributionCtx = document.getElementById('tokenDistributionChart').getContext('2d');
+            new Chart(tokenDistributionCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['ICO', 'Community Rewards', 'Team and Advisors', 'Ecosystem Development', 'Marketing and Partnerships', 'Treasury'],
+                    datasets: [{
+                        label: 'Token Distribution',
+                        data: [30, 20, 15, 15, 10, 10],
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+
+            // Market Growth Chart
+            const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
+            new Chart(marketGrowthCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2022', '2023', '2024'],
+                    datasets: [{
+                        label: 'Market Growth Projections',
+                        data: [100, 150, 200],
+                        backgroundColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Financial Projections Chart
+            const financialProjectionsCtx = document.getElementById('financialProjectionsChart').getContext('2d');
+            new Chart(financialProjectionsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [1, 5, 10],
+                            borderColor: '#4BC0C0',
+                            backgroundColor: '#4BC0C0',
+                            fill: false
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [2.5, 3, 3.5],
+                            borderColor: '#FF6384',
+                            backgroundColor: '#FF6384',
+                            fill: false
+                        },
+                        {
+                            label: 'Profit/Loss',
+                            data: [-1.5, 2, 6.5],
+                            borderColor: '#FFCE56',
+                            backgroundColor: '#FFCE56',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         });
     </script>
-    <script src="https://chatgpt.com/g/g-okli7Xlbi-cryptoquest-guide.js"></script>
 </body>
+
 </html>
