@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@coinbase/wallet-sdk": "^4.0.4",
-    "@metamask/detect-provider": "^1.2.0",  // Add this line
+    "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/contracts": "^5.0.2",
     "@tanstack/react-query": "^5.51.15",
     "@walletconnect/client": "^1.8.0",
