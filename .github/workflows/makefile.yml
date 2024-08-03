@@ -26,7 +26,7 @@ jobs:
       run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers --legacy-peer-deps
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider --legacy-peer-deps
 
     - name: Initialize Tailwind CSS
       run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
@@ -55,10 +55,10 @@ jobs:
       if: steps.check_req_file.outputs.req_exists == 'true'
 
     - name: Build arbitrage bot
-      run: cd cryptoquestmmorpg-dapp && node src/build-arbitrage-bot.js
+      run: cd cryptoquestmmorpg-dapp && npm run build-bot
 
     - name: Run arbitrage bot
-      run: cd cryptoquestmmorpg-dapp && node src/arbitrage-bot.js
+      run: cd cryptoquestmmorpg-dapp && npm run run-bot
 
     - name: Build project
       run: cd cryptoquestmmorpg-dapp && npm run build
