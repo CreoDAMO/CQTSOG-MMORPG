@@ -26,7 +26,7 @@ jobs:
       run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider --legacy-peer-deps
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider @uniswap/sdk --legacy-peer-deps
 
     - name: Initialize Tailwind CSS
       run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
