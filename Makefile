@@ -1,5 +1,3 @@
-# Makefile for setting up the cryptoquestmmorpg-dapp project with additional Python libraries
-
 # Variables
 APP_NAME = cryptoquestmmorpg-dapp
 PYTHON_ENV = env
@@ -28,11 +26,11 @@ setup-python-env:
 
 build-bot:
 	# Build the arbitrage bot
-	@cd $(APP_NAME) && npm run build-bot
+	@cd $(APP_NAME) && node src/build-arbitrage-bot.js
 
 run-bot:
 	# Run the arbitrage bot
-	@cd $(APP_NAME) && npm run run-bot
+	@cd $(APP_NAME) && node src/arbitrage-bot.js
 
 start:
 	# Navigate into the project directory and start the development server
