@@ -26,6 +26,14 @@ setup-python-env:
 	python3 -m venv $(PYTHON_ENV)
 	$(PYTHON_ENV)/bin/pip install -r requirements.txt
 
+build-bot:
+	# Build the arbitrage bot
+	@cd $(APP_NAME) && npm run build-bot
+
+run-bot:
+	# Run the arbitrage bot
+	@cd $(APP_NAME) && npm run run-bot
+
 start:
 	# Navigate into the project directory and start the development server
 	@cd $(APP_NAME) && npm start
@@ -56,4 +64,4 @@ clean-python-env:
 	@rm -rf $(PYTHON_ENV)
 
 # Targets
-.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env start build test format eject clean clean-python-env
+.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env
