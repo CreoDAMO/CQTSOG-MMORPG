@@ -20,13 +20,13 @@ jobs:
         node-version: '16'
 
     - name: Install project dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install
+      run: cd cryptoquestmmorpg-dapp && npm install --legacy-peer-deps
 
     - name: Install Tailwind and PostCSS dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer
+      run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers --legacy-peer-deps
 
     - name: Initialize Tailwind CSS
       run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
