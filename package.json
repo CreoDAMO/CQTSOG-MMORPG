@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@aave/contract-helpers": "^1.29.1",
+    "@aave/math-utils": "^1.29.1"
+  }
+}

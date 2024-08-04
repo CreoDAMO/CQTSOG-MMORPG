@@ -1,8 +1,7 @@
-const Web3 = require('web3');
 const { ethers } = require('ethers');
 const detectEthereumProvider = require('@metamask/detect-provider');
 const { Token, Fetcher, Route } = require('@uniswap/sdk');
-const { LendingPoolAddressesProvider, LendingPool } = require('@aave/protocol-js');
+const { Pool } = require('@aave/contract-helpers');
 const { LedgerSigner } = require('@ethersproject/hardware-wallets');
 
 const INFURA_URL = 'https://polygon-mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID';
@@ -24,7 +23,7 @@ async function setupProvider() {
 
 const CQT_ADDRESS = '0x94ef57abfBff1AD70bD00a921e1d2437f31C1665';
 const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270';
-const AAVE_LENDING_POOL_ADDRESS_PROVIDER = '0x24a0e79e7ab9f4f4f2de9bafbf45303b093a7d34';
+const AAVE_POOL_ADDRESS_PROVIDER = '0x24a0e79e7ab9f4f4f2de9bafbf45303b093a7d34';
 const UNISWAP_POOL_ADDRESS = '0x0b3CD8a843DEFDF01564a0342a89ba06c4fC9394';
 const UNISWAP_POOL_ABI = require('./abi.json'); // Load the ABI file
 
@@ -42,24 +41,18 @@ async function getPairData() {
 }
 
 async function executeFlashLoan(borrowAmount) {
-    const lendingPoolAddressesProvider = new ethers.Contract(
-        AAVE_LENDING_POOL_ADDRESS_PROVIDER,
-        LendingPoolAddressesProvider,
-        signer
-    );
+    const pool = new Pool(provider, {
+        POOL_ADDRESSES_PROVIDER: AAVE_POOL_ADDRESS_PROVIDER,
+    });
 
-    const lendingPoolAddress = await lendingPoolAddressesProvider.getLendingPool();
-    const lendingPool = new ethers.Contract(lendingPoolAddress, LendingPool, signer);
-
-    const tx = await lendingPool.flashLoan(
-        await signer.getAddress(),
-        MATIC_ADDRESS,
-        borrowAmount,
-        0,
-        await signer.getAddress(),
-        '0x',
-        0
-    );
+    const tx = await pool.flashLoan({
+        assets: [MATIC_ADDRESS],
+        amounts: [borrowAmount],
+        modes: [0],
+        onBehalfOf: await signer.getAddress(),
+        params: '0x',
+        referralCode: 0,
+    });
 
     await tx.wait();
     console.log(`Flash loan executed: ${tx.hash}`);
@@ -164,14 +157,7 @@ async function main() {
 
     const amount = 100; // Amount in MATIC
 
-    // Use Aave or dYdX based on conditions
-    const useAave = true; // This condition can be dynamic based on your logic
-    if (useAave) {
-        await executeFlashLoan(ethers.utils.parseUnits(amount.toString(), 'ether'));
-    } else {
-        await executeFlashLoanWithDYDX(ethers.utils.parseUnits(amount.toString(), 'ether'));
-    }
-
+    await executeFlashLoan(ethers.utils.parseUnits(amount.toString(), 'ether'));
     await executeTrade('sushiswap', 'uniswap', amount);
 }
 
