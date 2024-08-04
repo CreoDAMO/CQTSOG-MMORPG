@@ -4,7 +4,6 @@ PYTHON_ENV = env
 
 # Commands
 create-react-app:
-	# Check if the directory already exists
 	@if [ ! -d "$(APP_NAME)" ]; then \
 		npx create-react-app $(APP_NAME); \
 	else \
@@ -12,60 +11,45 @@ create-react-app:
 	fi
 
 install-dependencies:
-	# Navigate into the project directory and install dependencies
 	@cd $(APP_NAME) && npm install --legacy-peer-deps
-	# Install PostCSS and Tailwind CSS
 	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
-	# Initialize Tailwind CSS configuration files
 	@cd $(APP_NAME) && npx tailwindcss init -p
-	# Install specific version of ajv to resolve dependency issues
 	@cd $(APP_NAME) && npm install ajv@^6.12.6 ajv-keywords@^3.5.2 --legacy-peer-deps
 
 install-blockchain-dependencies:
-	# Navigate into the project directory and install blockchain-specific dependencies
 	@cd $(APP_NAME) && npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
 
 setup-python-env:
-	# Set up Python virtual environment and install dependencies
 	python3 -m venv $(PYTHON_ENV)
 	$(PYTHON_ENV)/bin/pip install -r $(APP_NAME)/src/data-processing-and-analytics/requirements.txt
 
 build-bot:
-	# Build the arbitrage bot
 	@cd $(APP_NAME) && node src/build-arbitrage-bot.js
 
-# Comment out the run-bot command for now
-# run-bot:
-# 	# Run the arbitrage bot
-# 	@cd $(APP_NAME) && node src/arbitrage-bot.js
-
 start:
-	# Navigate into the project directory and start the development server
 	@cd $(APP_NAME) && npm start
 
 build:
-	# Navigate into the project directory and create an optimized production build
+	@if [ ! -d "$(APP_NAME)/src/components/contracts" ]; then \
+		echo "Error: contracts directory not found in src/components"; \
+		exit 1; \
+	fi
 	@cd $(APP_NAME) && npm run build
 
 test:
-	# Navigate into the project directory and run tests
 	@cd $(APP_NAME) && npm test
 
 format:
-	# Navigate into the project directory and run prettier
 	@cd $(APP_NAME) && npm run format
 
 eject:
-	# Navigate into the project directory and eject the configuration
 	@cd $(APP_NAME) && npm run eject
 
 clean:
-	# Remove the node_modules directory and package-lock.json file
 	@rm -rf $(APP_NAME)/node_modules
 	@rm -f $(APP_NAME)/package-lock.json
 
 clean-python-env:
-	# Remove the Python virtual environment
 	@rm -rf $(PYTHON_ENV)
 
 # Targets
