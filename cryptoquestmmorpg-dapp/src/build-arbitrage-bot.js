@@ -1,9 +1,10 @@
 const { exec } = require('child_process');
 
-// Install necessary dependencies
-exec('npm install', (error, stdout, stderr) => {
+// Install necessary dependencies with --legacy-peer-deps
+exec('npm install --legacy-peer-deps', (error, stdout, stderr) => {
     if (error) {
         console.error(`Error installing dependencies: ${error.message}`);
+        console.error(stderr);
         return;
     }
     if (stderr) {
