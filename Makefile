@@ -32,9 +32,10 @@ build-bot:
 	# Build the arbitrage bot
 	@cd $(APP_NAME) && node src/build-arbitrage-bot.js
 
-run-bot:
-	# Run the arbitrage bot
-	@cd $(APP_NAME) && node src/arbitrage-bot.js
+# Comment out the run-bot command for now
+# run-bot:
+# 	# Run the arbitrage bot
+# 	@cd $(APP_NAME) && node src/arbitrage-bot.js
 
 start:
 	# Navigate into the project directory and start the development server
@@ -66,4 +67,4 @@ clean-python-env:
 	@rm -rf $(PYTHON_ENV)
 
 # Targets
-.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env
+.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env build-bot start build test format eject clean clean-python-env
