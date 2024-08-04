@@ -17,12 +17,12 @@ install-dependencies:
 
 install-blockchain-dependencies:
 	# Navigate into the project directory and install blockchain-specific dependencies
-	@cd $(APP_NAME) && npm install web3 ethers --legacy-peer-deps
+	@cd $(APP_NAME) && npm install web3 ethers@5.7.0 @metamask/detect-provider @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts --legacy-peer-deps
 
 setup-python-env:
 	# Set up Python virtual environment and install dependencies
 	python3 -m venv $(PYTHON_ENV)
-	$(PYTHON_ENV)/bin/pip install -r requirements.txt
+	$(PYTHON_ENV)/bin/pip install -r $(APP_NAME)/src/data-processing-and-analytics/requirements.txt
 
 build-bot:
 	# Build the arbitrage bot
