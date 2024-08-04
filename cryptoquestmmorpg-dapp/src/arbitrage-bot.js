@@ -1,18 +1,20 @@
 const { ethers } = require('ethers');
+const detectEthereumProvider = require('@metamask/detect-provider');
 const { Token, Fetcher, Route } = require('@uniswap/sdk');
 const { Pool } = require('@aave/contract-helpers');
-const { LedgerSigner } = require('@ethersproject/hardware-wallets');
 
-const INFURA_URL = 'https://polygon-amoy.infura.io/v3/a7fb924b8487461bb85c7554d2d914e7';
+const INFURA_URL = 'https://polygon-mainnet.infura.io/v3/a7fb924b8487461bb85c7554d2d914e7';
 let provider, signer;
 
 async function setupProvider() {
-    // Use JsonRpcProvider instead of detectEthereumProvider
-    provider = new ethers.providers.JsonRpcProvider(INFURA_URL);
-
-    // Choose between a standard JsonRpcSigner or a LedgerSigner based on your preference
-    signer = provider.getSigner(); // Standard signer
-    // signer = new LedgerSigner(provider); // Ledger signer
+    const ethereumProvider = await detectEthereumProvider();
+    if (ethereumProvider) {
+        provider = new ethers.providers.Web3Provider(ethereumProvider);
+        await ethereumProvider.request({ method: 'eth_requestAccounts' });
+        signer = provider.getSigner();
+    } else {
+        console.error('Please install MetaMask!');
+    }
 }
 
 const CQT_ADDRESS = '0x94ef57abfBff1AD70bD00a921e1d2437f31C1665';
