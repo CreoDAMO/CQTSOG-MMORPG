@@ -8,32 +8,40 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Build arbitrage bot
       run: npm run build-bot
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Run arbitrage bot
       run: npm run run-bot
+      working-directory: ./cryptoquestmmorpg-dapp
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-
-    - name: Install Python dependencies
+    - name: Setup Python environment
       run: |
-        cd cryptoquestmmorpg-dapp/src/data-processing-and-analytics
         python3 -m venv env
-        env/bin/pip install -r requirements.txt
+        source env/bin/activate
+        pip install -r src/data-processing-and-analytics/requirements.txt
+      working-directory: ./cryptoquestmmorpg-dapp
+
+    - name: Run check
+      run: make check
+      working-directory: ./cryptoquestmmorpg-dapp
+
+    - name: Run distcheck
+      run: make distcheck
+      working-directory: ./cryptoquestmmorpg-dapp
