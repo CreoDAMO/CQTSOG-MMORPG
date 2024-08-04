@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +25,7 @@ jobs:
       run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts --legacy-peer-deps
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts @ethersproject/hardware-wallets @aave/contract-helpers --legacy-peer-deps
 
     - name: Initialize Tailwind CSS
       run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
