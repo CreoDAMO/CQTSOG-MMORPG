@@ -18,6 +18,8 @@ install-dependencies:
 	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 	# Initialize Tailwind CSS configuration files
 	@cd $(APP_NAME) && npx tailwindcss init -p
+	# Install specific version of ajv to resolve dependency issues
+	@cd $(APP_NAME) && npm install ajv@^6.12.6 ajv-keywords@^3.5.2 --legacy-peer-deps
 
 install-blockchain-dependencies:
 	# Navigate into the project directory and install blockchain-specific dependencies
