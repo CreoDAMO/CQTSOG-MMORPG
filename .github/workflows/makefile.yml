@@ -25,7 +25,7 @@ jobs:
       run: cd cryptoquestmmorpg-dapp && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers@5 @metamask/detect-provider @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts --legacy-peer-deps
+      run: cd cryptoquestmmorpg-dapp && npm install web3 ethers @metamask/detect-provider @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts @ethersproject/hardware-wallets @aave/contract-helpers --legacy-peer-deps
 
     - name: Initialize Tailwind CSS
       run: cd cryptoquestmmorpg-dapp && npx tailwindcss init -p
@@ -34,4 +34,46 @@ jobs:
       id: check_req_file
       run: |
         if [ -f "cryptoquestmmorpg-dapp/src/data-processing-and-analytics/requirements.txt" ]; then
-          echo "requirements.txtBased on the information found, the error `ERR_PACKAGE_PATH_NOT_EXPORTED` is due to a breaking change in `ethers` version 6. It seems the most reliable solution is to downgrade to `ethers` version 5, which is more stable and widely supported by other libraries.
+          echo "requirements.txt file found."
+          echo "::set-output name=req_exists::true"
+        else
+          echo "requirements.txt file not found."
+          echo "::set-output name=req_exists::false"
+        fi
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+      if: steps.check_req_file.outputs.req_exists == 'true'
+
+    - name: Set up Python environment
+      run: |
+        python3 -m venv env
+        env/bin/pip install -r cryptoquestmmorpg-dapp/src/data-processing-and-analytics/requirements.txt
+      if: steps.check_req_file.outputs.req_exists == 'true'
+
+    - name: Build arbitrage bot
+      run: cd cryptoquestmmorpg-dapp && npm run build-bot
+
+    - name: Run arbitrage bot
+      run: cd cryptoquestmmorpg-dapp && npm run run-bot
+
+    - name: Build project
+      run: cd cryptoquestmmorpg-dapp && npm run build
+
+    - name: Test project
+      run: cd cryptoquestmmorpg-dapp && npm test
+
+    - name: Format code
+      run: cd cryptoquestmmorpg-dapp && npm run format
+
+    - name: Eject project configuration (optional)
+      run: cd cryptoquestmmorpg-dapp && npm run eject
+
+    - name: Clean project
+      run: make clean
+
+    - name: Clean Python environment
+      run: make clean-python-env
+      if: steps.check_req_file.outputs.req_exists == 'true'
