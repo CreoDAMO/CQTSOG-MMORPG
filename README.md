@@ -128,9 +128,11 @@ cryptoquestmmorpg-dapp/
 2. **Install Dependencies:**
    ```sh
    npm install
-```
+   ```
+   
 3 **Go to Directory And Install Dependencies**
 ```sh
+cd src
 cd data-processing-and-analytics
    pip install -r requirements.txt
    ```
