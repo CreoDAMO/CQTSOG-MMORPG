@@ -21,21 +21,27 @@ jobs:
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Build arbitrage bot
       run: npm run build-bot
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Run arbitrage bot
       run: npm run run-bot
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Setup Python environment
       run: |
         python3 -m venv env
         source env/bin/activate
         pip install -r src/data-processing-and-analytics/requirements.txt
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Run check
       run: make check
+      working-directory: ./cryptoquestmmorpg-dapp
 
     - name: Run distcheck
       run: make distcheck
+      working-directory: ./cryptoquestmmorpg-dapp
