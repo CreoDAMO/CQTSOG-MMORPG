@@ -1,17 +1,14 @@
-const { ethers } = require('ethers');
+ const { ethers } = require('ethers');
 const { Token, Fetcher, Route } = require('@uniswap/sdk');
 const { Pool } = require('@aave/contract-helpers');
 require('dotenv').config(); // To load the environment variables from a .env file
 
 const ALCHEMY_URL = 'https://polygonzkevm-mainnet.g.alchemy.com/v2/iBYxYh5HdV7D6teY1g7vo3VA46j5w4JS';
 
-let provider, signer;
+let provider;
 
 async function setupProvider() {
     provider = new ethers.providers.JsonRpcProvider(ALCHEMY_URL);
-    // Use a signer from a wallet without exposing the private key
-    // For example, using a Gnosis Safe signer
-    signer = provider.getSigner();
 }
 
 const CQT_ADDRESS = '0x94ef57abfBff1AD70bD00a921e1d2437f31C1665';
@@ -38,17 +35,20 @@ async function executeFlashLoan(borrowAmount) {
         POOL_ADDRESSES_PROVIDER: AAVE_POOL_ADDRESS_PROVIDER,
     });
 
+    // Assume signer is the user who will sign transactions manually via MetaMask or another service
+    const signerAddress = '0xCc380FD8bfbdF0c020de64075b86C84c2BB0AE79'; // Replace with your address
+
     const tx = await pool.flashLoan({
         assets: [MATIC_ADDRESS],
         amounts: [borrowAmount],
         modes: [0],
-        onBehalfOf: await signer.getAddress(),
+        onBehalfOf: signerAddress,
         params: '0x',
         referralCode: 0,
     });
 
-    await tx.wait();
-    console.log(`Flash loan executed: ${tx.hash}`);
+    // User signs transaction manually
+    console.log(`Flash loan transaction data: ${tx.data}`);
 }
 
 async function reinvestProfits(profits, reinvestPercentage) {
@@ -66,7 +66,7 @@ async function reinvestProfits(profits, reinvestPercentage) {
 }
 
 async function addLiquidity(amountCQT, amountMATIC) {
-    const poolContract = new ethers.Contract(UNISWAP_POOL_ADDRESS, UNISWAP_POOL_ABI, signer);
+    const poolContract = new ethers.Contract(UNISWAP_POOL_ADDRESS, UNISWAP_POOL_ABI, provider);
 
     const tx = await poolContract.mint({
         tickLower: getTick(1.53109), // Min price
@@ -75,12 +75,12 @@ async function addLiquidity(amountCQT, amountMATIC) {
         amount1Desired: ethers.utils.parseUnits(amountMATIC.toString(), 'ether'),
         amount0Min: 0,
         amount1Min: 0,
-        recipient: await signer.getAddress(),
+        recipient: '0xYourAddress', // Replace with your address
         deadline: Math.floor(Date.now() / 1000) + 60 * 20
     });
 
-    await tx.wait();
-    console.log(`Liquidity added: ${tx.hash}`);
+    // User signs transaction manually
+    console.log(`Liquidity addition transaction data: ${tx.data}`);
 }
 
 function getTick(price) {
