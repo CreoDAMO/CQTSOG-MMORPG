@@ -21,7 +21,7 @@ install-dependencies:
 
 install-blockchain-dependencies:
 	# Navigate into the project directory and install blockchain-specific dependencies
-	@cd $(APP_NAME) && npm install web3 ethers @uniswap/sdk @ethersproject/address @ethersproject/abi @ethersproject/providers @ethersproject/contracts @ethersproject/hardware-wallets @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
+	@cd $(APP_NAME) && npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
 
 setup-python-env:
 	# Set up Python virtual environment and install dependencies
