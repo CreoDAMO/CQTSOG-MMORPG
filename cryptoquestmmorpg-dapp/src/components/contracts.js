@@ -1,17 +1,16 @@
-// src/components/contracts.js
-import CryptoQuestTheShardsOfGenesisToken from '../contracts/CryptoQuestTheShardsOfGenesisToken.json';
-import CryptoQuestTheShardsOfGenesisNFT from '../contracts/CryptoQuestTheShardsOfGenesisNFT.json';
-import CryptoQuestTheShardsOfGenesisCollectionNFT from '../contracts/CryptoQuestTheShardsOfGenesisCollectionNFT.json';
-import TimelockControllerUpgradeable from '../contracts/TimelockControllerUpgradeable.json';
-import CryptoQuestTheShardsOfGenesisDAO from '../contracts/CryptoQuestTheShardsOfGenesisDAO.json';
-import CryptoQuestTheShardsOfGenesisMarketplace from '../contracts/CryptoQuestTheShardsOfGenesisMarketplace.json';
-import CryptoQuestTheShardsOfGenesisStaking from '../contracts/CryptoQuestTheShardsOfGenesisStaking.json';
-import CryptoQuestTheShardsOfGenesisFarming from '../contracts/CryptoQuestTheShardsOfGenesisFarming.json';
-import CryptoQuestTheShardsOfGenesisMMORPG from '../contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
-import CryptoQuestTheShardsOfGenesisWallet from '../contracts/CryptoQuestTheShardsOfGenesisWallet.json';
-import CryptoQuestSwap from '../contracts/CryptoQuestSwap.json';
-import CryptoQuestTheShardsOfGenesisBookNFT from '../contracts/CryptoQuestTheShardsOfGenesisBookNFT.json';
-import CQTTokenSaleContract from '../contracts/CQTTokenSaleContract.json';
+import CryptoQuestTheShardsOfGenesisToken from 'contracts/CryptoQuestTheShardsOfGenesisToken.json';
+import CryptoQuestTheShardsOfGenesisNFT from 'contracts/CryptoQuestTheShardsOfGenesisNFT.json';
+import CryptoQuestTheShardsOfGenesisCollectionNFT from 'contracts/CryptoQuestTheShardsOfGenesisCollectionNFT.json';
+import TimelockControllerUpgradeable from 'contracts/TimelockControllerUpgradeable.json';
+import CryptoQuestTheShardsOfGenesisDAO from 'contracts/CryptoQuestTheShardsOfGenesisDAO.json';
+import CryptoQuestTheShardsOfGenesisMarketplace from 'contracts/CryptoQuestTheShardsOfGenesisMarketplace.json';
+import CryptoQuestTheShardsOfGenesisStaking from 'contracts/CryptoQuestTheShardsOfGenesisStaking.json';
+import CryptoQuestTheShardsOfGenesisFarming from 'contracts/CryptoQuestTheShardsOfGenesisFarming.json';
+import CryptoQuestTheShardsOfGenesisMMORPG from 'contracts/CryptoQuestTheShardsOfGenesisMMORPG.json';
+import CryptoQuestTheShardsOfGenesisWallet from 'contracts/CryptoQuestTheShardsOfGenesisWallet.json';
+import CryptoQuestSwap from 'contracts/CryptoQuestSwap.json';
+import CryptoQuestTheShardsOfGenesisBookNFT from 'contracts/CryptoQuestTheShardsOfGenesisBookNFT.json';
+import CQTTokenSaleContract from 'contracts/CQTTokenSaleContract.json';
 
 export const contracts = {
   CryptoQuestTheShardsOfGenesisToken: {
