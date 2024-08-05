@@ -1,4 +1,3 @@
-// src/components/Web3Context.js
 import React, { createContext, useState, useEffect } from 'react';
 import Web3 from 'web3';
 import web3Modal from '../utils/web3Modal';
@@ -26,11 +25,15 @@ const Web3Provider = ({ children }) => {
   }, [web3, account]);
 
   const connectWallet = async () => {
-    const provider = await web3Modal.connect();
-    const web3Instance = new Web3(provider);
-    const accounts = await web3Instance.eth.getAccounts();
-    setWeb3(web3Instance);
-    setAccount(accounts[0]);
+    try {
+      const provider = await web3Modal.connect();
+      const web3Instance = new Web3(provider);
+      const accounts = await web3Instance.eth.getAccounts();
+      setWeb3(web3Instance);
+      setAccount(accounts[0]);
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+    }
   };
 
   const getCharacter = async (id) => {
