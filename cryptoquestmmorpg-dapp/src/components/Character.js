@@ -1,6 +1,5 @@
-// src/components/Character.js
 import React, { useState, useEffect, useContext } from 'react';
-import { Web3Context } from '../components/Web3Context';
+import { Web3Context } from './Web3Context';
 import PropTypes from 'prop-types';
 
 const Character = ({ id }) => {
@@ -9,8 +8,12 @@ const Character = ({ id }) => {
 
   useEffect(() => {
     const fetchCharacter = async () => {
-      const char = await getCharacter(id);
-      setCharacter(char);
+      try {
+        const char = await getCharacter(id);
+        setCharacter(char);
+      } catch (error) {
+        console.error('Error fetching character:', error);
+      }
     };
     fetchCharacter();
   }, [id, getCharacter]);
