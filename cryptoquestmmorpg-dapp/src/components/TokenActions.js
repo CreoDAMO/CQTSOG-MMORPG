@@ -1,6 +1,5 @@
-// src/components/TokenActions.js
 import React, { useState, useContext } from 'react';
-import { Web3Context } from '../components/Web3Context';
+import { Web3Context } from './Web3Context';
 
 const TokenActions = () => {
   const { buyToken, stakeTokens, unstakeTokens, swapTokens, addLiquidity, removeLiquidity } = useContext(Web3Context);
