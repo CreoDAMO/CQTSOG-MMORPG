@@ -1,8 +1,8 @@
-// src/components/App.js
 import React, { useContext } from 'react';
-import { Web3Context } from '../components/Web3Context';
+import { Web3Context } from './Web3Context';
 import TokenActions from './TokenActions';
 import Character from './Character';
+import ConnectWalletButton from './ConnectWalletButton';
 
 const App = () => {
   const { connectWallet } = useContext(Web3Context);
@@ -11,7 +11,7 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <h1>Welcome to CryptoQuest: The Shards of Genesis</h1>
-        <button onClick={connectWallet}>Connect Wallet</button>
+        <ConnectWalletButton />
       </header>
       <main>
         <TokenActions />
