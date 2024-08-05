@@ -4,9 +4,9 @@
   "description": "CryptoQuest: The Shards of Genesis is an ambitious blockchain-based MMORPG where players embark on an epic journey through the realm of Cryptonia.",
   "main": "src/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --passWithNoTests",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --passWithNoTests",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'",
@@ -55,7 +55,9 @@
     "eslint": "^9.8.0",
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.8.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "react-app-rewired": "^2.1.9",
+    "customize-cra": "^1.0.0"
   },
   "browserslist": {
     "production": [
