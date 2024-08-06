@@ -1,4 +1,3 @@
-// src/components/ConnectWalletButton.js
 import React, { useContext } from 'react';
 import { Web3Context } from '../components/Web3Context';
 
