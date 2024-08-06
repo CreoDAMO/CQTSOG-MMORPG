@@ -1,4 +1,4 @@
-name: CI
+name: Makefile CI
 
 on:
   push:
@@ -8,37 +8,38 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'  # Specify the Node.js version you are using
+    - uses: actions/checkout@v4
 
     - name: Install Node.js dependencies
-      run: npm install --legacy-peer-deps
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm install --legacy-peer-deps
 
-    - name: Install Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'  # Specify the Python version you are using
+    - name: Install blockchain dependencies
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
 
-    - name: Install Python dependencies
+    - name: Setup Python environment
       run: |
         python3 -m venv env
         source env/bin/activate
-        pip install -r src/data-processing-and-analytics/requirements.txt
+        pip install -r cryptoquestmmorpg-dapp/src/data-processing-and-analytics/requirements.txt
 
-    - name: Run Node.js tests
-      run: npm test
+    - name: Build the app
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm run build
 
-    - name: Build Node.js app
-      run: npm run build
+    - name: Test the app
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm run test
 
-    - name: Build arbitrage bot
-      run: npm run build-bot
+    - name: Run the bot
+      run: |
+        cd cryptoquestmmorpg-dapp
+        node src/arbitrage-bot.js
