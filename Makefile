@@ -12,7 +12,6 @@ create-react-app:
 
 install-dependencies:
 	@cd $(APP_NAME) && npm install --legacy-peer-deps
-	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer react-app-rewire-alias --legacy-peer-deps
 	@cd $(APP_NAME) && npx tailwindcss init -p
 
 install-blockchain-dependencies:
