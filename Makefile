@@ -3,13 +3,6 @@ APP_NAME = cryptoquestmmorpg-dapp
 PYTHON_ENV = env
 
 # Commands
-create-react-app:
-	@if [ ! -d "$(APP_NAME)" ]; then \
-		npx create-react-app $(APP_NAME); \
-	else \
-		echo "$(APP_NAME) already exists, skipping create-react-app."; \
-	fi
-
 install-dependencies:
 	@cd $(APP_NAME) && npm install --legacy-peer-deps
 	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer --legacy-peer-deps
@@ -51,4 +44,4 @@ clean-python-env:
 	@rm -rf $(PYTHON_ENV)
 
 # Targets
-.PHONY: create-react-app install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env
+.PHONY: install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env
