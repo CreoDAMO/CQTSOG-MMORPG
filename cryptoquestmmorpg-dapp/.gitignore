@@ -1,15 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/node_modules/
 /.pnp
 .pnp.js
 
 # testing
-/coverage
+/coverage/
 
 # production
-/build
+/build/
 
 # misc
 .DS_Store
@@ -18,40 +18,28 @@
 .env.development.local
 .env.test.local
 .env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
+*.sublime-project
 *.sublime-workspace
 
-# OS-generated files
-Thumbs.db
-*.DS_Store
-
-# Logs
+# Log files
 logs
 *.log
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-npm-debug.log*
 
-# Optional npm cache directory
-.npm
-
-# dotenv environment variables file
-.env
-
-# Next.js build output
-.next
-out
+# System files
+Thumbs.db
+.DS_Store
 
 # Build artifacts
-/src/smartcontracts/artifacts
-/src/smartcontracts/build-info
-
-# Generated JSON files for contracts
-/src/contracts/*.json
+dist/
+tmp/
+out/
