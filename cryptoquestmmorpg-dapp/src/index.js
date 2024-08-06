@@ -1,15 +1,12 @@
+// cryptoquestmmorpg-dapp/src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/App'; // Adjusted the import path
-import './src/index.css'; // Ensure this matches the actual file name and location
-import Web3Provider from './components/Web3Context'; // Ensure this matches the actual file name and location
+import ReactDOM from 'react-dom';
+import './index.css'; // Ensure this import is correct
+import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <Web3Provider>
-      <App />
-    </Web3Provider>
-  </React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
