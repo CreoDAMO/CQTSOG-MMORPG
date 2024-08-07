@@ -1,6 +1,9 @@
-const { alias, configPaths } = require('react-app-rewire-alias');
+const { alias } = require('react-app-rewire-alias');
 
-module.exports = function override(config, env) {
-  alias(configPaths('./tsconfig.paths.json'))(config);
+module.exports = function override(config) {
+  alias({
+    '@': 'src'
+  })(config);
+
   return config;
 };
