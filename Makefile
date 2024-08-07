@@ -5,7 +5,7 @@ PYTHON_ENV = env
 # Commands
 install-dependencies:
 	@cd $(APP_NAME) && npm install --legacy-peer-deps
-	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer react-app-rewire-alias --legacy-peer-deps
+	@cd $(APP_NAME) && npm install -D tailwindcss postcss autoprefixer react-app-rewired react-app-rewire-alias --legacy-peer-deps
 
 install-blockchain-dependencies:
 	@cd $(APP_NAME) && npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
