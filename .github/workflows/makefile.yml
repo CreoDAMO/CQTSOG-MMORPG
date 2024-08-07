@@ -1,28 +1,26 @@
-name: Makefile CI
+name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Install Node.js dependencies
-      run: |
-        cd cryptoquestmmorpg-dapp
-        npm install --legacy-peer-deps
-        npm install -D tailwindcss postcss autoprefixer react-app-rewire-alias --legacy-peer-deps
+      run: npm install --legacy-peer-deps
 
     - name: Install blockchain dependencies
-      run: |
-        cd cryptoquestmmorpg-dapp
-        npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
+      run: cd cryptoquestmmorpg-dapp && npm install --legacy-peer-deps
 
     - name: Setup Python environment
       run: |
@@ -36,11 +34,7 @@ jobs:
         npm run build
 
     - name: Test the app
-      run: |
-        cd cryptoquestmmorpg-dapp
-        npm run test
+      run: cd cryptoquestmmorpg-dapp && npm test
 
     - name: Run the bot
-      run: |
-        cd cryptoquestmmorpg-dapp
-        node src/arbitrage-bot.js
+      run: cd cryptoquestmmorpg-dapp && npm start
