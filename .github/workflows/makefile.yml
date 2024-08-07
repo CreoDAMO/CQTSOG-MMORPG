@@ -8,20 +8,39 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: configure
-      run: ./configure
+    - name: Install Node.js dependencies
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm install --legacy-peer-deps
+        npm install -D tailwindcss postcss autoprefixer react-app-rewire-alias --legacy-peer-deps
 
-    - name: Install dependencies
-      run: make
+    - name: Install blockchain dependencies
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm install web3 ethers @uniswap/sdk @aave/contract-helpers reflect-metadata dotenv --legacy-peer-deps
 
-    - name: Run check
-      run: make check
+    - name: Setup Python environment
+      run: |
+        python3 -m venv cryptoquestmmorpg-dapp/env
+        source cryptoquestmmorpg-dapp/env/bin/activate
+        pip install -r cryptoquestmmorpg-dapp/src/data-processing-and-analytics/requirements.txt
 
-    - name: Run distcheck
-      run: make distcheck
+    - name: Build the app
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm run build
+
+    - name: Test the app
+      run: |
+        cd cryptoquestmmorpg-dapp
+        npm run test
+
+    - name: Run the bot
+      run: |
+        cd cryptoquestmmorpg-dapp
+        node src/arbitrage-bot.js
