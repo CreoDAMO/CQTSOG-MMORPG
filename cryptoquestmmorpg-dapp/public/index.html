@@ -1,279 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoQuest: The Shards of Genesis</title>
-    <meta name="description" content="Embark on an epic journey through Cryptonia, a blockchain-based MMORPG where reality and digital existence converge. Own in-game assets as NFTs, participate in player governance, and experience a truly decentralized gaming economy.">
-    <meta name="keywords" content="CryptoQuest, MMORPG, blockchain game, NFTs, decentralized economy, player governance, cross-chain interactions">
-    <link rel="icon" href="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="preload" href="/path/to/critical-font.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="stylesheet" href="/path/to/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.6.6/dist/index.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <title>CryptoQuest: The Shards of Genesis & Arbitrage Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-XXXXXXXXX-X');
-    </script>
-    <meta property="og:title" content="CryptoQuest: The Shards of Genesis">
-    <meta property="og:description" content="Embark on an epic journey through the realm of Cryptonia, a blockchain-based MMORPG where reality and digital existence converge.">
-    <meta property="og:image" content="/path/to/og-image.png">
-    <meta property="og:url" content="https://cryptoquestmmorpg.quest/lander">
-    <meta name="twitter:card" content="summary_large_image">
-
     <style>
         :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --text-color: #333;
-            --bg-color: #f0f0f0;
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
             --neumorphic-light: #ffffff;
             --neumorphic-dark: #d1d9e6;
+            --button-background: #3498db;
+            --button-text-color: #ffffff;
+            --button-hover-background: #2980b9;
+            --dark-background-color: #2c3e50;
+            --dark-text-color: #ecf0f1;
+            --dark-neumorphic-light: #34495e;
+            --dark-neumorphic-dark: #1a252f;
+            --dark-button-background: #2ecc71;
+            --dark-button-text-color: #ffffff;
+            --dark-button-hover-background: #27ae60;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--background-color);
             color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .neumorphic {
-            background: var(--bg-color);
-            border-radius: 50px;
-            box-shadow: 20px 20px 60px var(--neumorphic-dark), -20px -20px 60px var(--neumorphic-light);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .neumorphic-inset {
-            background: var(--bg-color);
-            border-radius: 50px;
-            box-shadow: inset 20px 20px 60px var(--neumorphic-dark), inset -20px -20px 60px var(--neumorphic-light);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .gradient-text {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        .dark-mode {
-            --text-color: #f0f0f0;
-            --bg-color: #333;
-            --neumorphic-light: #3a3a3a;
-            --neumorphic-dark: #292929;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-        :root {
-            --primary-color: #6C63FF;
-            --secondary-color: #3F3D56;
-            --accent-color: #F50057;
-            --background-light: #F0F0F3;
-            --background-dark: #1A1A1D;
-            --text-light: #333;
-            --text-dark: #F0F0F3;
-            --shadow-light: 10px 10px 20px #D1D9E6, -10px -10px 20px #FFFFFF;
-            --shadow-dark: 10px 10px 20px #151517, -10px -10px 20px #1F1F23;
-        }
-
-        body.light-mode {
-            background-color: var(--background-light);
-            color: var(--text-light);
-        }
-
-        body.dark-mode {
-            background-color: var(--background-dark);
-            color: var(--text-dark);
-        }
-
-        .neumorphic {
-            border-radius: 15px;
-            background: var(--background-light);
-            box-shadow: var(--shadow-light);
+            background: var(--background-color);
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px var(--neumorphic-dark), -8px -8px 16px var(--neumorphic-light);
             transition: all 0.3s ease;
-        }
-
-        .dark-mode .neumorphic {
-            background: var(--background-dark);
-            box-shadow: var(--shadow-dark);
         }
 
         .neumorphic:hover {
-            transform: translateY(-5px);
+            box-shadow: 12px 12px 20px var(--neumorphic-dark), -12px -12px 20px var(--neumorphic-light);
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
+        .btn-neumorphic {
             padding: 10px 20px;
-            border-radius: 30px;
+            border: none;
+            border-radius: 10px;
+            background: var(--button-background);
+            color: var(--button-text-color);
+            box-shadow: 5px 5px 10px var(--neumorphic-dark), -5px -5px 10px var(--neumorphic-light);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        .btn-neumorphic:hover {
+            box-shadow: inset 5px 5px 10px var(--neumorphic-dark), inset -5px -5px 10px var(--neumorphic-light);
+            background-color: var(--button-hover-background);
         }
 
-        .video-section {
-            padding: 4rem 0;
-            background-color: rgba(108, 99, 255, 0.1);
+        .dark-mode {
+            --background-color: var(--dark-background-color);
+            --text-color: var(--dark-text-color);
+            --neumorphic-light: var(--dark-neumorphic-light);
+            --neumorphic-dark: var(--dark-neumorphic-dark);
+            --button-background: var(--dark-button-background);
+            --button-text-color: var(--dark-button-text-color);
+            --button-hover-background: var(--dark-button-hover-background);
         }
 
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .video-item {
-            width: 100%;
-            max-width: 560px;
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .video-item video {
-            width: 100%;
-            height: auto;
-        }
-
-        .video-info {
-            padding: 1rem;
-        }
-
-        #darkModeToggle {
+        #vanta-background {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #arbitrage-chart {
+            width: 100%;
+            height: 300px;
+        }
+
+        .logo {
+            display: block;
+            max-width: 150px;
+            margin: 0 auto 20px;
         }
     </style>
-    <!-- Lazy Loading Images -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-            if ("IntersectionObserver" in window) {
-                let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            let lazyImage = entry.target;
-                            lazyImage.src = lazyImage.dataset.src;
-                            lazyImage.classList.remove("lazy");
-                            lazyImageObserver.unobserve(lazyImage);
-                        }
-                    });
-                });
-                lazyImages.forEach(function (lazyImage) {
-                    lazyImageObserver.observe(lazyImage);
-                });
-            } else {
-                lazyImages.forEach(function (lazyImage) {
-                    lazyImage.src = lazyImage.dataset.src;
-                    lazyImage.classList.remove("lazy");
-                });
-            }
-        });
-
-        function toggleDarkMode() {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-            const isDarkMode = body.classList.contains('dark-mode');
-            localStorage.setItem('dark-mode', isDarkMode);
-        }
-
-        function loadDarkModeSetting() {
-            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadDarkModeSetting);
-        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
-    </script>
 </head>
+<body class="min-h-screen flex flex-col">
+    <div id="vanta-background"></div>
 
-<body class="min-h-screen flex flex-col light-mode bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
-    <button id="darkModeToggle" class="neumorphic px-4 py-2">Toggle Dark Mode</button>
-
-    <nav class="neumorphic p-4 mb-8">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="flex items-center">
-                <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="CryptoQuest Logo" class="h-10 w-10 mr-3">
-                <span class="text-xl font-bold gradient-text">CryptoQuest</span>
-            </a>
-            <div class="hidden md:flex space-x-4">
-                <a href="#features" class="hover:text-primary-color transition-colors">Features</a>
-                <a href="#marketplace" class="hover:text-primary-color transition-colors">Marketplace</a>
-                <a href="#governance" class="hover:text-primary-color transition-colors">Governance</a>
-                <a href="#tokenomics" class="hover:text-primary-color transition-colors">Tokenomics</a>
-                <a href="#ps5-development" class="hover:text-primary-color transition-colors">PS5 Development</a>
-                <a href="#xbox-development" class="hover:text-primary-color transition-colors">Xbox Development</a>
-                <a href="#unity" class="hover:text-primary-color transition-colors">Unity</a>
-                <a href="#unreal-engine-5" class="hover:text-primary-color transition-colors">Unreal Engine 5</a>
-                <a href="#cqt-token" class="hover:text-primary-color transition-colors">CQT Token</a>
-                <a href="#buy-token" class="hover:text-primary-color transition-colors">Buy Token</a>
-                <a href="#airdrop" class="hover:text-primary-color transition-colors">Airdrop</a>
-                <a href="#join-development" class="hover:text-primary-color transition-colors">Join Development</a>
-                <a href="#investor-perks" class="hover:text-primary-color transition-colors">Investor Perks</a>
-                <a href="#community-forum" class="hover:text-primary-color transition-colors">Community Forum</a>
-                <a href="#book-nft" class="hover:text-primary-color transition-colors">Book NFT</a>
-                <a href="#connect" class="hover:text-primary-color transition-colors">Connect</a>
-                <a href="#newsletter" class="hover:text-primary-color transition-colors">Newsletter</a>
-                <a href="#white-paper" class="hover:text-primary-color transition-colors">White Paper</a>
-                <a href="#merchandise" class="hover:text-primary-color transition-colors">Merchandise</a>
-                <a href="#chatbot" class="hover:text-primary-color transition-colors">Chatbot</a>
+    <header class="neumorphic p-4 mb-8">
+        <nav class="container mx-auto flex justify-between items-center">
+            <img src="https://dweb.link/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="CryptoQuest Logo" class="logo">
+            <div>
+                <button class="btn-neumorphic mr-4" id="connect-wallet">Connect Wallet</button>
+                <button class="btn-neumorphic" id="toggle-dark-mode">Toggle Dark Mode</button>
             </div>
-            <button id="connect-wallet" class="neumorphic px-4 py-2 rounded-full hover:bg-primary-color hover:text-white transition-colors">Connect Wallet</button>
-        </div>
-    </nav>
-
-    <header class="container mx-auto text-center mb-16">
-        <h1 class="text-5xl font-bold mb-4 gradient-text">CryptoQuest: The Shards of Genesis</h1>
-        <p class="text-xl mb-8">Embark on an epic journey through Cryptonia, where blockchain and fantasy collide.</p>
-        <div class="flex justify-center space-x-4">
-            <img src="https://cf-ipfs.com/ipfs/bafybeicoyjrvm4nnhm4zsbtv5kyhlbi4coiwxboikc7jvsucunlzngrxem" alt="Game Visual" class="w-1/3 neumorphic p-4 animate-float">
-            <img src="https://cf-ipfs.com/ipfs/bafybeidcbrabguyijjacv672yyq4j2juyf5s62hz6v2edinzm3kzltnbxy" alt="Token Visual" class="w-1/3 neumorphic p-4 animate-float" style="animation-delay: 2s;">
-        </div>
+        </nav>
     </header>
 
-    <main class="container mx-auto">
+    <main class="container mx-auto flex-grow">
+        <section class="neumorphic p-8 mb-8 text-center">
+            <h2 class="text-4xl font-bold mb-4">CryptoQuest: The Shards of Genesis</h2>
+            <p class="text-xl mb-8">Embark on an epic journey through Cryptonia, where blockchain and fantasy collide.</p>
+            <button class="btn-neumorphic text-lg" id="start-game">Start Your Adventure</button>
+        </section>
+
         <section id="features" class="mb-16">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Key Features</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -306,59 +171,6 @@
                     <i class="fas fa-cogs text-4xl mb-4 gradient-text"></i>
                     <h3 class="text-xl font-semibold mb-2">Cross-Chain Interactions</h3>
                     <p>Interact with multiple blockchains for expanded possibilities.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="marketplace" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">NFT Marketplace</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <p class="mb-4">Trade your in-game assets as unique NFTs on our decentralized marketplace.</p>
-                <div id="nft-showcase" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- NFT items will be dynamically loaded here -->
-                </div>
-                <div id="analytics" class="mt-8">
-                    <h3 class="text-2xl font-bold mb-4 gradient-text">Marketplace Analytics</h3>
-                    <p>Total Listings: <span id="totalListings"></span></p>
-                    <p>Active Listings: <span id="activeListings"></span></p>
-                    <p>Sold Listings: <span id="soldListings"></span></p>
-                    <p>Top Seller: <span id="topSeller"></span></p>
-                </div>
-                <div id="filters" class="mt-8">
-                    <h3 class="text-2xl font-bold mb-4 gradient-text">Filter Listings</h3>
-                    <label for="category">Category:</label>
-                    <select id="categoryFilter" class="w-full p-2 rounded neumorphic mb-4">
-                        <!-- Categories will be dynamically loaded here -->
-                    </select>
-                    <label for="rarity">Rarity:</label>
-                    <select id="rarityFilter" class="w-full p-2 rounded neumorphic">
-                        <!-- Rarities will be dynamically loaded here -->
-                    </select>
-                </div>
-            </div>
-        </section>
-
-        <section id="governance" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Governance Dashboard</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <p class="mb-4">Vote on important decisions that shape the future of CryptoQuest.</p>
-                <div id="governance-proposals" class="space-y-4">
-                    <!-- Governance proposals will be dynamically loaded here -->
-                </div>
-                <div id="createProposal" class="mt-8">
-                    <h3 class="text-2xl font-bold mb-4 gradient-text">Create Proposal</h3>
-                    <form>
-                        <label for="proposalDescription">Description:</label>
-                        <textarea id="proposalDescription" class="w-full p-2 rounded neumorphic mb-4"></textarea>
-                        <button type="button" class="btn btn-primary" onclick="createProposal()">Submit Proposal</button>
-
-
-                    </form>
-                </div>
-                <div id="metrics" class="mt-8">
-                    <h3 class="text-2xl font-bold mb-4 gradient-text">Metrics and Reports</h3>
-                    <button type="button" class="btn btn-primary mb-4" onclick="viewTreasuryReport()">View Treasury Report</button>
-                    <button type="button" class="btn btn-primary" onclick="viewGameMetrics()">View Game Metrics</button>
                 </div>
             </div>
         </section>
@@ -412,35 +224,11 @@
             </div>
         </section>
 
-        <section id="cqt-token" class="py-16 bg-gray-100 dark:bg-gray-800">
-            <div class="container mx-auto">
-                <h2 class="text-3xl font-bold mb-8 text-center gradient-text">CQT Token</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="neumorphic p-6">
-                        <h3 class="text-xl font-semibold mb-4">Token Price</h3>
-                        <p class="text-2xl font-bold">$0.30 USD</p>
-                        <p class="text-sm text-gray-500">Last updated: <span id="price-update-time"></span></p>
-                    </div>
-                    <div class="neumorphic p-6">
-                        <h3 class="text-xl font-semibold mb-4">Market Cap</h3>
-                        <p class="text-2xl font-bold">$300,000,000 USD</p>
-                    </div>
-                    <div class="neumorphic p-6">
-                        <h3 class="text-xl font-semibold mb-4">Total Supply</h3>
-                        <p class="text-2xl font-bold">1,000,000,000 CQT</p>
-                    </div>
-                </div>
-                <div class="mt-8 text-center">
-                    <a href="#" class="cta-button">Buy CQT Tokens</a>
-                </div>
-            </div>
-        </section>
-
         <section id="ps5-development" class="py-5">
             <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for PS5</h2>
             <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the PS5 platform, leveraging Unity and Unreal Engine 5.</p>
             <div class="text-center">
-                <a href="https://github.com/CreoDAMO/CQTSOG-MMORPG/wiki/CQTSOG%E2%80%90-PS5" class="btn btn-primary btn-lg">Read the PS5 Development Guide</a>
+                <a href="https://github.com/CreoDAMO/CQTSOG-MMORPG/wiki/CQTSOG%E2%80%90-PS5" class="btn-neumorphic text-lg">Read the PS5 Development Guide</a>
             </div>
         </section>
 
@@ -448,7 +236,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Developing CryptoQuest for Xbox</h2>
             <p class="lead text-center mb-8">Explore the process of developing CryptoQuest: The Shards of Genesis for the Xbox platform, leveraging Unity and Unreal Engine 5.</p>
             <div class="text-center">
-                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-Xbox" class="btn btn-primary btn-lg">Read the Xbox Development Guide</a>
+                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki/CQTSOG-Xbox" class="btn-neumorphic text-lg">Read the Xbox Development Guide</a>
             </div>
         </section>
 
@@ -456,7 +244,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Unity Development</h2>
             <p class="lead text-center mb-8">Discover how we utilize Unity to bring CryptoQuest to life, creating immersive environments and seamless gameplay experiences.</p>
             <div class="text-center">
-                <a href="https://unity.com/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unity</a>
+                <a href="https://unity.com/" class="btn-neumorphic text-lg" target="_blank">Learn More About Unity</a>
             </div>
         </section>
 
@@ -464,76 +252,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Unreal Engine 5 Development</h2>
             <p class="lead text-center mb-8">Explore the capabilities of Unreal Engine 5 and how it powers the stunning graphics and dynamic gameplay in CryptoQuest.</p>
             <div class="text-center">
-                <a href="https://www.unrealengine.com/en-US/" class="btn btn-primary btn-lg" target="_blank">Learn More About Unreal Engine 5</a>
-            </div>
-        </section>
-
-        <section id="buy-token" class="py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Buy CQT Token</h2>
-            <p class="lead text-center mb-8">Purchase the CQT CryptoQuest Token to enjoy exclusive in-game benefits, governance rights, and more. Follow the steps below to buy CQT tokens.</p>
-            <div class="text-center">
-                <div class="neumorphic p-8 max-w-md w-full mx-auto">
-                    <h1 class="text-3xl font-bold mb-6 text-center">Buy CQT Tokens</h1>
-                    <div class="mb-4">
-                        <label for="amount" class="block mb-2">Amount of CQT to buy:</label>
-                        <input type="number" id="amount" name="amount" class="w-full p-2 rounded neumorphic" placeholder="Enter amount">
-                    </div>
-                    <button id="buyCQTButton" class="w-full bg-blue-500 text-white p-2 rounded neumorphic hover:bg-blue-600 transition-colors">
-                        Buy CQT
-                    </button>
-                    <p id="statusCQT" class="mt-4 text-center"></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="wallet-functions" class="py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Wallet Functions</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="neumorphic p-6">
-                    <h3 class="text-xl font-semibold mb-4">Stake Tokens</h3>
-                    <label for="stakeAmount" class="block mb-2">Amount to Stake:</label>
-                    <input type="number" id="stakeAmount" class="w-full p-2 rounded mb-4">
-                    <button id="stakeTokensButton" class="btn btn-primary w-full">Stake Tokens</button>
-                </div>
-               
-
- <div class="neumorphic p-6">
-                    <h3 class="text-xl font-semibold mb-4">Unstake Tokens</h3>
-                    <button id="unstakeTokensButton" class="btn btn-primary w-full">Unstake Tokens</button>
-                </div>
-                <div class="neumorphic p-6">
-                    <h3 class="text-xl font-semibold mb-4">Role Management</h3>
-                    <label for="roleAccount" class="block mb-2">Account Address:</label>
-                    <input type="text" id="roleAccount" class="w-full p-2 rounded mb-4">
-                    <label for="roleType" class="block mb-2">Role:</label>
-                    <select id="roleType" class="w-full p-2 rounded mb-4">
-                        <option value="ADMIN_ROLE">Admin</option>
-                        <option value="PAUSER_ROLE">Pauser</option>
-                        <option value="UPGRADER_ROLE">Upgrader</option>
-                    </select>
-                    <button id="grantRoleButton" class="btn btn-primary w-full mb-4">Grant Role</button>
-                    <button id="revokeRoleButton" class="btn btn-primary w-full">Revoke Role</button>
-                </div>
-                <div class="neumorphic p-6">
-                    <h3 class="text-xl font-semibold mb-4">Submit Transaction</h3>
-                    <label for="txTo" class="block mb-2">To Address:</label>
-                    <input type="text" id="txTo" class="w-full p-2 rounded mb-4">
-                    <label for="txValue" class="block mb-2">Value (ETH):</label>
-                    <input type="number" id="txValue" class="w-full p-2 rounded mb-4">
-                    <label for="txData" class="block mb-2">Data:</label>
-                    <input type="text" id="txData" class="w-full p-2 rounded mb-4">
-                    <button id="submitTxButton" class="btn btn-primary w-full">Submit Transaction</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="swap-functions" class="py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Swap Functions</h2>
-            <div class="text-center">
-                <button id="addLiquidityButton" class="btn btn-primary btn-lg mr-2">Add Liquidity</button>
-                <button id="removeLiquidityButton" class="btn btn-primary btn-lg">Remove Liquidity</button>
-                <button id="swapMATICForTokensButton" class="btn btn-primary btn-lg mt-4 mr-2">Swap MATIC for Tokens</button>
-                <button id="swapTokensForMATICButton" class="btn btn-primary btn-lg mt-4">Swap Tokens for MATIC</button>
+                <a href="https://www.unrealengine.com/en-US/" class="btn-neumorphic text-lg" target="_blank">Learn More About Unreal Engine 5</a>
             </div>
         </section>
 
@@ -541,7 +260,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">CQT Token Airdrop</h2>
             <p class="lead text-center mb-8">Participate in our airdrop event to receive free CQT tokens. Complete the tasks below to qualify for the airdrop.</p>
             <div class="text-center">
-                <a href="https://cryptoquestmmorpg.quest/lander" class="btn btn-primary btn-lg">Join Airdrop</a>
+                <a href="https://cryptoquestmmorpg.quest/lander" class="btn-neumorphic text-lg">Join Airdrop</a>
             </div>
         </section>
 
@@ -549,7 +268,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Development</h2>
             <p class="lead text-center mb-8">Want to help shape the future of CryptoQuest? Join our vibrant community of developers and contribute to the project's evolution!</p>
             <div class="text-center">
-                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki" class="btn btn-primary btn-lg">Visit the Wiki</a>
+                <a href="https://github.com/CreoDAMO/CQRSOG-MMORPG/wiki" class="btn-neumorphic text-lg">Visit the Wiki</a>
             </div>
         </section>
 
@@ -593,347 +312,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Join the Community Forum</h2>
             <p class="lead text-center mb-8">Engage with other players, share your experiences, and participate in discussions on our community forum.</p>
             <div class="text-center">
-                <a href="https://discord.com/invite/NSDxccdf" class="btn btn-primary btn-lg" target="_blank">Visit the Forum</a>
-            </div>
-        </section>
-
-        <section id="book-nft" class="bg-light py-5">
-            <div class="container mx-auto">
-                <h2 class="text-3xl font-bold mb-8 gradient-text text-center">CryptoQuest: The Shards of Genesis Book NFT</h2>
-                <p class="lead text-center mb-8">Discover the exclusive CryptoQuest Book NFT series, each representing a unique chapter, character, location, element, and rarity within the CryptoQuest universe. Own a piece of the story and earn rewards!</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="mb-4">Our NFT smart contract ensures true ownership, allowing players to buy, sell, and trade their books securely on the blockchain. With roles for pausing, minting, upgrading, and managing royalties, our system is robust and adaptable.</p>
-                        <ul class="list-disc pl-5">
-                            <li class="mb-2">Pauser Role: Pause and unpause the contract to control minting and transfers.</li>
-                            <li class="mb-2">Minter Role: Mint new NFTs with unique metadata and attributes.</li>
-                            <li class="mb-2">Royalty Manager Role: Set and manage royalty fees for secondary sales.</li>
-                            <li class="mb-2">Book Manager Role: Add new books to the collection with detailed descriptions and media.</li>
-                            <li class="mb-2">Publisher Role: Publish books, making them available for players.</li>
-                        </ul>
-                        <div class="mt-4">
-                            <label for="tierSelect" class="block mb-2">Select Tier:</label>
-                            <select id="tierSelect" class="w-full p-2 rounded neumorphic mb-4">
-                                <!-- Tiers will be dynamically loaded here -->
-                            </select>
-                            <button id="buyNFTBookButton" class="btn btn-primary btn-lg">Buy an NFT Book</button>
-                            <p id="statusNFTBook" class="mt-4"></p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src="https://bafybeiaryl6kl3yqxh4zellkwnzw7hq74ftxavwoiejgbacasgs3swahwa.ipfs.dweb.link/" alt="CryptoQuest: The Shards of Genesis Book Cover" class="book-cover">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="connect" class="py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Connect with Us</h2>
-            <div class="text-center">
-                <p class="lead mb-4">Follow us on social media to stay updated with the latest news and developments.</p>
-                <div class="flex justify-center space-x-4">
-                    <a href="https://twitter.com/CreoDAMO" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-                    <a href="https://www.facebook.com/profile.php?id=61554683433668" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-                    <a href="https://www.instagram.com/creodamoinc" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="https://www.linkedin.com/company/creodamo" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="newsletter" class="bg-light py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Join Our Newsletter</h2>
-            <p class="lead text-center mb-8">Stay informed about CryptoQuest by subscribing to our newsletter. Get the latest updates, exclusive content, and more delivered straight to your inbox.</p>
-            <div class="text-center">
-                <form action="https://cryptoquestmmorpg.quest/newsletter" method="post" class="w-full max-w-md mx-auto">
-                    <div class="flex items-center border-b border-b-2 border-primary-color py-2">
-                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="email" placeholder="Enter your email address" aria-label="Email">
-                        <button class="btn btn-primary" type="submit">Subscribe</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-         <section id="white-paper" class="py-5">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">CryptoQuest: The Shards of Genesis - Enhanced Whitepaper</h2>
-            <div class="flex justify-end mb-4">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="ml-2 text-gray-700 dark:text-gray-300">Dark Mode</span>
-            </div>
-
-            <!-- Executive Summary Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Executive Summary</h2>
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Project Overview</h3>
-                    <p>CryptoQuest: The Shards of Genesis (CQTSOG) is a revolutionary blockchain-based MMORPG that integrates decentralized technology to offer players true ownership of in-game assets via NFTs. The game features an immersive world enhanced by AI and AR/VR technologies, creating a player-driven economy and unique gameplay experiences.</p>
-                    <p><strong>Company:</strong> CreoDAMO Inc.</p>
-                    <p><strong>Founder & President:</strong> Jacque Antoine DeGraff</p>
-                    <p><strong>Location:</strong> Miami, Florida</p>
-                    <p><strong>Contact:</strong> Jacquedegraff@creodamo.com</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Vision Statement</h3>
-                    <p>To create a groundbreaking MMORPG that empowers players with true ownership, fosters community-driven governance, and sets new standards in blockchain gaming.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Unique Selling Proposition (USP)</h3>
-                    <p>CryptoQuest stands out with its innovative integration of AI, AR/VR technologies, and decentralized governance, offering an unparalleled immersive experience and a truly player-driven economy.</p>
-                </div>
-            </div>
-
-            <!-- Company Description Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Company Description</h2>
-                <div class="mb-6">
-                    <p>CreoDAMO, standing for Decentralized Asset Management and Optimization, is a visionary project helmed by a dedicated solo entrepreneur. It aims to transform asset management through blockchain technology and AI.</p>
-                    <p><strong>Mission:</strong> Pioneer the integration of blockchain technology into the gaming industry, providing players with ownership, transparency, and an engaging, interactive environment.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Core Values</h3>
-                    <ul class="list-disc pl-5">
-                        <li><strong>Innovation:</strong> Constantly pushing the boundaries of technology and gameplay.</li>
-                        <li><strong>Transparency:</strong> Ensuring fairness and clarity in all aspects of the game.</li>
-                        <li><strong>Community:</strong> Building a strong, inclusive community where players have a voice.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Market Analysis Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Market Analysis</h2>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Industry Overview</h3>
-                    <p>The global gaming industry is projected to reach $200 billion by 2024, with blockchain gaming becoming a significant segment. The rise of NFTs and play-to-earn models are driving new growth opportunities.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Target Market</h3>
-                    <p><strong>Primary:</strong> Gamers aged 18-35 interested in blockchain technology and NFTs.</p>
-                    <p><strong>Secondary:</strong> Cryptocurrency enthusiasts and blockchain investors.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Competitive Analysis</h3>
-                    <p>Competitors include Axie Infinity, Decentraland, and The Sandbox. CQTSOG differentiates itself through its immersive gameplay, advanced technological integration, and player-driven economy.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Market Size and Growth Projections</h3>
-                    <div class="chart-container">
-                        <canvas id="marketGrowthChart"></canvas>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold">User Personas</h3>
-                    <div class="persona">
-                        <h4 class="text-xl font-bold">Persona 1: Alex</h4>
-                        <ul class="list-disc pl-5">
-                            <li>25 years old, avid gamer since childhood. Spends 15 hours/week gaming.</li>
-                            <li>Frustrated by "pay-to-win" models where real money is required to progress. Wants to retain value from time invested.</li>
-                            <li>Enjoys MMORPGs for their open worlds and community aspects. Last game was World of Warcraft but lost interest after a few years.</li>
-                        </ul>
-                    </div>
-                    <div class="persona">
-                        <h4 class="text-xl font-bold">Persona 2: Jamie</h4>
-                        <ul class="list-disc pl-5">
-                            <li>32, has followed cryptocurrency for 5 years and sees the potential of blockchain to revolutionize industries like gaming.</li>
-                            <li>Used to play games more casually but now prefers investing spare income. Looking for new opportunities in emerging technologies.</li>
-                            <li>Intrigued by "play-to-earn" models after learning about Axie Infinity but wants a more engaging gaming experience.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Organization and Management Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Organization and Management</h2>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Leadership Team</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Founder & President</h4>
-                            <p>Jacque Antoine DeGraff</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">CEO</h4>
-                            <p>To be announced</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">CTO</h4>
-                            <p>To be announced</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Lead Developer</h4>
-                            <p>To be announced</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Marketing Director</h4>
-                            <p>To be announced</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Blockchain Specialist</h4>
-                            <p>To be announced</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Advisors</h3>
-                    <p>Blockchain experts, game design veterans, and financial analysts.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Team Bios</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Jacque Antoine DeGraff</h4>
-                            <p>Founder and President with over 15 years of experience in game development and blockchain technology.</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">CEO</h4>
-                            <p>Experienced executive with a background in tech startups and game publishing.</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">CTO</h4>
-                            <p>Tech expert specializing in blockchain integration and scalable architectures.</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Lead Developer</h4>
-                            <p>Senior game developer with extensive experience in MMORPGs.</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Marketing Director</h4>
-                            <p>Marketing strategist with a track record of successful game launches.</p>
-                        </div>
-                        <div class="team-member">
-                            <h4 class="text-xl font-bold">Blockchain Specialist</h4>
-                            <p>Expert in blockchain technologies and smart contracts.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold">Organizational Chart</h3>
-                    <div class="chart-container">
-                        <div id="orgChart"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tokenomics Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Tokenomics</h2>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">CQT (CryptoQuest Token)</h3>
-                    <p>The CryptoQuest ecosystem is powered by the CQT (CryptoQuest Token), an ERC-20 token built on the Ethereum blockchain. The CQT token serves as the primary currency for in-game transactions, player-to-player trades, and interactions with the broader CryptoQuest ecosystem.</p>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Token Distribution</h3>
-                    <div class="chart-container">
-                        <canvas id="tokenDistributionChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Token Utility</h3>
-                    <div class="token-distribution">
-                        <div class="token-item">
-                            <h4 class="font-bold">In-Game Transactions</h4>
-                            <p>CQT tokens will be used for purchasing in-game items, services, and land.</p>
-                        </div>
-                        <div class="token-item">
-                            <h4 class="font-bold">Player-to-Player Trades</h4>
-                            <p>Players can use CQT tokens to trade NFT-based assets on the CryptoQuest marketplace.</p>
-                        </div>
-                        <div class="token-item">
-                            <h4 class="font-bold">Governance</h4>
-                            <p>CQT token holders will have a say in the decision-making process for the game's development and ecosystem.</p>
-                        </div>
-                        <div class="token-item">
-                            <h4 class="font-bold">Staking and Rewards</h4>
-                            <p>Players can stake their CQT tokens to earn additional rewards and participate in the game's governance.</p>
-                        </div>
-                        <div class="token-item">
-                            <h4 class="font-bold">Cross-Chain Interactions</h4>
-                            <p>CQT tokens can be used for interactions with other blockchain-based games and platforms, fostering a broader ecosystem.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold">Token Release Schedule</h3>
-                    <div class="chart-container">
-                        <div id="tokenReleaseChart"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Financial Projections Section -->
-            <div class="section fade-in">
-                <h2 class="text-3xl font-bold mb-6">Financial Projections</h2>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Revenue and Expense Projections</h3>
-                    <div class="chart-container">
-                        <canvas id="financialProjectionsChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Profit/Loss</h3>
-                    <div class="financial-item">
-                        <span>Year 1:</span>
-                        <span class="text-red-500">-$1,500,000</span>
-                    </div>
-                    <div class="financial-item">
-                        <span>Year 2:</span>
-                        <span class="text-green-500">$2,000,000</span>
-                    </div>
-                    <div class="financial-item">
-                        <span>Year 3:</span>
-                        <span class="text-green-500">$6,500,000</span>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 class="text-2xl font-bold">Sensitivity Analysis</h3>
-                    <ul class="list-disc pl-5">
-                        <li><strong>Base Case:</strong> Expected growth rate and revenue projections.</li>
-                        <li><strong>Optimistic Case:</strong> 25% higher retention from engaging gameplay fueling 25% higher revenue.</li>
-                        <li><strong>Pessimistic Case:</strong> Delays or lower interest temporarily slowing growth 15-20%.</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold">Break-Even Analysis</h3>
-                    <p>The project is expected to break even by Year 2 with a user base of 100,000 active players.</p>
-                </div>
-            </div>
-
-            <!-- Contract Cards Section -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Contract cards will be dynamically inserted here -->
-            </div>
-
-            <!-- Contract Visualization Section -->
-            <div id="contractVisualization" class="chart-container mt-12"></div>
-
-            <!-- Token Economy Section -->
-            <div class="mt-12">
-                <h2 class="text-2xl font-bold mb-4">Token Economy</h2>
-                <canvas id="tokenEconomyChart"></canvas>
+                <a href="https://discord.com/invite/NSDxccdf" class="btn-neumorphic text-lg" target="_blank">Visit the Forum</a>
             </div>
         </section>
 
@@ -941,7 +320,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Exclusive Merchandise</h2>
             <p class="lead text-center mb-8">Subscribe to receive exclusive CryptoQuest merchandise, including apparel, accessories, and collectibles.</p>
             <div class="text-center">
-                <a href="https://cryptoquestmmorpg.store" class="btn btn-primary btn-lg" target="_blank">Visit Merchandise Store</a>
+                <a href="https://cryptoquestmmorpg.store" class="btn-neumorphic text-lg" target="_blank">Visit Merchandise Store</a>
             </div>
         </section>
 
@@ -949,7 +328,7 @@
             <h2 class="text-3xl font-bold mb-8 gradient-text">Chat with Cryptoquest AI Guide</h2>
             <p class="lead text-center mb-8">Need help or have questions? Chat with our interactive guide to get instant support and information about CryptoQuest.</p>
             <div class="text-center">
-                <button id="chatbotButton" class="btn btn-primary btn-lg">Start Chat</button>
+                <a href="https://chatgpt.com/g/g-okli7Xlbi-cryptoquest-guide" class="btn-neumorphic text-lg" target="_blank">Start Chat</a>
             </div>
         </section>
 
@@ -981,617 +360,741 @@
             </div>
         </section>
 
-        <section id="poolInfo" class="neumorphic mt-12">
-            <h2 class="text-2xl font-bold mb-4">Current Pool Information</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <h3 class="text-xl font-semibold mb-2">CQT / MATIC</h3>
-                    <p>Fee: 0.30%</p>
-                    <p>Status: In range</p>
-                    <p>Current Price: 1.72404 CQT per MATIC</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-2">Liquidity</h3>
-                    <p>CQT: 30.00 (41%)</p>
-                    <p>MATIC: 25.34 (59%)</p>
+        <section id="connect" class="py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Connect with Us</h2>
+            <div class="text-center">
+                <p class="lead mb-4">Follow us on social media to stay updated with the latest news and developments.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="https://twitter.com/CreoDAMO" class="btn-neumorphic text-lg" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://www.facebook.com/profile.php?id=61554683433668" class="btn-neumorphic text-lg" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://www.instagram.com/creodamoinc" class="btn-neumorphic text-lg" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.linkedin.com/company/creodamo" class="btn-neumorphic text-lg" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 </div>
             </div>
-            <div class="mt-4">
-                <h3 class="text-xl font-semibold mb-2">Price Range</h3>
-                <p>Min Price: 1.53109 CQT per MATIC</p>
-                <p>Max Price: 2.05436 CQT per MATIC</p>
+        </section>
+
+        <section id="newsletter" class="bg-light py-5">
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Join Our Newsletter</h2>
+            <p class="lead text-center mb-8">Stay informed about CryptoQuest by subscribing to our newsletter. Get the latest updates, exclusive content, and more delivered straight to your inbox.</p>
+            <div class="text-center">
+                <form action="https://cryptoquestmmorpg.quest/newsletter" method="post" class="w-full max-w-md mx-auto">
+                    <div class="flex items-center border-b border-b-2 border-primary-color py-2">
+                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="email" placeholder="Enter your email address" aria-label="Email">
+                        <button class="btn-neumorphic text-lg" type="submit">Subscribe</button>
+                    </div>
+                </form>
             </div>
         </section>
 
-        <section id="botConfig" class="neumorphic mt-12">
-            <h2 class="text-2xl font-bold mb-4">Bot Configuration</h2>
-            <form id="botConfigForm">
-                <div class="mb-4">
-                    <label for="reinvestmentRate" class="block mb-2">Reinvestment Rate (%)</label>
-                    <input type="number" id="reinvestmentRate" name="reinvestmentRate" class="w-full p-2 rounded" min="0" max="100">
-                </div>
-                <div class="mb-4">
-                    <label for="flashLoanProvider" class="block mb-2">Flash Loan Provider</label>
-                    <select id="flashLoanProvider" name="flashLoanProvider" class="w-full p-2 rounded">
-                        <option value="aave">Aave</option>
-                        <option value="dydx">dYdX</option>
-                    </select>
-                </div>
-                <button type="submit" class="bg-secondary-color text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 transition">Update Configuration</button>
-            </form>
-        </section>
+        <div class="mb-8">
+            <div class="flex space-x-4 mb-4 flex-wrap">
+                <button class="btn-neumorphic tab-btn active text-lg" data-tab="player">Player</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="quests">Quests</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="crafting">Crafting</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="guilds">Guilds</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="marketplace">Marketplace</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="dao">DAO</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="token-sale">Token Sale</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="nft-book">NFT Book</button>
+                <button class="btn-neumorphic tab-btn text-lg" data-tab="arbitrage-bot">Arbitrage Bot</button>
+            </div>
 
-        <section id="performanceChart" class="neumorphic mt-12">
-            <h2 class="text-2xl font-bold mb-4">Bot Performance</h2>
-            <canvas id="botPerformanceChart"></canvas>
-        </section>
-    </main>
+            <div id="player" class="tab-content active">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">Player Dashboard</h3>
+                    <div id="player-stats" class="mb-4">
+                        <p>Name: <span id="player-name">-</span></p>
+                        <p>Level: <span id="player-level">-</span></p>
+                        <p>Experience: <span id="player-xp">-</span></p>
+                        <p>Gold: <span id="player-gold">-</span></p>
+                    </div>
+                    <div id="player-inventory" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">Inventory</h4>
+                        <ul id="inventory-list"></ul>
+                    </div>
+                    <button class="btn-neumorphic text-lg" id="create-player">Create Player</button>
+                </section>
+            </div>
 
-    <footer class="neumorphic py-8">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 CreoDAMO Inc: CryptoQuest The Shards of Genesis MMORPG. All rights reserved.</p>
-            <div class="mt-4">
-                <a href="#" class="mx-2 hover:text-accent-color">Privacy Policy</a>
-                <a href="#" class="mx-2 hover:text-accent-color">Terms of Service</a>
-                <a href="#" class="mx-2 hover:text-accent-color">Contact Us</a>
+            <div id="quests" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">Quests</h3>
+                    <div id="active-quest" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">Active Quest</h4>
+                        <p id="active-quest-name">No active quest</p>
+                        <p id="active-quest-progress"></p>
+                    </div>
+                    <ul id="quest-list" class="mb-4"></ul>
+                    <button class="btn-neumorphic text-lg" id="start-quest">Start New Quest</button>
+                </section>
+            </div>
+
+            <div id="crafting" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">Crafting</h3>
+                    <div id="recipe-list" class="mb-4">
+                        <select id="recipe-select" class="mb-2">
+                            <option value="">Select a recipe</option>
+                        </select>
+                        <div id="recipe-details"></div>
+                    </div>
+                    <button class="btn-neumorphic text-lg" id="craft-item">Craft Item</button>
+                </section>
+            </div>
+
+            <div id="guilds" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">Guilds</h3>
+                    <div id="guild-info" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">Your Guild</h4>
+                        <p id="guild-name">Not a member of any guild</p>
+                        <ul id="guild-members"></ul>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button class="btn-neumorphic text-lg" id="create-guild">Create Guild</button>
+                        <button class="btn-neumorphic text-lg" id="join-guild">Join Guild</button>
+                    </div>
+                </section>
+            </div>
+
+            <div id="marketplace" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">NFT Marketplace</h3>
+                    <div id="nft-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4"></div>
+                    <button class="btn-neumorphic text-lg" id="create-nft">Create NFT</button>
+                </section>
+            </div>
+
+            <div id="dao" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">DAO & Staking</h3>
+                    <div id="dao-info" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">DAO Proposals</h4>
+                        <ul id="proposal-list"></ul>
+                    </div>
+                    <div id="staking-info" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">Staking</h4>
+                        <p>Staked Amount: <span id="staked-amount">0</span></p>
+                        <p>Rewards: <span id="staking-rewards">0</span></p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button class="btn-neumorphic text-lg" id="create-proposal">Create Proposal</button>
+                        <button class="btn-neumorphic text-lg" id="stake-tokens">Stake Tokens</button>
+                    </div>
+                </section>
+            </div>
+
+            <div id="token-sale" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">CQT Token Sale</h3>
+                    <div id="token-sale-info" class="mb-4">
+                        <p>Total Supply: <span id="total-supply">-</span></p>
+                        <p>Tokens Sold: <span id="tokens-sold">-</span></p>
+                        <p>Token Price: <span id="token-price">-</span> ETH</p>
+                        <p>Sale Status: <span id="sale-status">-</span></p>
+                    </div>
+                    <div class="mb-4">
+                        <input type="number" id="token-amount" placeholder="Amount of tokens" class="w-full p-2 mb-2">
+                        <button class="btn-neumorphic text-lg w-full" id="buy-tokens">Buy Tokens</button>
+                    </div>
+                    <div id="admin-controls" class="mb-4" style="display: none;">
+                        <h4 class="text-xl font-bold mb-2">Admin Controls</h4>
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="start-sale">Start Sale</button>
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="end-sale">End Sale</button>
+                        <button class="btn-neumorphic text-lg w-full" id="withdraw-funds">Withdraw Funds</button>
+                    </div>
+                </section>
+            </div>
+
+            <div id="nft-book" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">NFT Book: The Shards of Genesis</h3>
+                    <div id="nft-book-info" class="mb-4">
+                        <p>Total Supply: <span id="book-total-supply">-</span></p>
+                        <p>Books Minted: <span id="books-minted">-</span></p>
+                        <p>Book Price: <span id="book-price">-</span> ETH</p>
+                        <p>Sale Status: <span id="book-sale-status">-</span></p>
+                    </div>
+                    <div class="mb-4">
+                        <input type="number" id="book-amount" placeholder="Number of books" class="w-full p-2 mb-2">
+                        <button class="btn-neumorphic text-lg w-full" id="mint-book">Mint Book NFT</button>
+                    </div>
+                    <div id="book-admin-controls" class="mb-4" style="display: none;">
+                        <h4 class="text-xl font-bold mb-2">Admin Controls</h4>
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="set-book-price">Set Book Price</button>
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="toggle-book-sale">Toggle Sale Status</button>
+                        <button class="btn-neumorphic text-lg w-full" id="withdraw-book-funds">Withdraw Funds</button>
+                    </div>
+                </section>
+            </div>
+
+            <div id="arbitrage-bot" class="tab-content">
+                <section class="neumorphic p-6 float-animation">
+                    <h3 class="text-2xl font-bold mb-4">LP Arbitrage Bot</h3>
+                    <div id="bot-controls" class="mb-4">
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="start-bot">Start Bot</button>
+                        <button class="btn-neumorphic text-lg w-full mb-2" id="stop-bot">Stop Bot</button>
+                    </div>
+                    <div id="bot-status" class="mb-4">
+                        <p>Status: <span id="bot-status-text">Inactive</span></p>
+                        <p>Total Profit: <span id="total-profit">0 ETH</span></p>
+                        <p>Average Profit per Trade: <span id="avg-profit">0 ETH</span></p>
+                        <p>Total Trades Executed: <span id="total-trades">0</span></p>
+                        <p>Success Rate: <span id="success-rate">0%</span></p>
+                    </div>
+                    <div id="arbitrage-opportunities" class="mb-4">
+                        <h4 class="text-xl font-bold mb-2">Recent Opportunities</h4>
+                        <ul id="opportunity-list"></ul>
+                    </div>
+                    <div id="arbitrage-chart-container" class="mb-4">
+                        <canvas id="arbitrage-chart"></canvas>
+                    </div>
+                    <div id="historical-chart-container" class="mb-4">
+                        <canvas id="historical-chart"></canvas>
+                    </div>
+                    <section id="botConfig" class="neumorphic mt-12">
+                        <h2 class="text-2xl font-bold mb-4">Bot Configuration</h2>
+                        <form id="botConfigForm">
+                            <div class="mb-4">
+                                <label for="reinvestmentRate" class="block mb-2">Reinvestment Rate (%)</label>
+                                <input type="number" id="reinvestmentRate" name="reinvestmentRate" class="w-full p-2 rounded" min="0" max="100">
+                            </div>
+                            <div class="mb-4">
+                                <label for="tradeFrequency" class="block mb-2">Trade Frequency (seconds)</label>
+                                <input type="number" id="tradeFrequency" name="tradeFrequency" class="w-full p-2 rounded" min="1" max="3600">
+                            </div>
+                            <div class="mb-4">
+                                <label for="maxSlippage" class="block mb-2">Max Slippage (%)</label>
+                                <input type="number" id="maxSlippage" name="maxSlippage" class="w-full p-2 rounded" min="0" max="100">
+                            </div>
+                            <div class="mb-4">
+                                <label for="flashLoanProvider" class="block mb-2">Flash Loan Provider</label>
+                                <select id="flashLoanProvider" name="flashLoanProvider" class="w-full p-2 rounded">
+                                    <option value="aave">Aave</option>
+                                    <option value="dydx">dYdX</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="bg-secondary-color text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 transition">Update Configuration</button>
+                        </form>
+                    </section>
+                </section>
             </div>
         </div>
+    </main>
+
+    <footer class="neumorphic p-4 mt-8 text-center">
+        <p>&copy; 2024 CreoDAMO Inc: CryptoQuest The Shards of Genesis MMORPG. All rights reserved.</p>
     </footer>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.27.3/apexcharts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.0/dist/ethers.umd.min.js"></script>
-    <script src="https://chatgpt.com/g/g-okli7Xlbi-cryptoquest-guide.js"></script>
     <script>
-        const CQTSalesContractAddress = '0xc36fc9872Bd271BD80365517958e6F48D3b4FA91'; // Replace with your actual CQT contract address
-        const CQTSalesContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressRemovedFromWhitelist","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"addr","type":"address"}],"name":"AddressWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"CommunityMemberRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"FundsWithdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"InvestorRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPrice","type":"uint256"},{"indexed":false,"internalType":"string","name":"role","type":"string"}],"name":"TokenPriceUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"purchaser","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensPurchased","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"beneficiary","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensReleased","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newCap","type":"uint256"}],"name":"TotalCapUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"COMMUNITY_MEMBER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INVESTOR_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"addAddressToWhitelist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"addCommunityMember","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"addInvestor","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"buyTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"founder","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"_tokenAddress","type":"address"},{"internalType":"address","name":"_proxyAddress","type":"address"},{"internalType":"uint256","name":"_tokenPriceInvestor","type":"uint256"},{"internalType":"uint256","name":"_tokenPriceCommunity","type":"uint256"},{"internalType":"uint256","name":"_tokenPricePublic","type":"uint256"},{"internalType":"uint256","name":"_totalCap","type":"uint256"},{"internalType":"uint256","name":"_releaseTime","type":"uint256"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"purchasedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"releaseTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"releaseTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"removeAddressFromWhitelist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"removeCommunityMember","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"removeInvestor","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newPrice","type":"uint256"},{"internalType":"string","name":"role","type":"string"}],"name":"setTokenPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newCap","type":"uint256"}],"name":"setTotalCap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPriceCommunity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPriceInvestor","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPricePublic","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalCap","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"vestedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"whitelistedAddresses","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add ABI Here
-
-        const NFTBookSalesContractAddress = '0x8206b3a98dbd4e3cd767e0e5caba6c6af68044c8'; // Replace with actual NFTBook contract address
-        const NFTBookSalesContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"CQT","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MATIC","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAYMENT_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"USDC","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"WETH","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"}],"name":"addTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tierId","type":"uint256"},{"internalType":"address","name":"paymentToken","type":"address"},{"internalType":"string","name":"uri","type":"string"},{"components":[{"internalType":"string","name":"chapter","type":"string"},{"internalType":"string","name":"character","type":"string"},{"internalType":"string","name":"location","type":"string"},{"internalType":"string","name":"element","type":"string"},{"internalType":"string","name":"rarity","type":"string"}],"internalType":"struct CryptoQuestTheShardsOfGenesisBookNFT.Metadata","name":"metadata","type":"tuple"}],"name":"buyNFT","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"paymentManager","type":"address"},{"internalType":"address","name":"nftAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"nftContract","outputs":[{"internalType":"contract CryptoQuestTheShardsOfGenesisBookNFT","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"nftAddress","type":"address"}],"name":"setNFTContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tierCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tiers","outputs":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"},{"internalType":"uint256","name":"sold","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tierId","type":"uint256"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"supply","type":"uint256"}],"name":"updateTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address payable","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawFunds","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add ABI Here
-
-        const walletContractAddress = '0xf60d96cfa71c6fe7fe18ca028041ca7f42b543bd'; // Replace with your Wallet contract address
-        const walletContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"startTime","type":"uint256"}],"name":"TokensStaked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"TokensUnstaked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionConfirmed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionExecuted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"txIndex","type":"uint256"}],"name":"TransactionSubmitted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"confirmTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"daoAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc1155Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc20Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"erc721Address","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"executeTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"farmingAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"admin","type":"address"},{"internalType":"uint256","name":"_requiredConfirmations","type":"uint256"},{"internalType":"uint256","name":"_stakingRate","type":"uint256"},{"internalType":"address","name":"_erc20Address","type":"address"},{"internalType":"address","name":"_erc721Address","type":"address"},{"internalType":"address","name":"_erc1155Address","type":"address"},{"internalType":"address","name":"_daoAddress","type":"address"},{"internalType":"address","name":"_stakingAddress","type":"address"},{"internalType":"address","name":"_farmingAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"isConfirmed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"requiredConfirmations","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_txIndex","type":"uint256"}],"name":"revokeConfirmation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_daoAddress","type":"address"}],"name":"setDAOAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc1155Address","type":"address"}],"name":"setERC1155Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc20Address","type":"address"}],"name":"setERC20Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_erc721Address","type":"address"}],"name":"setERC721Address","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_farmingAddress","type":"address"}],"name":"setFarmingAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_stakingAddress","type":"address"}],"name":"setStakingAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"stakeTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"startTime","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"submitTransaction","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"transactions","outputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"},{"internalType":"bool","name":"executed","type":"bool"},{"internalType":"uint256","name":"numConfirmations","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unstakeTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"stateMutability":"payable","type":"receive"}]; // Add Wallet contract ABI here
-
-        const swapContractAddress = '0xYourSwapContractAddress'; // Replace with your Swap contract address
-        const swapContractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"AccessControlBadConfirmation","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bytes32","name":"neededRole","type":"bytes32"}],"name":"AccessControlUnauthorizedAccount","type":"error"},{"inputs":[{"internalType":"address","name":"target","type":"address"}],"name":"AddressEmptyCode","type":"error"},{"inputs":[{"internalType":"address","name":"implementation","type":"address"}],"name":"ERC1967InvalidImplementation","type":"error"},{"inputs":[],"name":"ERC1967NonPayable","type":"error"},{"inputs":[],"name":"EnforcedPause","type":"error"},{"inputs":[],"name":"ExpectedPause","type":"error"},{"inputs":[],"name":"FailedInnerCall","type":"error"},{"inputs":[],"name":"InvalidInitialization","type":"error"},{"inputs":[],"name":"NotInitializing","type":"error"},{"inputs":[],"name":"UUPSUnauthorizedCallContext","type":"error"},{"inputs":[{"internalType":"bytes32","name":"slot","type":"bytes32"}],"name":"UUPSUnsupportedProxiableUUID","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint64","name":"version","type":"uint64"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"provider","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"LiquidityAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"provider","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"LiquidityRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"swapper","type":"address"},{"indexed":true,"internalType":"address","name":"nftContract","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"}],"name":"NFTSwapped","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"swapper","type":"address"},{"indexed":true,"internalType":"address","name":"token","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethAmount","type":"uint256"}],"name":"TokenSwapped","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEE_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LIQUIDITY_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"UPGRADE_INTERFACE_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"}],"name":"addLiquidity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"cqtNFT","outputs":[{"internalType":"contract IERC721Upgradeable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"cqtToken","outputs":[{"internalType":"contract IERC20Upgradeable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"defaultAdmin","type":"address"},{"internalType":"address","name":"pauser","type":"address"},{"internalType":"address","name":"upgrader","type":"address"},{"internalType":"address","name":"liquidityManager","type":"address"},{"internalType":"address","name":"cqtTokenAddress","type":"address"},{"internalType":"address","name":"cqtNFTAddress","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"liquidityPools","outputs":[{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"ethAmount","type":"uint256"},{"internalType":"uint256","name":"totalLiquidity","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"liquidity","type":"uint256"}],"name":"removeLiquidity","outputs":[{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"ethAmount","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"callerConfirmation","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapETHForNFT","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"minTokens","type":"uint256"}],"name":"swapETHForTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapNFTForETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"uint256","name":"minETH","type":"uint256"}],"name":"swapTokensForETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unpause","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"newTokenAmount","type":"uint256"},{"internalType":"uint256","name":"newEthAmount","type":"uint256"}],"name":"updateLiquidityPool","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"withdrawNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}]; // Add Swap contract ABI here
-
-        let web3;
-        let CQTContract;
-        let NFTBookContract;
-        let walletContract;
-        let swapContract;
-        let userAccount;
-
-        async function init() {
-            if (typeof window.ethereum !== 'undefined') {
-                web3 = new Web3(window.ethereum);
-                try {
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const accounts = await web3.eth.getAccounts();
-                    userAccount = accounts[0];
-                    CQTContract = new web3.eth.Contract(CQTContractABI, CQTContractAddress);
-                    NFTBookContract = new web3.eth.Contract(NFTBookContractABI, NFTBookContractAddress);
-                    walletContract = new web3.eth.Contract(walletContractABI, walletContractAddress);
-                    swapContract = new web3.eth.Contract(swapContractABI, swapContractAddress);
-
-                    document.getElementById('buyCQTButton').addEventListener('click', buyCQT);
-                    document.getElementById('buyNFTBookButton').addEventListener('click', buyNFTBook);
-                    document.getElementById('stakeTokensButton').addEventListener('click', stakeTokens);
-                    document.getElementById('unstakeTokensButton').addEventListener('click', unstakeTokens);
-                    document.getElementById('grantRoleButton').addEventListener('click', grantRole);
-                    document.getElementById('revokeRoleButton').addEventListener('click', revokeRole);
-                    document.getElementById('submitTxButton').addEventListener('click', submitTransaction);
-                    document.getElementById('addLiquidityButton').addEventListener('click', addLiquidity);
-                    document.getElementById('removeLiquidityButton').addEventListener('click', removeLiquidity);
-                    document.getElementById('swapMATICForTokensButton').addEventListener('click', swapMATICForTokens);
-                    document.getElementById('swapTokensForMATICButton').addEventListener('click', swapTokensForMATIC);
-                    loadTiers();
-
-                    document.getElementById('statusCQT').textContent = 'Connected to wallet';
-                    document.getElementById('statusNFTBook').textContent = 'Connected to wallet';
-                } catch (error) {
-                    console.error("User denied account access");
-                    document.getElementById('statusCQT').textContent = 'Please connect to MetaMask';
-                    document.getElementById('statusNFTBook').textContent = 'Please connect to MetaMask';
-                }
-            } else {
-                console.log('MetaMask not detected');
-                document.getElementById('statusCQT').textContent = 'Please install MetaMask';
-                document.getElementById('statusNFTBook').textContent = 'Please install MetaMask';
-            }
-        }
-
-        async function loadTiers() {
-            try {
-                const tierCount = await NFTBookContract.methods.tierCount().call();
-                const tierSelect = document.getElementById('tierSelect');
-                for (let i = 0; i < tierCount; i++) {
-                    const tier = await NFTBookContract.methods.tiers(i).call();
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = Tier ${i + 1}: Price ${web3.utils.fromWei(tier.price, 'ether')} ETH, Supply ${tier.supply - tier.sold}/${tier.supply};
-                    tierSelect.appendChild(option);
-                }
-            } catch (error) {
-                console.error('Error loading tiers:', error);
-            }
-        }
-
-        async function buyCQT() {
-            const amount = document.getElementById('amount').value;
-            if (!amount || amount <= 0) {
-                Swal.fire('Error', 'Please enter a valid amount', 'error');
-                return;
-            }
-
-            try {
-                const tokenPrice = await CQTContract.methods.tokenPricePublic().call();
-                const totalCost = web3.utils.toBN(amount).mul(web3.utils.toBN(tokenPrice));
-                const gas = await CQTContract.methods.buyTokens(amount).estimateGas({ from: userAccount });
-
-                await CQTContract.methods.buyTokens(amount).send({
-                    from: userAccount,
-                    value: totalCost.toString(),
-                    gas: gas
-                });
-
-                Swal.fire('Success', Successfully purchased ${amount} CQT tokens!, 'success');
-            } catch (error) {
-                console.error('Error buying tokens:', error);
-                Swal.fire('Error', 'Failed to buy tokens. Please try again.', 'error');
-            }
-        }
-
-        async function buyNFTBook() {
-            document.getElementById('progressIndicator').classList.remove('hidden');
-            const tierId = document.getElementById('tierSelect').value;
-            const status = document.getElementById('statusNFTBook');
-            status.textContent = 'Processing...';
-
-            try {
-                const tier = await NFTBookContract.methods.tiers(tierId).call();
-                const price = tier.price;
-                await NFTBookContract.methods.buyNFT(tierId, '0x0000000000000000000000000000000000000000', 'https://example.com/nft-metadata.json', {
-                    chapter: 'Chapter 1',
-                    character: 'Hero',
-                    location: 'Genesis',
-                    element: 'Fire',
-                    rarity: 'Rare'
-                }).send({ from: userAccount, value: price });
-
-                status.textContent = 'Success! NFT Book purchased.';
-            } catch (error) {
-                console.error(error);
-                status.textContent = Error: ${error.message};
-            }
-
-            document.getElementById('progressIndicator').classList.add('hidden');
-        }
-
-        async function stakeTokens() {
-            const amount = document.getElementById('stakeAmount').value;
-            if (amount > 0) {
-                try {
-                    await walletContract.methods.stakeTokens(web3.utils.toWei(amount, 'ether')).send({ from: userAccount });
-                    Swal.fire('Success', 'Tokens staked successfully', 'success');
-                } catch (error) {
-                    Swal.fire('Error', error.message, 'error');
-                }
-            } else {
-                Swal.fire('Error', 'Please enter a valid amount', 'error');
-            }
-        }
-
-        async function unstakeTokens() {
-            try {
-                await walletContract.methods.unstakeTokens().send({ from: userAccount });
-                Swal.fire('Success', 'Tokens unstaked successfully', 'success');
-            } catch (error) {
-                Swal.fire('Error', error.message, 'error');
-            }
-        }
-
-        async function grantRole() {
-            const role = document.getElementById('roleType').value;
-            const accountAddress = document.getElementById('roleAccount').value;
-            try {
-                await walletContract.methods.grantRole(web3.utils.keccak256(role), accountAddress).send({ from: userAccount });
-                Swal.fire('Success', Role ${role} granted to ${accountAddress}, 'success');
-            } catch (error) {
-                Swal.fire('Error', error.message, 'error');
-            }
-        }
-
-        async function revokeRole() {
-            const role = document.getElementById('roleType').value;
-            const accountAddress = document.getElementById('roleAccount').value;
-            try {
-                await walletContract.methods.revokeRole(web3.utils.keccak256(role), accountAddress).send({ from: userAccount });
-                Swal.fire('Success', Role ${role} revoked from ${accountAddress}, 'success');
-            } catch (error) {
-                Swal.fire('Error', error.message, 'error');
-            }
-        }
-
-        async function submitTransaction() {
-            const to = document.getElementById('txTo').value;
-            const value = document.getElementById('txValue').value;
-            const data = document.getElementById('txData').value;
-            try {
-                await walletContract.methods.submitTransaction(to, web3.utils.toWei(value, 'ether'), data).send({ from: userAccount });
-                Swal.fire('Success', 'Transaction submitted successfully', 'success');
-            } catch (error) {
-                Swal.fire('Error', error.message, 'error');
-            }
-        }
-
-        async function addLiquidity() {
-            const tokenAmount = document.getElementById('tokenAmount').value;
-            const maticAmount = document.getElementById('maticAmount').value;
-            if (tokenAmount > 0 && maticAmount > 0) {
-                try {
-                    await swapContract.methods.addLiquidity(web3.utils.toWei(tokenAmount, 'ether'), web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
-                    Swal.fire('Success', 'Liquidity added successfully', 'success');
-                } catch (error) {
-                    Swal.fire('Error', error.message, 'error');
-                }
-            } else {
-                Swal.fire('Error', 'Please enter valid amounts', 'error');
-            }
-        }
-
-        async function removeLiquidity() {
-            const tokenAmount = document.getElementById('removeTokenAmount').value;
-            const maticAmount = document.getElementById('removeMaticAmount').value;
-            if (tokenAmount > 0 && maticAmount > 0) {
-                try {
-                    await swapContract.methods.removeLiquidity(web3.utils.toWei(tokenAmount, 'ether'), web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
-                    Swal.fire('Success', 'Liquidity removed successfully', 'success');
-                } catch (error) {
-                    Swal.fire('Error', error.message, 'error');
-                }
-            } else {
-                Swal.fire('Error', 'Please enter valid amounts', 'error');
-            }
-        }
-
-        async function swapMATICForTokens() {
-            const maticAmount = document.getElementById('swapMaticAmount').value;
-            if (maticAmount > 0) {
-                try {
-                    await swapContract.methods.swapMATICForTokens(web3.utils.toWei(maticAmount, 'ether')).send({ from: userAccount });
-                    Swal.fire('Success', 'MATIC swapped for tokens successfully', 'success');
-                } catch (error) {
-                    Swal.fire('Error', error.message, 'error');
-                }
-            } else {
-                Swal.fire('Error', 'Please enter a valid amount', 'error');
-            }
-        }
-
-        async function swapTokensForMATIC() {
-            const tokenAmount = document.getElementById('swapTokenAmount').value;
-            if (tokenAmount > 0) {
-                try {
-                    await swapContract.methods.swapTokensForMATIC(web3.utils.toWei(tokenAmount, 'ether')).send({ from: userAccount });
-                    Swal.fire('Success', 'Tokens swapped for MATIC successfully', 'success');
-                } catch (error) {
-                    Swal.fire('Error', error.message, 'error');
-                }
-            } else {
-                Swal.fire('Error', 'Please enter a valid amount', 'error');
-            }
-        }
-
-        window.addEventListener('load', init);
-
-        const Web3 = require('web3');
-        const { ethers } = require('ethers');
-        const detectEthereumProvider = require('@metamask/detect-provider');
-        const { Token, Fetcher, Route } = require('@uniswap/sdk');
-        const { LendingPoolAddressesProvider, LendingPool } = require('@aave/protocol-js');
-        const { LedgerSigner } = require('@ethersproject/hardware-wallets');
-
-        const INFURA_URL = 'https://polygon-mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID';
-        let provider, signer;
-
-        async function setupProvider() {
-            const ethereumProvider = await detectEthereumProvider();
-            if (ethereumProvider) {
-                provider = new ethers.providers.Web3Provider(ethereumProvider);
-                await ethereumProvider.request({ method: 'eth_requestAccounts' });
-
-                // Choose between MetaMask and Ledger based on preference
-                signer = provider.getSigner(); // For MetaMask
-                // signer = new LedgerSigner(provider); // For Ledger
-            } else {
-                console.error('Please install MetaMask!');
-            }
-        }
-
-        const CQT_ADDRESS = '0x94ef57abfBff1AD70bD00a921e1d2437f31C1665';
-        const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270';
-        const AAVE_LENDING_POOL_ADDRESS_PROVIDER = '0x24a0e79e7ab9f4f4f2de9bafbf45303b093a7d34';
-        const UNISWAP_POOL_ADDRESS = '0x0b3CD8a843DEFDF01564a0342a89ba06c4fC9394';
-        const UNISWAP_POOL_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"address","name":"recipient","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"Collect","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint128","name":"amount0","type":"uint128"},{"indexed":false,"internalType":"uint128","name":"amount1","type":"uint128"}],"name":"CollectProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"paid1","type":"uint256"}],"name":"Flash","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextOld","type":"uint16"},{"indexed":false,"internalType":"uint16","name":"observationCardinalityNextNew","type":"uint16"}],"name":"IncreaseObservationCardinalityNext","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Initialize","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"int24","name":"tickLower","type":"int24"},{"indexed":true,"internalType":"int24","name":"tickUpper","type":"int24"},{"indexed":false,"internalType":"uint128","name":"amount","type":"uint128"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"feeProtocol0Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1Old","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol0New","type":"uint8"},{"indexed":false,"internalType":"uint8","name":"feeProtocol1New","type":"uint8"}],"name":"SetFeeProtocol","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"int256","name":"amount0","type":"int256"},{"indexed":false,"internalType":"int256","name":"amount1","type":"int256"},{"indexed":false,"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"indexed":false,"internalType":"uint128","name":"liquidity","type":"uint128"},{"indexed":false,"internalType":"int24","name":"tick","type":"int24"}],"name":"Swap","type":"event"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"}],"name":"burn","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collect","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint128","name":"amount0Requested","type":"uint128"},{"internalType":"uint128","name":"amount1Requested","type":"uint128"}],"name":"collectProtocol","outputs":[{"internalType":"uint128","name":"amount0","type":"uint128"},{"internalType":"uint128","name":"amount1","type":"uint128"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"fee","outputs":[{"internalType":"uint24","name":"","type":"uint24"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal0X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeGrowthGlobal1X128","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"flash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"}],"name":"increaseObservationCardinalityNext","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"liquidity","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxLiquidityPerTick","outputs":[{"internalType":"uint128","name":"","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"},{"internalType":"uint128","name":"amount","type":"uint128"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"mint","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"observations","outputs":[{"internalType":"uint32","name":"blockTimestamp","type":"uint32"},{"internalType":"int56","name":"tickCumulative","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityCumulativeX128","type":"uint160"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint32[]","name":"secondsAgos","type":"uint32[]"}],"name":"observe","outputs":[{"internalType":"int56[]","name":"tickCumulatives","type":"int56[]"},{"internalType":"uint160[]","name":"secondsPerLiquidityCumulativeX128s","type":"uint160[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"positions","outputs":[{"internalType":"uint128","name":"liquidity","type":"uint128"},{"internalType":"uint256","name":"feeGrowthInside0LastX128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthInside1LastX128","type":"uint256"},{"internalType":"uint128","name":"tokensOwed0","type":"uint128"},{"internalType":"uint128","name":"tokensOwed1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"protocolFees","outputs":[{"internalType":"uint128","name":"token0","type":"uint128"},{"internalType":"uint128","name":"token1","type":"uint128"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"feeProtocol0","type":"uint8"},{"internalType":"uint8","name":"feeProtocol1","type":"uint8"}],"name":"setFeeProtocol","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"slot0","outputs":[{"internalType":"uint160","name":"sqrtPriceX96","type":"uint160"},{"internalType":"int24","name":"tick","type":"int24"},{"internalType":"uint16","name":"observationIndex","type":"uint16"},{"internalType":"uint16","name":"observationCardinality","type":"uint16"},{"internalType":"uint16","name":"observationCardinalityNext","type":"uint16"},{"internalType":"uint8","name":"feeProtocol","type":"uint8"},{"internalType":"bool","name":"unlocked","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"tickLower","type":"int24"},{"internalType":"int24","name":"tickUpper","type":"int24"}],"name":"snapshotCumulativesInside","outputs":[{"internalType":"int56","name":"tickCumulativeInside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityInsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsInside","type":"uint32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"bool","name":"zeroForOne","type":"bool"},{"internalType":"int256","name":"amountSpecified","type":"int256"},{"internalType":"uint160","name":"sqrtPriceLimitX96","type":"uint160"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"swap","outputs":[{"internalType":"int256","name":"amount0","type":"int256"},{"internalType":"int256","name":"amount1","type":"int256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"int16","name":"","type":"int16"}],"name":"tickBitmap","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tickSpacing","outputs":[{"internalType":"int24","name":"","type":"int24"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"int24","name":"","type":"int24"}],"name":"ticks","outputs":[{"internalType":"uint128","name":"liquidityGross","type":"uint128"},{"internalType":"int128","name":"liquidityNet","type":"int128"},{"internalType":"uint256","name":"feeGrowthOutside0X128","type":"uint256"},{"internalType":"uint256","name":"feeGrowthOutside1X128","type":"uint256"},{"internalType":"int56","name":"tickCumulativeOutside","type":"int56"},{"internalType":"uint160","name":"secondsPerLiquidityOutsideX128","type":"uint160"},{"internalType":"uint32","name":"secondsOutside","type":"uint32"},{"internalType":"bool","name":"initialized","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]; // Uniswap V3 pool ABI
-
-        async function getPairData() {
-            try {
-                const cqtToken = new Token(137, CQT_ADDRESS, 18);
-                const maticToken = new Token(137, MATIC_ADDRESS, 18);
-                const pair = await Fetcher.fetchPairData(cqtToken, maticToken, provider);
-                const route = new Route([pair], maticToken);
-                console.log(1 MATIC = ${route.midPrice.toSignificant(6)} CQT);
-                console.log(1 CQT = ${route.midPrice.invert().toSignificant(6)} MATIC);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        async function executeFlashLoan(borrowAmount) {
-            const lendingPoolAddressesProvider = new ethers.Contract(
-                AAVE_LENDING_POOL_ADDRESS_PROVIDER,
-                LendingPoolAddressesProvider,
-                signer
-            );
-
-            const lendingPoolAddress = await lendingPoolAddressesProvider.getLendingPool();
-            const lendingPool = new ethers.Contract(lendingPoolAddress, LendingPool, signer);
-
-            const tx = await lendingPool.flashLoan(
-                await signer.getAddress(),
-                MATIC_ADDRESS,
-                borrowAmount,
-                0,
-                await signer.getAddress(),
-                '0x',
-                0
-            );
-
-            await tx.wait();
-            console.log(Flash loan executed: ${tx.hash});
-        }
-
-        async function executeFlashLoanWithDYDX(borrowAmount) {
-            // Implement dYdX flash loan logic here
-        }
-
-        async function reinvestProfits(profits, reinvestPercentage) {
-            const amountToReinvest = profits * (reinvestPercentage / 100);
-
-            const cqtToken = new Token(137, CQT_ADDRESS, 18);
-            const maticToken = new Token(137, MATIC_ADDRESS, 18);
-            const pair = await Fetcher.fetchPairData(cqtToken, maticToken, provider);
-            const route = new Route([pair], maticToken);
-
-            const maticAmount = amountToReinvest / parseFloat(route.midPrice.toSignificant(6));
-            const cqtAmount = amountToReinvest;
-
-            await addLiquidity(cqtAmount, maticAmount);
-        }
-
-        async function addLiquidity(amountCQT, amountMATIC) {
-            const poolContract = new ethers.Contract(UNISWAP_POOL_ADDRESS, UNISWAP_POOL_ABI, signer);
-
-            const tx = await poolContract.mint({
-                tickLower: getTick(1.53109), // Min price
-                tickUpper: getTick(2.05436), // Max price
-                amount0Desired: ethers.utils.parseUnits(amountCQT.toString(), 'ether'),
-                amount1Desired: ethers.utils.parseUnits(amountMATIC.toString(), 'ether'),
-                amount0Min: 0,
-                amount1Min: 0,
-                recipient: await signer.getAddress(),
-                deadline: Math.floor(Date.now() / 1000) + 60 * 20
+        // JavaScript code
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Vanta.js background
+            VANTA.NET({
+                el: "#vanta-background",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x3498db,
+                backgroundColor: 0xecf0f1,
+                points: 10.00,
+                maxDistance: 25.00,
+                spacing: 17.00
             });
 
-            await tx.wait();
-            console.log(Liquidity added: ${tx.hash});
-        }
+            // Toggle dark mode
+            const toggleDarkMode = document.getElementById('toggle-dark-mode');
+            toggleDarkMode.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    window.VANTA.NET.setOptions({
+                        color: 0x2ecc71,
+                        backgroundColor: 0x2c3e50
+                    });
+                } else {
+                    window.VANTA.NET.setOptions({
+                        color: 0x3498db,
+                        backgroundColor: 0xecf0f1
+                    });
+                }
+            });
 
-        function getTick(price) {
-            return Math.floor(Math.log(price) / Math.log(1.0001));
-        }
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-        function calculateReinvestmentPercentage(profits) {
-            if (profits > 100) return 60;
-            if (profits > 50) return 50;
-            return 40;
-        }
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.getAttribute('data-tab');
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    button.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+                });
+            });
 
-        async function executeTrade(buyExchange, sellExchange, amount) {
-            let profits = 0;
+            // Smart contract integration
+            let provider, signer, gameContract, tokenSaleContract, nftBookContract;
+            const gameContractAddress = "GAME_CONTRACT_ADDRESS";
+            const tokenSaleContractAddress = "TOKEN_SALE_CONTRACT_ADDRESS";
+            const nftBookContractAddress = "NFT_BOOK_CONTRACT_ADDRESS";
+            const gameContractABI = []; // Add your game contract ABI here
+            const tokenSaleContractABI = []; // Add your token sale contract ABI here
+            const nftBookContractABI = []; // Add your NFT book contract ABI here
 
-            if (buyExchange === 'sushiswap' && sellExchange === 'uniswap') {
-                const buyResult = await buyOnSushiSwap(amount);
-                const sellResult = await sellOnUniswap(amount);
-                profits = sellResult - buyResult;
-            } else if (buyExchange === 'uniswap' && sellExchange === 'sushiswap') {
-                const buyResult = await buyOnUniswap(amount);
-                const sellResult = await sellOnSushiSwap(amount);
-                profits = sellResult - buyResult;
+            async function connectWallet() {
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        provider = new ethers.providers.Web3Provider(window.ethereum);
+                        signer = provider.getSigner();
+                        gameContract = new ethers.Contract(gameContractAddress, gameContractABI, signer);
+                        tokenSaleContract = new ethers.Contract(tokenSaleContractAddress, tokenSaleContractABI, signer);
+                        nftBookContract = new ethers.Contract(nftBookContractAddress, nftBookContractABI, signer);
+                        document.getElementById('connect-wallet').textContent = 'Wallet Connected';
+                        document.getElementById('connect-wallet').disabled = true;
+                        updatePlayerInfo();
+                        updateTokenSaleInfo();
+                        updateNFTBookInfo();
+                    } catch (error) {
+                        console.error('Failed to connect wallet:', error);
+                    }
+                } else {
+                    alert('Please install MetaMask to connect your wallet!');
+                }
             }
 
-            const reinvestPercentage = calculateReinvestmentPercentage(profits);
-            console.log(Reinvesting ${reinvestPercentage}% of profits);
+            document.getElementById('connect-wallet').addEventListener('click', connectWallet);
 
-            if (profits > 0) {
-                await reinvestProfits(profits, reinvestPercentage);
-            }
-        }
-
-        // Implement buy and sell functions as needed
-        async function buyOnSushiSwap(amount) {
-            // Implement SushiSwap buy logic here
-            // Return the cost in MATIC
-        }
-
-        async function sellOnUniswap(amount) {
-            // Implement Uniswap sell logic here
-            // Return the proceeds in MATIC
-        }
-
-        async function buyOnUniswap(amount) {
-            // Implement Uniswap buy logic here
-            // Return the cost in MATIC
-        }
-
-        async function sellOnSushiSwap(amount) {
-            // Implement SushiSwap sell logic here
-            // Return the proceeds in MATIC
-        }
-
-        async function buyOnBalancer(amount) {
-            // Implement Balancer buy logic here
-            // Return the cost in MATIC
-        }
-
-        async function sellOnBalancer(amount) {
-            // Implement Balancer sell logic here
-            // Return the proceeds in MATIC
-        }
-
-        // Update executeTrade to support new exchanges
-        async function execute
-
-Trade(buyExchange, sellExchange, amount) {
-            let profits = 0;
-
-            if (buyExchange === 'balancer' && sellExchange === 'uniswap') {
-                const buyResult = await buyOnBalancer(amount);
-                const sellResult = await sellOnUniswap(amount);
-                profits = sellResult - buyResult;
-            } else if (buyExchange === 'sushiswap' && sellExchange === 'uniswap') {
-                const buyResult = await buyOnSushiSwap(amount);
-                const sellResult = await sellOnUniswap(amount);
-                profits = sellResult - buyResult;
+            // Player functions
+            async function createPlayer() {
+                if (!gameContract) return;
+                try {
+                    const tx = await gameContract.createPlayer("Player Name");
+                    await tx.wait();
+                    updatePlayerInfo();
+                } catch (error) {
+                    console.error('Failed to create player:', error);
+                }
             }
 
-            const reinvestPercentage = calculateReinvestmentPercentage(profits);
-            console.log(Reinvesting ${reinvestPercentage}% of profits);
-
-            if (profits > 0) {
-                await reinvestProfits(profits, reinvestPercentage);
-            }
-        }
-
-        async function main() {
-            await setupProvider();
-            await getPairData();
-
-            const amount = 100; // Amount in MATIC
-
-            // Use Aave or dYdX based on conditions
-            const useAave = document.getElementById('flashLoanProvider').value === 'aave';
-            if (useAave) {
-                await executeFlashLoan(ethers.utils.parseUnits(amount.toString(), 'ether'));
-            } else {
-                await executeFlashLoanWithDYDX(ethers.utils.parseUnits(amount.toString(), 'ether'));
+            async function updatePlayerInfo() {
+                if (!gameContract) return;
+                try {
+                    const playerInfo = await gameContract.getPlayerInfo();
+                    document.getElementById('player-name').textContent = playerInfo.name;
+                    document.getElementById('player-level').textContent = playerInfo.level.toString();
+                    document.getElementById('player-xp').textContent = playerInfo.experience.toString();
+                    document.getElementById('player-gold').textContent = playerInfo.gold.toString();
+                    updateInventory(playerInfo.inventory);
+                } catch (error) {
+                    console.error('Failed to update player info:', error);
+                }
             }
 
-            await executeTrade('sushiswap', 'uniswap', amount);
-        }
+            function updateInventory(inventory) {
+                const inventoryList = document.getElementById('inventory-list');
+                inventoryList.innerHTML = '';
+                inventory.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} (x${item.quantity})`;
+                    inventoryList.appendChild(li);
+                });
+            }
 
-        document.getElementById('botConfigForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const reinvestmentRate = document.getElementById('reinvestmentRate').value;
-            const flashLoanProvider = document.getElementById('flashLoanProvider').value;
+            document.getElementById('create-player').addEventListener('click', createPlayer);
 
-            // Update the configuration and run the bot with the new settings
-            await main();
-        });
+            // Quest functions
+            async function startQuest() {
+                if (!gameContract) return;
+                try {
+                    const tx = await gameContract.startQuest(1); // Assuming quest ID 1
+                    await tx.wait();
+                    updateActiveQuest();
+                } catch (error) {
+                    console.error('Failed to start quest:', error);
+                }
+            }
 
-        window.addEventListener('load', setupProvider);
-    </script>
+            async function updateActiveQuest() {
+                if (!gameContract) return;
+                try {
+                    const activeQuest = await gameContract.getActiveQuest();
+                    document.getElementById('active-quest-name').textContent = activeQuest.name;
+                    document.getElementById('active-quest-progress').textContent = `Progress: ${activeQuest.progress}%`;
+                } catch (error) {
+                    console.error('Failed to update active quest:', error);
+                }
+            }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Token Distribution Chart
+            document.getElementById('start-quest').addEventListener('click', startQuest);
+
+            // Token Sale functions
+            async function updateTokenSaleInfo() {
+                if (!tokenSaleContract) return;
+                try {
+                    const totalSupply = await tokenSaleContract.totalSupply();
+                    const tokensSold = await tokenSaleContract.tokensSold();
+                    const tokenPrice = await tokenSaleContract.tokenPrice();
+                    const saleStatus = await tokenSaleContract.saleStatus();
+
+                    document.getElementById('total-supply').textContent = totalSupply.toString();
+                    document.getElementById('tokens-sold').textContent = tokensSold.toString();
+                    document.getElementById('token-price').textContent = ethers.utils.formatEther(tokenPrice);
+                    document.getElementById('sale-status').textContent = saleStatus ? 'Active' : 'Inactive';
+
+                    // Check if the connected address is the owner
+                    const owner = await tokenSaleContract.owner();
+                    const connectedAddress = await signer.getAddress();
+                    if (owner.toLowerCase() === connectedAddress.toLowerCase()) {
+                        document.getElementById('admin-controls').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Failed to update token sale info:', error);
+                }
+            }
+
+            async function buyTokens() {
+                if (!tokenSaleContract) return;
+                const amount = document.getElementById('token-amount').value;
+                try {
+                    const tokenPrice = await tokenSaleContract.tokenPrice();
+                    const totalCost = tokenPrice.mul(amount);
+                    const tx = await tokenSaleContract.buyTokens(amount, { value: totalCost });
+                    await tx.wait();
+                    updateTokenSaleInfo();
+                } catch (error) {
+                    console.error('Failed to buy tokens:', error);
+                }
+            }
+
+            document.getElementById('buy-tokens').addEventListener('click', buyTokens);
+
+            // Admin functions for Token Sale
+            async function startSale() {
+                if (!tokenSaleContract) return;
+                try {
+                    const tx = await tokenSaleContract.startSale();
+                    await tx.wait();
+                    updateTokenSaleInfo();
+                } catch (error) {
+                    console.error('Failed to start sale:', error);
+                }
+            }
+
+            async function endSale() {
+                if (!tokenSaleContract) return;
+                try {
+                    const tx = await tokenSaleContract.endSale();
+                    await tx.wait();
+                    updateTokenSaleInfo();
+                } catch (error) {
+                    console.error('Failed to end sale:', error);
+                }
+            }
+
+            async function withdrawFunds() {
+                if (!tokenSaleContract) return;
+                try {
+                    const tx = await tokenSaleContract.withdraw();
+                    await tx.wait();
+                    alert('Funds withdrawn successfully');
+                } catch (error) {
+                    console.error('Failed to withdraw funds:', error);
+                }
+            }
+
+            document.getElementById('start-sale').addEventListener('click', startSale);
+            document.getElementById('end-sale').addEventListener('click', endSale);
+            document.getElementById('withdraw-funds').addEventListener('click', withdrawFunds);
+
+            // NFT Book functions
+            async function updateNFTBookInfo() {
+                if (!nftBookContract) return;
+                try {
+                    const totalSupply = await nftBookContract.totalSupply();
+                    const booksMinted = await nftBookContract.totalMinted();
+                    const bookPrice = await nftBookContract.price();
+                    const saleStatus = await nftBookContract.saleIsActive();
+
+                    document.getElementById('book-total-supply').textContent = totalSupply.toString();
+                    document.getElementById('books-minted').textContent = booksMinted.toString();
+                    document.getElementById('book-price').textContent = ethers.utils.formatEther(bookPrice);
+                    document.getElementById('book-sale-status').textContent = saleStatus ? 'Active' : 'Inactive';
+
+                    // Check if the connected address is the owner
+                    const owner = await nftBookContract.owner();
+                    const connectedAddress = await signer.getAddress();
+                    if (owner.toLowerCase() === connectedAddress.toLowerCase()) {
+                        document.getElementById('book-admin-controls').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Failed to update NFT book info:', error);
+                }
+            }
+
+            async function mintBook() {
+                if (!nftBookContract) return;
+                const amount = document.getElementById('book-amount').value;
+                try {
+                    const bookPrice = await nftBookContract.price();
+                    const totalCost = bookPrice.mul(amount);
+                    const tx = await nftBookContract.mint(amount, { value: totalCost });
+                    await tx.wait();
+                    updateNFTBookInfo();
+                } catch (error) {
+                    console.error('Failed to mint book:', error);
+                }
+            }
+
+            document.getElementById('mint-book').addEventListener('click', mintBook);
+
+            // Admin functions for NFT Book
+            async function setBookPrice() {
+                if (!nftBookContract) return;
+                const newPrice = prompt("Enter new book price in ETH:");
+                if (newPrice) {
+                    try {
+                        const priceInWei = ethers.utils.parseEther(newPrice);
+                        const tx = await nftBookContract.setPrice(priceInWei);
+                        await tx.wait();
+                        updateNFTBookInfo();
+                    } catch (error) {
+                        console.error('Failed to set book price:', error);
+                    }
+                }
+            }
+
+            async function toggleBookSale() {
+                if (!nftBookContract) return;
+                try {
+                    const tx = await nftBookContract.toggleSaleStatus();
+                    await tx.wait();
+                    updateNFTBookInfo();
+                } catch (error) {
+                    console.error('Failed to toggle book sale status:', error);
+                }
+            }
+
+            async function withdrawBookFunds() {
+                if (!nftBookContract) return;
+                try {
+                    const tx = await nftBookContract.withdraw();
+                    await tx.wait();
+                    alert('Funds withdrawn successfully');
+                } catch (error) {
+                    console.error('Failed to withdraw book funds:', error);
+                }
+            }
+
+            document.getElementById('set-book-price').addEventListener('click', setBookPrice);
+            document.getElementById('toggle-book-sale').addEventListener('click', toggleBookSale);
+            document.getElementById('withdraw-book-funds').addEventListener('click', withdrawBookFunds);
+
+            // Arbitrage Bot functionality
+            const startBot = document.getElementById('start-bot');
+            const stopBot = document.getElementById('stop-bot');
+            const botStatusText = document.getElementById('bot-status-text');
+            const totalProfit = document.getElementById('total-profit');
+            const avgProfit = document.getElementById('avg-profit');
+            const totalTrades = document.getElementById('total-trades');
+            const successRate = document.getElementById('success-rate');
+            const opportunityList = document.getElementById('opportunity-list');
+            const tradeFrequencyInput = document.getElementById('tradeFrequency');
+
+            let botActive = false;
+            let profit = 0;
+            let trades = 0;
+            let successfulTrades = 0;
+
+            startBot.addEventListener('click', () => {
+                botActive = true;
+                botStatusText.textContent = 'Active';
+                startBot.disabled = true;
+                stopBot.disabled = false;
+                simulateArbitrage();
+            });
+
+            stopBot.addEventListener('click', () => {
+                botActive = false;
+                botStatusText.textContent = 'Inactive';
+                startBot.disabled = false;
+                stopBot.disabled = true;
+            });
+
+            function simulateArbitrage() {
+                if (!botActive) return;
+
+                // Simulate arbitrage opportunities for three pools
+                const opportunities = {
+                    'CQT/MATIC': Math.random() * 0.01,
+                    'CQT/WBTC': Math.random() * 0.01,
+                    'CQT/WETH': Math.random() * 0.01
+                };
+
+                // Calculate total profit and update stats
+                const totalOpportunity = opportunities['CQT/MATIC'] + opportunities['CQT/WBTC'] + opportunities['CQT/WETH'];
+                profit += totalOpportunity;
+                trades += 1;
+                successfulTrades += (totalOpportunity > 0 ? 1 : 0);
+                totalProfit.textContent = `${profit.toFixed(4)} ETH`;
+                avgProfit.textContent = `${(profit / trades).toFixed(4)} ETH`;
+                totalTrades.textContent = trades;
+                successRate.textContent = `${((successfulTrades / trades) * 100).toFixed(2)}%`;
+
+                // Update opportunity list
+                const listItem = document.createElement('li');
+                listItem.textContent = `Opportunities: CQT/MATIC: ${opportunities['CQT/MATIC'].toFixed(4)} ETH, CQT/WBTC: ${opportunities['CQT/WBTC'].toFixed(4)} ETH, CQT/WETH: ${opportunities['CQT/WETH'].toFixed(4)} ETH`;
+                opportunityList.prepend(listItem);
+
+                if (opportunityList.children.length > 5) {
+                    opportunityList.removeChild(opportunityList.lastChild);
+                }
+
+                // Update charts
+                updateArbitrageChart(totalOpportunity);
+                updateHistoricalChart(profit);
+
+                // Schedule next simulation
+                setTimeout(simulateArbitrage, tradeFrequencyInput.value * 1000 || 5000);
+            }
+
+            // Initialize Chart.js for arbitrage opportunities
+            const ctx = document.getElementById('arbitrage-chart').getContext('2d');
+            const arbitrageChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Arbitrage Opportunities',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            function updateArbitrageChart(opportunity) {
+                const timestamp = new Date().toLocaleTimeString();
+                arbitrageChart.data.labels.push(timestamp);
+                arbitrageChart.data.datasets[0].data.push(opportunity);
+
+                if (arbitrageChart.data.labels.length > 10) {
+                    arbitrageChart.data.labels.shift();
+                    arbitrageChart.data.datasets[0].data.shift();
+                }
+
+                arbitrageChart.update();
+            }
+
+            // Initialize Chart.js for historical profit
+            const historicalCtx = document.getElementById('historical-chart').getContext('2d');
+            const historicalChart = new Chart(historicalCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Historical Profit',
+                        data: [],
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            function updateHistoricalChart(profit) {
+                const timestamp = new Date().toLocaleTimeString();
+                historicalChart.data.labels.push(timestamp);
+                historicalChart.data.datasets[0].data.push(profit);
+
+                if (historicalChart.data.labels.length > 10) {
+                    historicalChart.data.labels.shift();
+                    historicalChart.data.datasets[0].data.shift();
+                }
+
+                historicalChart.update();
+            }
+
+            // Update historical chart periodically
+            setInterval(() => {
+                if (botActive) {
+                    updateHistoricalChart(profit);
+                }
+            }, 60000);
+
+            // Handle form submission for bot configuration
+            document.getElementById('botConfigForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Bot configuration updated!');
+            });
+
+            // Initialize Token Distribution Chart
             const tokenDistributionCtx = document.getElementById('tokenDistributionChart').getContext('2d');
-            new Chart(tokenDistributionCtx, {
+            const tokenDistributionChart = new Chart(tokenDistributionCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['ICO', 'Community Rewards', 'Team and Advisors', 'Ecosystem Development', 'Marketing and Partnerships', 'Treasury'],
+                    labels: ['Team', 'Advisors', 'Public Sale', 'Private Sale', 'Ecosystem', 'Reserve'],
                     datasets: [{
-                        label: 'Token Distribution',
-                        data: [30, 20, 15, 15, 10, 10],
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+                        data: [20, 10, 25, 15, 20, 10],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top'
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                                }
+                            }
                         }
                     }
                 }
             });
 
-            // Market Growth Chart
-            const marketGrowthCtx = document.getElementById('marketGrowthChart').getContext('2d');
-            new Chart(marketGrowthCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2022', '2023', '2024'],
-                    datasets: [{
-                        label: 'Market Growth Projections',
-                        data: [100, 150, 200],
-                        backgroundColor: '#36A2EB'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-            // Financial Projections Chart
-            const financialProjectionsCtx = document.getElementById('financialProjectionsChart').getContext('2d');
-            new Chart(financialProjectionsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Year 1', 'Year 2', 'Year 3'],
-                    datasets: [
-                        {
-                            label: 'Revenue',
-                            data: [1, 5, 10],
-                            borderColor: '#4BC0C0',
-                            backgroundColor: '#4BC0C0',
-                            fill: false
-                        },
-                        {
-                            label: 'Expenses',
-                            data: [2.5, 3, 3.5],
-                            borderColor: '#FF6384',
-                            backgroundColor: '#FF6384',
-                            fill: false
-                        },
-                        {
-                            label: 'Profit/Loss',
-                            data: [-1.5, 2, 6.5],
-                            borderColor: '#FFCE56',
-                            backgroundColor: '#FFCE56',
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+            // Add more game-specific functionality here
+            // ...
         });
     </script>
 </body>
-
 </html>
