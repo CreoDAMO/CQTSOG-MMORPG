@@ -1,6 +1,6 @@
 kafka-python==2.0.2
 pyspark==3.4.1
-cryptography==42.0.4
+cryptography==43.0.1
 flask==2.3.3
 torch==2.2.0
 transformers==4.38.0
