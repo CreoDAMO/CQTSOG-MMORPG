@@ -1,6 +1,7 @@
 # Variables
 APP_NAME = cryptoquestmmorpg-dapp
 PYTHON_ENV = env
+NODE_ENV = production
 
 # Commands
 install-dependencies:
@@ -15,16 +16,16 @@ setup-python-env:
 	$(PYTHON_ENV)/bin/pip install -r $(APP_NAME)/src/data-processing-and-analytics/requirements.txt
 
 build-bot:
-	@cd $(APP_NAME) && node src/build-arbitrage-bot.js
+	@cd $(APP_NAME) && NODE_ENV=$(NODE_ENV) node src/build-arbitrage-bot.js
 
 run-bot:
-	@cd $(APP_NAME) && node src/arbitrage-bot.js
+	@cd $(APP_NAME) && NODE_ENV=$(NODE_ENV) node src/arbitrage-bot.js
 
 start:
 	@cd $(APP_NAME) && npm start
 
 build:
-	@cd $(APP_NAME) && npm run build
+	@cd $(APP_NAME) && NODE_ENV=$(NODE_ENV) npm run build
 
 test:
 	@cd $(APP_NAME) && npm test
@@ -42,5 +43,21 @@ clean:
 clean-python-env:
 	@rm -rf $(PYTHON_ENV)
 
+# CI Commands
+ci-prepare: clean clean-python-env install-dependencies install-blockchain-dependencies setup-python-env build
+
+ci-test: ci-prepare test
+
+ci-lint:
+	@cd $(APP_NAME) && npm run lint
+
+ci-deploy:
+	# Add deployment commands here (e.g., `scp`, `rsync`, or deploy to cloud services)
+	@echo "Deploying the build..."
+	# Example: scp -r $(APP_NAME)/build user@host:/path/to/deployment
+
+ci-cleanup: clean clean-python-env
+	@echo "CI cleanup done."
+
 # Targets
-.PHONY: install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env
+.PHONY: install-dependencies install-blockchain-dependencies setup-python-env build-bot run-bot start build test format eject clean clean-python-env ci-prepare ci-test ci-lint ci-deploy ci-cleanup
